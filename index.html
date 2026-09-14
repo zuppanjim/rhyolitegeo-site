@@ -1108,186 +1108,109 @@
 
 <!-- AI =================================================================== -->
 <div class="page" id="/ai" data-title="AI — Rhyolite Geo">
-  <div class="wrap">
-    <section class="hero">
-      <h1>The work of a department, done by a small team and a great deal of machinery.</h1>
-      <p class="lede">Artificial intelligence is not something this company sells. It is how the company does its own work &mdash; how sites are found, how the ground and the resource are mapped, how the numbers are built, how the documents are written and how the schedule is kept. It is the reason a firm this size can develop projects at all.</p>
-    </section>
+<div class="wrap">
+  <section class="hero">
+    <h1>The work of a department, done by a small team and a great deal of machinery.</h1>
+    <p class="lede">Artificial intelligence is not something this company sells. It is how the company does its own work, and it is the reason a firm this size can develop projects at all.</p>
+  </section>
 
-    <section>
-      <p class="eyebrow">Why it matters here</p>
-      <h2>Development is mostly reading, joining and rebuilding &mdash; and that is the part a machine is good at</h2>
-      <p>Most of what a development company actually does all day is not judgment. It is reading public records that were never meant to be read together, joining them to a piece of ground, chasing a document that proves what a data point claimed, rebuilding a spreadsheet because one assumption moved, and writing the same paragraph into the ninth version of a report. Conventionally that work is staffed &mdash; analysts, a GIS contractor, a cost consultant, a bookkeeper, a designer, a document manager &mdash; and the staffing is why small projects are said not to pencil.</p>
-      <p>We moved that work into software we run ourselves. What follows is not a plan. Each item below is a tool that exists, is run from a command, and produces the artifacts this company works from. The judgment stayed with people; the labor did not.</p>
+  <section>
+    <p class="eyebrow">Why it matters here</p>
+    <h2>Development is mostly reading, joining and rebuilding &mdash; and that is the part a machine is good at</h2>
+    <p>Most of a development company's day is not judgment. It is reading public records that were never meant to be read together, joining them to a piece of ground, chasing the document that proves what a data point claimed, and rebuilding a model because one assumption moved. Conventionally that work is staffed, and the staffing is why small projects are said not to pencil. We moved it into software we run ourselves. The judgment stayed with people; the labor did not.</p>
+    <div class="facts">
+      <div class="fact"><dt>Built, not bought</dt><dd>The site database, the analysis server, the document generators and this website are ours<small>No per-seat tool sits between us and the method</small></dd></div>
+      <div class="fact"><dt>Every output is sourced</dt><dd>A number that cannot name its document does not go in a report<small>Facts stay attached to the revision and date they came from</small></dd></div>
+      <div class="fact"><dt>Re-runnable, not retyped</dt><dd>Every deliverable is regenerated from the assumption, never edited in place<small>An assumption is stated in exactly one place</small></dd></div>
+      <div class="fact"><dt>Nothing is signed by a machine</dt><dd>A person reads and signs everything that leaves the building<small>The tools narrow; they do not decide</small></dd></div>
+    </div>
+  </section>
 
-      <div class="facts">
-        <div class="fact"><dt>Built, not bought</dt><dd>The site database, the analysis server, the document generators and this website are ours. No per-seat tool sits between us and the method.</dd></div>
-        <div class="fact"><dt>Every output is sourced</dt><dd>A number that cannot name the document it came from does not go in a report.</dd></div>
-        <div class="fact"><dt>Re-runnable, not retyped</dt><dd>Assumptions change constantly. Every deliverable is regenerated from the assumption, never edited in place.</dd></div>
-        <div class="fact"><dt>Nothing is signed by a machine</dt><dd>A person reads and signs everything that leaves the building. The tools narrow; they do not decide.</dd></div>
+  <section>
+    <p class="eyebrow">What is running</p>
+    <h2>Ten tools, each one a command rather than a plan</h2>
+    <p>None of the following is a roadmap. Each is running today and produces the artifacts this company works from.</p>
+    <div class="tiles">
+      <div class="tile">
+        <h4>Site search as a database</h4>
+        <p>Closure notices, the federal facility registry, Department of Energy plant energy records, assessor parcels and substation geography, all resolved to the same piece of ground so sources that have never spoken can be cross-examined. Pass-or-fail screens run first and cost nothing but compute; survivors are weighted, ranked and cut. The method is on the <a href="#/search">Site Search</a> page.</p>
       </div>
-    </section>
-
-    <section>
-      <p class="eyebrow">Site selection</p>
-      <h2>Thousands of candidates ranked before anyone drives anywhere</h2>
-      <p>Site search is the clearest case. It is a data problem before it is a real estate problem, and we run it as one: a database and a re-runnable harness rather than a broker and a shortlist. The full method is set out on the <a href="#/search">Site Search</a> page; what belongs here is the machinery underneath it.</p>
-
-      <div class="tiles">
-        <div class="tile">
-          <h4>The universe is built from closures</h4>
-          <p>A candidate list is assembled from state closure and layoff notices, the federal facility registry and its enforcement history, the Department of Energy's industrial assessment records with measured plant energy use, county assessor and parcel files, public transmission and substation geography, and listings that publish amperage and clear height. The notices arrive as scanned PDFs; they are parsed to structured records automatically, because a building's utility service decays on a clock and the ones worth finding are the ones found early.</p>
-        </div>
-        <div class="tile">
-          <h4>Everything keys to a parcel</h4>
-          <p>Each record from each source is resolved to the same piece of ground, so sources that have never spoken to one another can be cross-examined against one parcel. The join is the whole value; without it, six datasets are six lists.</p>
-        </div>
-        <div class="tile">
-          <h4>Screens are pass or fail, and they run first</h4>
-          <p>Service already energized, substation distance and voltage, floodplain position, zoning, structure, yard, environmental record. Applied in order, evaluated from the database before anyone is contacted, and a candidate that misses one is dropped rather than negotiated. Screening thousands of sites is only affordable because this part costs nothing but compute.</p>
-        </div>
-        <div class="tile">
-          <h4>Weighted, then ranked, then cut</h4>
-          <p>Survivors are scored on the measures that decide the outcome, weighted rather than averaged &mdash; a site is not compensated for missing power by having good zoning. The output is a ranked database, not a verdict, so a threshold can be moved and the whole population re-sorts in seconds.</p>
-        </div>
-        <div class="tile">
-          <h4>A new search area is a configuration file</h4>
-          <p>Opening a region means writing down a center, a radius, the jurisdictions and their public data endpoints, and one translator per county. It is not a new project and it is not a new hire. Reno is live; Klamath Falls and Ukiah are queued behind it.</p>
-        </div>
-        <div class="tile">
-          <h4>Every run is repeatable</h4>
-          <p>Each command is idempotent, each run is logged, and every network call is cached, so a search can be re-run months later and the difference between the two runs is the answer &mdash; which sites moved, which service was reduced, which building came to market.</p>
-        </div>
+      <div class="tile">
+        <h4>A region is a config file</h4>
+        <p>Opening a search area means a center, a radius, the jurisdictions and their data endpoints, and one translator per county. Not a new project, not a new hire. Reno is live; Klamath Falls and Ukiah are queued. Every run is idempotent, logged and cached, so re-running months later tells you what changed.</p>
       </div>
-    </section>
-
-    <section>
-      <p class="eyebrow">Mapping and resources</p>
-      <h2>The ground, the grid and the heat, on one map</h2>
-      <p>A site decision is a geometry problem: where the parcel sits relative to the floodplain, the substation, the transmission corridor, the fault, the neighbor and the resource. We compute those relationships rather than eyeball them off a viewer.</p>
-      <div class="cols">
-        <div class="col"><span class="tick"></span><p><strong>Parcel and hazard geometry.</strong> Parcel boundaries against floodplain polygons, setbacks, access and yard area, computed exactly. Where a precise geometry library is unavailable the tools fall back to bounding boxes and say so &mdash; a fallback that is conservative in the safe direction, able to turn a pass into a fail but never a fail into a pass.</p></div>
-        <div class="col"><span class="tick"></span><p><strong>Grid geography.</strong> Substation location, capacity and voltage, transmission and distribution routing, distance from the parcel to the point of service, and regional price and load data, joined to the same parcel key as everything else.</p></div>
-        <div class="col"><span class="tick"></span><p><strong>Geothermal resource.</strong> Measured well temperatures, heat-flow and gradient data, producing fields and their published performance, land status, and the state and federal survey record for a basin &mdash; assembled into a resource picture for a search area before a single lease is discussed.</p></div>
-        <div class="col"><span class="tick"></span><p><strong>Maps are generated, not drawn.</strong> Every figure comes out of the dataset that produced the conclusion, so a map cannot drift away from the numbers it illustrates. When the data updates, the map is regenerated rather than redrawn.</p></div>
+      <div class="tile">
+        <h4>The ground, the grid and the heat on one map</h4>
+        <p>Parcel geometry against floodplain, setbacks, access and yard, computed exactly rather than eyeballed off a viewer, with fallbacks that can only turn a pass into a fail. Substation capacity, voltage and routing, and the measured well temperatures and heat-flow record for a basin, joined to the same parcel key. Maps are generated from the dataset that produced the conclusion, so a figure cannot drift from its numbers.</p>
       </div>
-    </section>
-
-    <section>
-      <p class="eyebrow">Documents and due diligence</p>
-      <h2>Fifty years of paper, made searchable</h2>
-      <p>The most valuable geothermal information in the West is old, public, and effectively unreadable: state survey bulletins, federal resource assessments, well logs, decades-old feasibility studies, utility filings. It is scanned, it is not indexed, and it is why the same basin gets re-studied every fifteen years by somebody who could not find what was already known about it.</p>
-      <p>We run that corpus through optical character recognition and into a full-text index, so a question about a field, a well, a temperature or a flow rate returns the page it is answered on. Facts extracted from those documents stay attached to the document, the revision and the date they came from. Where two sources disagree &mdash; and on a fifty-year record they frequently do &mdash; the conflict is surfaced as a conflict rather than quietly averaged into a number that no source supports.</p>
-    </section>
-
-    <section>
-      <p class="eyebrow">Analysis</p>
-      <h2>The numbers are generated, not typed</h2>
-      <p>Behind the reports sits an analysis server: a single queryable body of costs, rates, comparables and assumptions that every document and every model reads from. Capital cost by component, operating cost, construction rates, drilling and plant figures, market benchmarks, grid prices, transaction comparables, the tax credit and grant landscape, after-tax treatment, capital structure and valuation, and a risk register carried alongside them.</p>
-      <p>One consequence matters more than the rest: an assumption is stated in exactly one place. Moving it re-runs everything downstream instead of being pasted into thirty cells across six files, three of which will be missed. The failure mode of conventional development analysis is not bad math &mdash; it is nine versions of a spreadsheet that no longer agree, and nobody knowing which one is current.</p>
-    </section>
-
-    <section>
-      <p class="eyebrow">Pro formas</p>
-      <h2>A pro forma that can be re-run, compared and defended</h2>
-      <p>The financial model is a program rather than a workbook. Any figure in it is addressable, every figure carries the source and the assumption behind it, and a variant is a named set of changes rather than a copied file.</p>
-      <div class="cols">
-        <div class="col"><span class="tick"></span><p><strong>Variants, side by side.</strong> Capacity, phasing, resource assumption, financing shape and site type are parameters. Two cases are compared by the tool, on the same basis and the same assumptions, with the differences listed rather than hunted.</p></div>
-        <div class="col"><span class="tick"></span><p><strong>Sensitivity is cheap.</strong> Because a case costs seconds, the question stops being "what does the model say" and becomes "what has to be true for this to work" &mdash; which is the only version of the question worth asking a lender or a partner.</p></div>
-        <div class="col"><span class="tick"></span><p><strong>Capital cost from components.</strong> Equipment, drilling, plant, construction, interconnection and building are priced from current rates and equipment bid sheets, not from a dollars-per-megawatt rule of thumb inherited from a project at ten times the size.</p></div>
-        <div class="col"><span class="tick"></span><p><strong>Assumptions are a document.</strong> Every case can print the assumption register that produced it. A reviewer does not have to reverse-engineer the model to find out what it believes.</p></div>
+      <div class="tile">
+        <h4>Fifty years of paper, made searchable</h4>
+        <p>The best geothermal information in the West is old, public and effectively unreadable: survey bulletins, well logs, decades-old feasibility studies. We run the corpus through OCR into a full-text index, so a question about a field or a flow rate returns the page it is answered on. Where two sources disagree, the conflict is surfaced rather than averaged away.</p>
       </div>
-    </section>
-
-    <section>
-      <p class="eyebrow">Accounting</p>
-      <h2>Books that keep up with a development schedule</h2>
-      <p>Development spending is awkward to account for: it is lumpy, it splits between what is capitalized into a project and what is expensed, it lands across entities and phases, and it arrives as vendor invoices and bids rather than tidy categories. We run the assembly of that work with the same tooling &mdash; spend classified to project and phase, vendor and bid records kept beside the cost model, and cost-to-date reconciled against the capital estimate so the estimate and the ledger are the same conversation instead of two documents that meet once a year.</p>
-      <p>The point is the loop, not the bookkeeping. When what a thing actually cost flows back into the model that estimated it, the next estimate is better; when it does not, every project is priced by memory.</p>
-    </section>
-
-    <section>
-      <p class="eyebrow">Reports and deliverables</p>
-      <h2>Written once, regenerated thereafter</h2>
-      <p>Every study, memorandum and deck this company issues is produced by a generator rather than by hand. The consequences are unglamorous and worth a great deal.</p>
-      <div class="tiles">
-        <div class="tile">
-          <h4>One house style, enforced</h4>
-          <p>Cover, header, footer, confidentiality line, the instruction to verify before relying, the source revision and date, and page numbering are applied by the generator to every document. There is no version with the old logo, because there is no hand-made version.</p>
-        </div>
-        <div class="tile">
-          <h4>Reissue is a re-run</h4>
-          <p>When an underlying figure changes, the affected documents are regenerated in minutes, in Word and PDF, from the same corrected source. The alternative &mdash; finding every document that quoted the old number &mdash; is the reason stale figures survive in practice.</p>
-        </div>
-        <div class="tile">
-          <h4>A library with a manifest</h4>
-          <p>The finished studies sit in one indexed library, and a manifest records for every file its source, its revision, its date and an automated check that it carries the right marks. It is checkable rather than asserted.</p>
-        </div>
-        <div class="tile">
-          <h4>The reader gets the provenance</h4>
-          <p>Each document says on its face which revision of which source it was built from and on what date. A reader never has to ask whether they are holding the current one.</p>
-        </div>
+      <div class="tile">
+        <h4>One analysis server</h4>
+        <p>Costs, rates, comparables, grid prices, the credit and grant landscape, after-tax treatment, capital structure and a risk register, in one queryable body that every document and model reads from. Moving an assumption re-runs everything downstream. The failure mode of conventional development analysis is not bad math, it is nine spreadsheets that no longer agree.</p>
       </div>
-    </section>
-
-    <section>
-      <p class="eyebrow">Design and engineering</p>
-      <h2>The building is modeled before it is drawn</h2>
-      <p>The facility is a standard kit repeated, which makes a three-dimensional model an asset that improves rather than a drawing thrown away at the end of a job. We build and revise those models directly from the specification &mdash; the equipment layout, the yard, the plant, the shell and its regional variants, setbacks and sound &mdash; and every project the kit is used on sharpens the model for the next one.</p>
-      <p>This is where a repeated format pays off twice. Design work that a one-off building spends and discards is spent once here and amortized across every site, which is a large part of why a 500&nbsp;kW building can be developed economically at all.</p>
-    </section>
-
-    <section>
-      <p class="eyebrow">Project management</p>
-      <h2>The schedule is a system, not a status meeting</h2>
-      <p>The work itself is run through a task harness. Every piece of work is a record with an owner, a stated done-condition and a claim on the files it touches, so two workstreams never quietly edit the same thing and discover it later. A task closes against its done-condition with evidence, not against somebody's opinion that it is finished. Long-lead items &mdash; utility studies, interconnection, permits, equipment orders &mdash; are tracked against dates, because on a project this size the schedule is decided almost entirely by the three or four items nobody can accelerate.</p>
-      <p>Automated checks refuse work that does not meet the standard: a claim without a source, a document missing its legend, a change that would break the published site. The standard is enforced by the tooling rather than remembered by a person under time pressure, which is the only place a standard survives.</p>
-    </section>
-
-    <section>
-      <p class="eyebrow">Software and this website</p>
-      <h2>The tools are ours, including this page</h2>
-      <p>This site is generated and validated by our own build, with the rules of the page &mdash; contrast, the accent colors, the required legal legend, what a page may and may not contain &mdash; checked by software that refuses to publish a version that breaks them. The same is true of the site database, the analysis server and the document generators. Changing the method means editing a file, not filing a request with a vendor and waiting a quarter.</p>
-    </section>
-
-    <section>
-      <p class="eyebrow">The discipline</p>
-      <h2>Every claim declares what it rests on</h2>
-      <p>Machine-assisted work is worth having only if it is more reliable than the work it replaces, and a language model left unsupervised is confidently wrong in exactly the register that reads as authoritative. So the tooling carries rules, and the rules are the reason the output is usable.</p>
-
-      <div class="screens">
-        <div class="screen">
-          <div><h3>Primary or inferred, stated</h3></div>
-          <p>A finding rests on the artifact itself &mdash; a file, a query result, a page of a document, a measured value &mdash; or it rests on reasoning from packaging: a title, a summary, an assumption, another tool's output. The second kind is a hypothesis and is labeled one. It is never acted on until it is promoted by primary evidence.</p>
-        </div>
-        <div class="screen">
-          <div><h3>A tool that errored produces no facts</h3></div>
-          <p>When a query returns nothing, that is a fact about the query until a second method agrees. "The record does not exist" and "the search failed" look identical in the output and are opposite conclusions; treating the first as established without checking is how confident nonsense enters a report.</p>
-        </div>
-        <div class="screen">
-          <div><h3>Conflicts are surfaced, not smoothed</h3></div>
-          <p>Where two sources disagree, both are kept and the disagreement is named. An averaged number that no source supports is worse than either of the numbers that produced it.</p>
-        </div>
-        <div class="screen">
-          <div><h3>Verification does not delegate</h3></div>
-          <p>Load-bearing quotes and figures are checked against the source by a person &mdash; particularly any finding that reverses an earlier conclusion. The machine assembles the case; it does not get to certify it.</p>
-        </div>
-        <div class="screen">
-          <div><h3>Data-room ready by construction</h3></div>
-          <p>Because every claim is already tied to its document, the diligence package is not a three-week assembly exercise at the end. It is the same chain of sources the work was done on, printed.</p>
-        </div>
+      <div class="tile">
+        <h4>A pro forma that is a program</h4>
+        <p>Every figure is addressable and carries its source. A variant is a named set of changes, not a copied file, so two cases are compared on the same basis with the differences listed rather than hunted. Capital cost is built from equipment bids and current rates, not a dollars-per-megawatt rule of thumb from a project ten times the size. Each case prints its own assumption register.</p>
       </div>
-    </section>
+      <div class="tile">
+        <h4>Books that keep up with the schedule</h4>
+        <p>Development spend is lumpy and splits between capitalized and expensed. It is classified to project and phase, kept beside the vendor and bid records, and reconciled against the capital estimate. The point is the loop: when what a thing actually cost flows back into the model that estimated it, the next estimate is better.</p>
+      </div>
+      <div class="tile">
+        <h4>Documents are generated</h4>
+        <p>Every study, memorandum and deck comes out of a generator. One house style applied by the tool, so there is no version with the old logo. A changed figure regenerates the affected documents in minutes, in Word and PDF. The library carries a manifest of source, revision and date, and each document says on its face what it was built from.</p>
+      </div>
+      <div class="tile">
+        <h4>The building is modeled before it is drawn</h4>
+        <p>A standard kit repeated makes a three-dimensional model an asset that improves rather than a drawing thrown away. Layout, yard, plant, shell and regional variants are built from the specification, and every site sharpens the model for the next. Design work a one-off building spends and discards is spent once here, which is much of why a 500&nbsp;kW building pencils at all.</p>
+      </div>
+      <div class="tile">
+        <h4>The schedule is a system</h4>
+        <p>Work is a record with an owner, a done-condition and a claim on the files it touches, so two workstreams never quietly edit the same thing. Tasks close on evidence. Long-lead items are tracked against dates, because the schedule is decided by the three or four things nobody can accelerate. Automated checks refuse a claim without a source or a document missing its legend. This website is built and validated the same way.</p>
+      </div>
+    </div>
+  </section>
 
-    <section>
-      <p class="eyebrow">Limits</p>
-      <h2>What the machines do not do</h2>
-      <p>The boundary is not modesty; it is where the value actually sits. None of this negotiates a purchase or a lease, talks to a utility engineer, walks a roof, reads a switchgear nameplate, obtains a will-serve letter, sits with a planning commission, signs anything, or decides how capital is committed. A ranked database does not produce a fiber quote, a capacity study, a Phase&nbsp;I or a structural report &mdash; and a site is not real until it has all four.</p>
-      <p>What the tooling does is make the expensive human work land on the right small number of things. Field time is spent on finalists rather than on the set of buildings a broker happened to be marketing. Analysis time is spent on the assumption that matters rather than on rebuilding a workbook. A document is read for whether it is right, not retyped.</p>
+  <section>
+    <p class="eyebrow">The discipline</p>
+    <h2>Every claim declares what it rests on</h2>
+    <p>A language model left unsupervised is confidently wrong in exactly the register that reads as authoritative. The rules below are the reason the output is usable.</p>
 
-      <div class="pull">The machine narrows the field and carries the paperwork. <span>People decide, and people sign.</span></div>
-    </section>
-  </div>
+    <div class="screens">
+      <div class="screen">
+        <div><h3>Primary or inferred, stated</h3></div>
+        <p>A finding rests on the artifact itself, or it rests on reasoning from packaging. The second kind is a hypothesis, is labeled one, and is never acted on until primary evidence promotes it.</p>
+      </div>
+      <div class="screen">
+        <div><h3>A tool that errored produces no facts</h3></div>
+        <p>"The record does not exist" and "the search failed" look identical in the output and are opposite conclusions. A null is a fact about the query until a second method agrees.</p>
+      </div>
+      <div class="screen">
+        <div><h3>Conflicts are surfaced, not smoothed</h3></div>
+        <p>Where two sources disagree, both are kept and the disagreement is named. An averaged number that no source supports is worse than either of the numbers behind it.</p>
+      </div>
+      <div class="screen">
+        <div><h3>Verification does not delegate</h3></div>
+        <p>Load-bearing quotes and figures are checked against the source by a person, particularly any finding that reverses an earlier conclusion. The machine assembles the case; it does not certify it.</p>
+      </div>
+      <div class="screen">
+        <div><h3>Data-room ready by construction</h3></div>
+        <p>Because every claim is already tied to its document, the diligence package is not a three-week assembly exercise at the end. It is the chain of sources the work was done on, printed.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Limits</p>
+    <h2>What the machines do not do</h2>
+    <p>The boundary is where the value sits. None of this negotiates a lease, talks to a utility engineer, walks a roof, reads a switchgear nameplate, obtains a will-serve letter, sits with a planning commission, or decides how capital is committed. A ranked database does not produce a fiber quote, a capacity study, a Phase&nbsp;I or a structural report, and a site is not real until it has all four. What the tooling does is make the expensive human work land on the right small number of things: field time on finalists, analysis time on the assumption that matters, a document read for whether it is right rather than retyped.</p>
+
+    <div class="pull">The machine narrows the field and carries the paperwork. <span>People decide, and people sign.</span></div>
+  </section>
+</div>
 </div>
 
 <!-- INVESTORS ============================================================ -->
