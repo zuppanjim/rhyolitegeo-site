@@ -82,20 +82,24 @@
     backdrop-filter:saturate(130%) blur(9px);
     border-bottom:1px solid var(--line);
   }
-  .mast .wrap{display:flex; align-items:center; gap:20px; flex-wrap:wrap; padding-block:13px}
-  .mark{display:block; height:clamp(58px,8.5vw,94px); width:auto; max-width:100%}
-  nav{display:flex; gap:1px; flex-wrap:wrap; margin-left:-11px}
+  .mast .wrap{display:flex; align-items:center; gap:14px; flex-wrap:nowrap; padding-block:13px}
+  .mark{display:block; height:clamp(46px,6.5vw,72px); width:auto; max-width:100%; flex:0 0 auto}
+  /* One row, always. The nav is the flexible half of the masthead: it never
+     wraps, and on a narrow screen it scrolls sideways rather than stacking. */
+  nav{display:flex; gap:0; flex-wrap:nowrap; margin-left:-7px; min-width:0;
+      overflow-x:auto; scrollbar-width:none}
+  nav::-webkit-scrollbar{display:none}
   nav a{
-    font-family:var(--sans); font-size:12.5px; font-weight:500;
-    color:var(--ink-2); text-decoration:none; padding:7px 11px;
+    font-family:var(--sans); font-size:11.5px; font-weight:500; white-space:nowrap;
+    color:var(--ink-2); text-decoration:none; padding:7px 7px;
     border-bottom:2px solid transparent;
     transition:color .18s ease, border-color .18s ease;
   }
   nav a:hover{color:var(--ink); border-bottom-color:var(--line-2)}
   nav a[aria-current="page"]{color:var(--oxide); border-bottom-color:var(--oxide)}
   @media (max-width:860px){
-    nav{margin-left:-9px}
-    nav a{padding:6px 9px; font-size:12px}
+    nav{margin-left:-6px}
+    nav a{padding:6px 6px; font-size:11px}
   }
 
   /* routed pages -------------------------------------------------------- */
@@ -422,12 +426,11 @@
     <nav id="nav">
       <a href="#/">Home</a>
       <a href="#/overview">Overview</a>
-      <a href="#/company">Company</a>
       <a href="#/strategy">Development</a>
       <a href="#/btm">Behind the Meter</a>
-      <a href="#/geothermal">Geothermal Development</a>
+      <a href="#/geothermal">Geothermal</a>
       <a href="#/specs">Specifications</a>
-      <a href="#/designs">Data Center Designs</a>
+      <a href="#/designs">Data Centers</a>
       <a href="#/search">Site Search</a>
       <a href="#/ai">AI</a>
       <a href="#/investors">Investors</a>
@@ -523,70 +526,6 @@
   </div>
 </div>
 
-<!-- COMPANY INFO ========================================================= -->
-<div class="page" id="/company" data-title="Company — Rhyolite Geo">
-  <div class="wrap">
-    <section>
-      <p class="eyebrow">Company information</p>
-      <h2>What the company is, and what it builds</h2>
-      <p>Rhyolite Geo Inc. develops two things that belong together: geothermal power, and the small data centers that run on it. Heat is the one resource that cannot be shipped, so the building goes to it instead. Sites are alternative energy generation that is already in operation, most often geothermal, where the output is firm around the clock and the same resource that makes the power also carries the cooling. Each facility is a little different, tailored to site-specific conditions: roughly 3,000 square feet, standardized inside down to the last detail and repeated site to site, carrying a load that starts at 500 kW, in a building we put up or one that already stands. A site is phased up to 2 MW by repeating that building, rather than by making one of them larger.</p>
-      <p>The company is a facilitator, and wears whichever hats a project needs: site selection and diligence, development, plans and specifications, construction management, commissioning, and the long-run maintenance and operation of the finished building. On its own projects it builds, owns and operates rather than selling them on, and sells capacity locally by the cabinet and the partial cage. Where a host or a landowner wants only part of that, we take only that part. The team has run every one of these stages before, on data centers considerably larger than these.</p>
-      
-      <div class="tiles">
-        <div class="tile"><h4>Alternative-powered sites</h4><p>The core case. An operating clean plant — solar, wind, hydro, geothermal, biogas — where the power is taken on site, as described on the <a href="#/btm">Behind the Meter</a> page. The host permitted and interconnected itself years ago and is running today, so the long items are finished before we arrive and the facility starts in months rather than years.</p></div>
-        <div class="tile"><h4>Greenfield development</h4><p>Raw land, usually beside generation that is new or still being built. The layout is entirely ours to set, so the shell is drawn around the kit rather than the kit fitted to the shell. The schedule is the longest of the three because access, grading, water and the power path all start from bare ground.</p></div>
-        <div class="tile"><h4>Brownfield development</h4><p>A parcel that was already industrial, where the service, access road and grading are still in place and heavy power on the property is ordinary. What it costs is diligence — what is buried there, what easements are recorded, and a footprint someone else set.</p></div>
-      </div>
-
-      <dl class="facts">
-        <div class="fact"><dt>Legal name</dt><dd>Rhyolite Geo Inc.</dd></div>
-        <div class="fact"><dt>Based in</dt><dd>Reno, Nevada</dd></div>
-        <div class="fact"><dt>Business</dt><dd>Energy &amp; digital infrastructure</dd></div>
-        <div class="fact"><dt>Stage</dt><dd>Early stage &mdash; site search and development</dd></div>
-      </dl>
-    </section>
-
-    <section>
-      <p class="eyebrow">Where the company stands</p>
-      <h2>Where the company actually stands</h2>
-      <p class="lede">Rhyolite Geo Inc. is a startup. We do not operate facilities today. We are searching sites, developing the first of them, and settling the standard kit that gets repeated after that.</p>
-      <p>We would rather say that plainly than sound further along than we are.</p>
-      <div class="cols">
-        <div class="col"><span class="tick"></span><p><strong>Small, meshed data centers.</strong> Capacity measured in hundreds of kilowatts, placed near the people and the work it serves, and made large by repetition across many sites rather than by one campus. The demand for it is arriving now, from regional enterprises and from inference that has to answer close to the person asking.</p></div>
-        <div class="col"><span class="tick"></span><p><strong>Geothermal developed for this load specifically.</strong> Not generation built for a grid and sold into it, but a resource developed against what a data center actually needs &mdash; firm output around the clock, and the cooling that comes with the same resource.</p></div>
-        <div class="col"><span class="tick"></span><p><strong>Existing alternative energy sites, taken locally.</strong> Plants that are already permitted, interconnected and running, where power can be taken on site instead of moved. The slow work was finished by somebody else years ago, and the opportunity is site by site rather than national.</p></div>
-      </div>
-      <p>Each of those three is a market in its own right and none of them is crowded yet. What makes the combination worth building a company around is that the same modest building serves all three, and that the timing on all three is the same timing. The load is growing faster than firm power is being added, the grid queue has stopped being a realistic path for anyone in a hurry, and the operating clean plants that could host this are sitting there today with nobody asking.</p>
-      <p>That window is open now. It does not stay open indefinitely, and being early to it is the whole thesis of the company.</p>
-    </section>
-
-      <section>
-        <p class="eyebrow">Who is behind it</p>
-        <h2>People who have already built this, at the size above this one</h2>
-        <p class="lede">The company is led from the design side of mission-critical facilities rather than from the finance side of them. Thirty-five years in the field, fourteen of them as senior data center architect for a global technology operator, and more than 300 MW delivered across eight campuses in four countries.</p>
-        <div class="cols">
-          <div class="col"><span class="tick"></span><p><strong>Design authority, end to end.</strong> Building layout, airflow architecture, central plant, piping topology, controls and the sequences that run them &mdash; owned from the first massing sketch through commissioning, and tuned afterward against the plant's own trend history.</p></div>
-          <div class="col"><span class="tick"></span><p><strong>First-of-their-kind systems.</strong> The world's first data center to run with no mechanical cooling at all, the first to eliminate central fan systems and ductwork entirely, and the first rack-level cooling for distributed 48&nbsp;VDC battery cabinets. Each set an industry precedent rather than following one.</p></div>
-          <div class="col"><span class="tick"></span><p><strong>Small and modular, already productized.</strong> Developer of FlexDC, HP's flexible modular data center concept &mdash; building architecture, layout and ductless cooling packaged for rapid deployment. That product is the direct ancestor of the building this company repeats.</p></div>
-          <div class="col"><span class="tick"></span><p><strong>Industrial retrofit, done once already.</strong> Converted an operating glass manufacturing plant into a data center inside the existing shell and its installed cooling infrastructure, reconfiguring the process equipment rather than replacing it. The retrofit case on our <a href="#/search">Site Search</a> page is not theoretical here.</p></div>
-          <div class="col"><span class="tick"></span><p><strong>Power generation, not just the load.</strong> Resource, technology and commercial analysis of geothermal development and the data center load it is built to serve: a Great Basin resource screen against the operating fleet, behind-the-meter repricing, and geopressured and geologic resource assessment.</p></div>
-        </div>
-      </section>
-
-    <section>
-      <p class="eyebrow">Small enough to be welcome</p>
-      <h2>Nobody turns out to fight a building this small</h2>
-      <p>Through 2026 the argument over data centers stopped being abstract and started showing up on council agendas. Indianapolis paused new data center permits through the end of 2027. Montgomery County, Maryland passed its moratorium on an eleven to nothing council vote. Hillsboro, Oregon stopped new and expanded projects for a hundred and twenty days, unanimously. Tucson wrote its first zoning rules for large sites, and the list of what those rules demand is a fair summary of what people are actually worried about: setbacks from houses, limits on noise, and disclosure of how much water and how much power the building is going to take.</p>
-      <p>None of that was aimed at a building like ours. It was aimed at campuses measured in hundreds of acres and hundreds of megawatts, drawing cooling water from an aquifer the county was already arguing about and asking a utility for more power than it has spare. Three thousand square feet next to a plant that is already generating is a different conversation entirely. The setback question, the noise question and the water question are all easy for us to answer, and we would rather answer them early than win them later.</p>
-      <p>That is also why we get large the other way around. Rather than one campus that rearranges the town it lands in, we put the same modest building on a lot of different sites, and the size of the company shows up in the total instead of in any one place. It is a slower way to be big and a much easier one to be welcome.</p>
-      <p>We would honestly rather the buildings be boring. If one of our sites turns out to be the most interesting thing on its road, something has gone wrong.</p>
-    </section>
-
-    
-  </div>
-</div>
-
-<!-- DEVELOPMENT STRATEGIES =============================================== -->
 <div class="page" id="/strategy" data-title="Development Strategies — Rhyolite Geo">
   <div class="wrap">
 
