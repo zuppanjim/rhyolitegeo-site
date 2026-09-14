@@ -282,11 +282,6 @@
     font-weight:600; max-width:13ch; margin:0 0 36px;
   }
   .lp h1.lp-head em{font-style:normal; color:var(--oxide)}
-  .lp .lp-sub{font-size:clamp(18px,2vw,22px); line-height:1.5; color:var(--ink-2); max-width:42ch; margin:0}
-  .lp .lp-hero-foot{
-    display:grid; grid-template-columns:minmax(0,1fr) auto; gap:28px 48px;
-    align-items:end; padding-bottom:52px;
-  }
   .lp .lp-btn{
     display:inline-block; font-family:var(--mono); font-size:12.5px; font-weight:500;
     letter-spacing:.11em; text-transform:uppercase; padding:16px 28px;
@@ -357,7 +352,6 @@
   .lp .lp-close .stack{display:flex; flex-direction:column; gap:13px; align-items:flex-start}
 
   @media (max-width:760px){
-    .lp .lp-hero-foot{grid-template-columns:1fr}
     .lp .lp-nums{grid-template-columns:1fr 1fr; gap:24px}
     .lp .lp-nums .div{border-left:0; padding-left:0}
     .lp .lp-steps{grid-template-columns:1fr; gap:26px}
@@ -372,19 +366,25 @@
     border-bottom:1px solid var(--line);}
   .lp .lp-fly .plate{position:absolute; inset:0; background-image:url("assets/hero-datacenter.jpg");
     background-size:cover; background-position:50% 62%; will-change:transform;
-    animation:fly 34s cubic-bezier(.32,0,.28,1) infinite alternate both;}
+    animation:fly 56s linear infinite both;}
+  /* Four stages: wide establishing shot, a lateral drift across the site,
+     a push in toward the gate, then back out to where it started. The cycle
+     ends on the opening frame so the loop has no seam and does not need
+     `alternate`, which would run the whole move backwards. */
   @keyframes fly{
-    from{transform:scale(1.02) translate3d(0,0,0)}
-    to  {transform:scale(1.30) translate3d(0,-3.2%,0)}
+    0%  {transform:scale(1.04) translate3d(0,0,0);          animation-timing-function:cubic-bezier(.4,0,.5,1)}
+    28% {transform:scale(1.11) translate3d(-3.6%,-.7%,0);   animation-timing-function:cubic-bezier(.45,0,.35,1)}
+    58% {transform:scale(1.56) translate3d(-6.6%,-3.6%,0);  animation-timing-function:cubic-bezier(.4,0,.4,1)}
+    84% {transform:scale(1.19) translate3d(-2.1%,-1.3%,0);  animation-timing-function:cubic-bezier(.5,0,.5,1)}
+    100%{transform:scale(1.04) translate3d(0,0,0)}
   }
   @media (prefers-reduced-motion:reduce){ .lp .lp-fly .plate{animation:none; transform:scale(1.06)} }
   .lp .lp-fly .scrim{position:absolute; inset:0;
     background:linear-gradient(180deg,rgba(20,17,14,.54) 0%,rgba(20,17,14,.16) 36%,rgba(20,17,14,.76) 100%);}
   .lp .lp-fly .copy{position:relative; height:100%; display:flex; flex-direction:column;
     justify-content:flex-end; padding-block:0 50px; color:#F2EADC;}
-  .lp .lp-fly h1.lp-head{color:#F2EADC; margin-bottom:20px; text-shadow:0 2px 26px rgba(0,0,0,.44)}
+  .lp .lp-fly h1.lp-head{color:#F2EADC; margin-bottom:0; text-shadow:0 2px 26px rgba(0,0,0,.44)}
   .lp .lp-fly h1.lp-head em{color:#E8874A}
-  .lp .lp-fly .lp-sub{color:#EFE6D6; text-shadow:0 1px 14px rgba(0,0,0,.5)}
   .lp .lp-fly .lp-caption{position:absolute; right:18px; bottom:12px; margin:0;
     font-family:var(--mono); font-size:10.5px; letter-spacing:.13em; text-transform:uppercase;
     color:rgba(242,234,220,.62);}
@@ -447,9 +447,6 @@
     <div class="scrim"></div>
     <div class="wrap copy">
       <h1 class="lp-head">We build where the power <em>already is.</em></h1>
-      <div class="lp-hero-foot">
-        <p class="lp-sub">Every other data center is waiting on an interconnection queue. We put a small one on the generator&rsquo;s own property, behind the meter, and the wait never starts.</p>
-      </div>
     </div>
     <p class="lp-caption">Illustrative design rendering</p>
   </div>
