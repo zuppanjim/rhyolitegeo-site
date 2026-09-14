@@ -130,29 +130,25 @@ ${block}
   fs.mkdirSync(OUT, { recursive: true });
   fs.writeFileSync(path.join(OUT, `${name}.dc.html`), inlineAssets(doc));
 
-  // rough height from the text the page carries, clamped to something sane
-  const text = block.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ");
-  // no upper clamp: a frame shorter than its page clips, and a clipped
-  // artboard cannot be scrolled back into view
-  const h = Math.max(1500, Math.round(text.length * 1.25) + 1400);
-
-  artboards.push({ name, route, title, h });
+  artboards.push({ name, route, title });
 });
 
-// --- lay them out: home first, the rest in rows of four ------------------
-const W = 1440, GAP_X = 140, GAP_Y = 200;
-const placed = [];
-let x = 0, y = 0, rowH = 0, col = 0;
-for (const a of artboards) {
-  if (col === 4) { x = 0; y += rowH + GAP_Y; rowH = 0; col = 0; }
-  placed.push({
-    file: `${a.name}.dc.html`,
-    x, y, w: W, h: a.h,
-    title: `${a.route}  —  ${a.title.replace(/ — Rhyolite Geo$/, "")}`,
-    expand: "fill",
-  });
-  x += W + GAP_X; rowH = Math.max(rowH, a.h); col += 1;
-}
+// --- lay them out: an even contact sheet, home first ---------------------
+// Every artboard gets the SAME frame. Sizing each frame to its own page was
+// tried twice and both readings look broken: rows of four leave acres of
+// blank canvas between rows because one 20,000px page sets the row height,
+// and packing them into columns by height gives a ragged masonry that reads
+// as rubble rather than as a site. A long page simply shows its top here and
+// scrolls the rest when it is expanded, which is what "fill" is for.
+const W = 1440, H = 2600, GAP_X = 140, GAP_Y = 190, COLS = 4;
+const placed = artboards.map((a, i) => ({
+  file: `${a.name}.dc.html`,
+  x: (i % COLS) * (W + GAP_X),
+  y: Math.floor(i / COLS) * (H + GAP_Y),
+  w: W, h: H,
+  title: `${a.route}  —  ${a.title.replace(/ — Rhyolite Geo$/, "")}`,
+  expand: "fill",
+}));
 
 const canvas = {
   artboards: placed,
@@ -164,12 +160,14 @@ const canvas = {
       + "re-run the script, republish. The home artboard is the investor landing page: "
       + "\"We build where the power already is.\"",
   }],
-  launch: { view: "focused", file: "Main.dc.html" },
+  // open on the whole canvas: a focused launch shows the landing page alone
+  // and reads as if the other eleven routes are missing
+  launch: { view: "canvas" },
 };
 fs.writeFileSync(path.join(OUT, "canvas.json"), JSON.stringify(canvas, null, 2) + "\n");
 
 console.log(`${artboards.length} artboards -> ${OUT}`);
-for (const a of artboards) console.log(`  ${a.route.padEnd(12)} ${a.name}.dc.html  h=${a.h}`);
+for (const a of artboards) console.log(`  ${a.route.padEnd(12)} ${a.name}.dc.html`);
 
 // --- seed the canvas payload, when the design skill is on this machine ---
 const skill = process.env.DESIGN_SKILL_DIR
