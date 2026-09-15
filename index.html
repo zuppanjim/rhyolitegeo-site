@@ -341,9 +341,14 @@
   .lp .lp-who .eyebrow{margin:0 0 18px}
   .lp .lp-def{
     font-size:clamp(20px,2.3vw,27px); line-height:1.34; letter-spacing:-.018em;
-    color:var(--ink); max-width:46ch; margin:0 0 34px;
+    color:var(--ink); max-width:46ch; margin:0 0 20px;
   }
   .lp .lp-def em{font-style:normal; color:var(--oxide)}
+  /* the mission sentence is the headline; this carries the how, one step down */
+  .lp .lp-sub{
+    font-size:17.5px; line-height:1.62; color:var(--ink-2);
+    max-width:62ch; margin:0 0 34px;
+  }
   .lp .lp-who .lp-two{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
   .lp .lp-arm{border-top:3px solid var(--oxide); padding-top:16px}
   .lp .lp-arm h3{font-size:21px; margin:0 0 10px}
@@ -464,15 +469,16 @@
   <div class="wrap">
     <section class="lp-who">
       <p class="eyebrow">Who we are</p>
-      <p class="lp-def">Rhyolite Geo Inc. is a startup built on two core competencies: <em>geothermal power</em> and <em>digital infrastructure</em>. The company is new; the people are not &mdash; years of work in geothermal development and data center design and construction are the company&rsquo;s strengths.</p>
+      <p class="lp-def">Rhyolite Geo Inc. is working toward data centers <em>powered and cooled by geothermal energy</em>, taken <em>behind the meter</em>. The power and the building are one project, because neither half answers the other&rsquo;s problem on its own.</p>
+      <p class="lp-sub">That puts us at both ends of the same market: the supply side, where the resource is located and developed, and the infrastructure side, where the building is designed and built. The company is a startup and it is early. The people are not new to this &mdash; years of work in geothermal development and in data center design and construction are what it is built on.</p>
       <div class="lp-two">
         <div class="lp-arm">
-          <h3>Geothermal</h3>
-          <p>We locate and secure properties with a geothermal resource and take them through development: steam field, power plant, and the connection to the end user, either across the grid or behind the meter.</p>
+          <h3>The power half</h3>
+          <p>We locate and secure properties with a geothermal resource and take them through development: steam field, power plant, and the connection to the load, either behind the meter or across the grid.</p>
         </div>
         <div class="lp-arm">
-          <h3>Digital infrastructure</h3>
-          <p>We locate sites for small to midsize data center developments &mdash; co-located with existing alternative energy projects where possible, or on brownfields where existing infrastructure can be reused.</p>
+          <h3>The building half</h3>
+          <p>We locate sites for small to midsize data center developments and design and build them &mdash; co-located with existing alternative energy projects where possible, or on brownfields where existing infrastructure can be reused.</p>
         </div>
       </div>
     </section>
