@@ -1,0 +1,357 @@
+<title>Reno Site Board</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#EEF1F4; --panel:#FFFFFF; --panel-2:#F6F8FA; --ink:#17212B; --muted:#5B6976; --line:#D3DAE1; --line-2:#E6EAEE;
+  --accent:#0E7683; --accent-ink:#0B5C66; --accent-soft:#D9EEF0;
+  --pass:#2C7A4B; --pass-soft:#DDEFE3; --fail:#B03A2E; --fail-soft:#F5DEDA; --unk:#8E6F14; --unk-soft:#F3E9CB;
+  --sel:#E4F1F3; --shadow:0 1px 2px rgba(23,33,43,.06),0 8px 24px rgba(23,33,43,.06);
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#11171D; --panel:#1A2229; --panel-2:#1F2830; --ink:#E3E9EE; --muted:#93A1AD; --line:#2B3640; --line-2:#242E38;
+  --accent:#3FB2BB; --accent-ink:#7ED0D6; --accent-soft:#183A3F;
+  --pass:#5FC087; --pass-soft:#1B3A29; --fail:#E4796B; --fail-soft:#44221D; --unk:#D8B04E; --unk-soft:#3D3316;
+  --sel:#1C353A; --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+}}
+:root[data-theme="dark"]{
+  --bg:#11171D; --panel:#1A2229; --panel-2:#1F2830; --ink:#E3E9EE; --muted:#93A1AD; --line:#2B3640; --line-2:#242E38;
+  --accent:#3FB2BB; --accent-ink:#7ED0D6; --accent-soft:#183A3F;
+  --pass:#5FC087; --pass-soft:#1B3A29; --fail:#E4796B; --fail-soft:#44221D; --unk:#D8B04E; --unk-soft:#3D3316;
+  --sel:#1C353A; --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-ink)}
+button{font:inherit;color:inherit}
+.wrap{padding:0 20px;padding-block:0 40px;max-width:1480px;margin:0 auto}
+h1,h2,h3{text-wrap:balance;margin:0}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.eyebrow{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--panel);border-bottom:1px solid var(--line);margin:0 -20px;padding:14px 20px 12px}
+.top-in{max-width:1440px;margin:0 auto;display:flex;flex-wrap:wrap;gap:12px 28px;align-items:flex-end}
+.top h1{font-size:20px;font-weight:600;letter-spacing:-.01em}
+.top .sub{color:var(--muted);font-size:13px;margin-top:2px}
+.tiles{display:flex;gap:8px;flex-wrap:wrap;margin-left:auto}
+.tile{border:1px solid var(--line);border-radius:6px;padding:6px 10px;min-width:92px;background:var(--panel-2);cursor:pointer;text-align:left}
+.tile:hover{border-color:var(--accent)}
+.tile.on{border-color:var(--accent);background:var(--accent-soft)}
+.tile b{display:block;font-size:20px;font-weight:600;line-height:1.1}
+.tile span{font-size:11px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.tile.fatal b{color:var(--fail)} .tile.finalist b{color:var(--accent-ink)}
+nav.sec{display:flex;gap:18px;margin:14px 0 0;font-size:13px;flex-wrap:wrap}
+nav.sec a{text-decoration:none;color:var(--muted);padding-bottom:4px;border-bottom:2px solid transparent}
+nav.sec a:hover{color:var(--ink);border-color:var(--line)}
+
+/* board */
+.board{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(340px,1fr);gap:18px;margin-top:18px;align-items:start}
+@media (max-width:980px){.board{grid-template-columns:1fr}.detail{position:static}}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:8px}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;padding:10px 12px;border-bottom:1px solid var(--line-2);align-items:center}
+.toolbar input,.toolbar select{font:inherit;color:var(--ink);background:var(--panel-2);border:1px solid var(--line);border-radius:5px;padding:6px 8px}
+.toolbar input{flex:1 1 180px;min-width:0}
+.toolbar select{max-width:100%}
+.toolbar .count{color:var(--muted);font-size:12px;margin-left:auto;white-space:nowrap}
+.tbl-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%}
+th{text-align:left;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap;background:var(--panel)}
+td{padding:8px 10px;border-bottom:1px solid var(--line-2);vertical-align:middle}
+tr.row{cursor:pointer}
+tr.row:hover td{background:var(--panel-2)}
+tr.row.sel td{background:var(--sel)}
+tr.row:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+td.r,th.r{text-align:right}
+.addr{font-weight:500;white-space:nowrap;max-width:260px;overflow:hidden;text-overflow:ellipsis}
+.apn{max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+td.host{white-space:nowrap;max-width:200px;overflow:hidden;text-overflow:ellipsis}
+.apn{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.chip{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.04em;padding:2px 7px;border-radius:4px;white-space:nowrap}
+.c-FINALIST{background:var(--accent-soft);color:var(--accent-ink)}
+.c-NEAR_MISS{background:var(--panel-2);color:var(--muted);border:1px solid var(--line)}
+.c-BELOW_CUT{background:var(--panel-2);color:var(--muted);border:1px solid var(--line)}
+.c-FATAL_1,.c-FATAL_2,.c-FATAL_3{background:var(--fail-soft);color:var(--fail)}
+.c-PASS{background:var(--pass-soft);color:var(--pass)} .c-FAIL{background:var(--fail-soft);color:var(--fail)} .c-UNKNOWN{background:var(--unk-soft);color:var(--unk)}
+.c-PRIMARY{background:var(--panel-2);color:var(--muted);border:1px solid var(--line)} .c-INFERRED{background:var(--unk-soft);color:var(--unk)}
+.bar{position:relative;height:8px;background:var(--line-2);border-radius:4px;width:110px;overflow:hidden}
+.bar i{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:4px}
+.bar i.cov{background:transparent;border-right:2px solid var(--muted);border-radius:0}
+.strip{display:inline-flex;gap:2px}
+.strip i{width:9px;height:14px;border-radius:2px;display:block}
+.s-PASS{background:var(--pass)} .s-FAIL{background:var(--fail)} .s-UNKNOWN{background:var(--unk);opacity:.45}
+.legend{display:flex;gap:14px;flex-wrap:wrap;padding:8px 12px;color:var(--muted);font-size:12px;border-top:1px solid var(--line-2)}
+.legend i{display:inline-block;width:9px;height:12px;border-radius:2px;vertical-align:-2px;margin-right:4px}
+
+/* detail */
+.detail{position:sticky;top:calc(env(safe-area-inset-top,0px) + 118px);max-height:calc(100vh - 130px);overflow:auto}
+.detail .head{padding:14px 16px;border-bottom:1px solid var(--line-2)}
+.detail h2{font-size:18px;font-weight:600;letter-spacing:-.01em}
+.detail .meta{color:var(--muted);font-size:12.5px;margin-top:4px}
+.detail .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.sec{padding:12px 16px;border-bottom:1px solid var(--line-2)}
+.sec:last-child{border-bottom:0}
+.sec h3{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:8px}
+.kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.kpi div{background:var(--panel-2);border-radius:6px;padding:8px 10px}
+.kpi b{display:block;font-size:20px;font-weight:600;line-height:1.1}
+.kpi span{font-size:11px;color:var(--muted)}
+.kpi .ghost b{color:var(--muted);text-decoration:line-through;text-decoration-thickness:1px}
+.screen{display:grid;grid-template-columns:96px 1fr;gap:10px;padding:7px 0;border-bottom:1px dashed var(--line-2);align-items:start}
+.screen:last-child{border-bottom:0}
+.screen .why{font-size:12.5px;color:var(--muted)}
+.screen .why b{color:var(--ink);font-weight:500;display:block}
+.metric{display:grid;grid-template-columns:1fr 34px 120px 54px;gap:10px;align-items:center;padding:5px 0;font-size:13px}
+.metric .mb{height:8px;background:var(--line-2);border-radius:4px;overflow:hidden}
+.metric .mb i{display:block;height:100%;background:var(--accent)}
+.metric.miss .mb i{background:transparent}
+.metric.miss{color:var(--muted)}
+.metric .g{text-align:center}
+dl.facts{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;margin:0;font-size:13px}
+dl.facts dt{color:var(--muted)} dl.facts dd{margin:0;overflow-wrap:anywhere}
+.note{font-size:13px;color:var(--muted);background:var(--panel-2);border-radius:6px;padding:8px 10px}
+.empty{padding:40px 16px;color:var(--muted);text-align:center}
+
+/* lower sections */
+section.blk{margin-top:26px}
+section.blk h2{font-size:16px;font-weight:600;margin-bottom:4px}
+section.blk p.lead{color:var(--muted);margin:0 0 12px;max-width:68ch}
+.jgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.jcard{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:12px 14px}
+.jcard h3{font-size:14px;font-weight:600}
+.jcard .k{color:var(--muted);font-size:12px;margin-bottom:8px}
+.jcard .chk{border-top:1px solid var(--line-2);padding:8px 0;font-size:12.5px}
+.jcard .chk .why{color:var(--muted);margin-top:3px}
+.jcard.closed{border-color:var(--fail)}
+.foot{margin-top:28px;color:var(--muted);font-size:12px;line-height:1.6}
+@media (prefers-reduced-motion:no-preference){.tile,tr.row td{transition:background .12s}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="top-in">
+      <div>
+        <div class="eyebrow"><a href="../" style="color:inherit;text-decoration:none">Rhyolite Geo</a> · Site Selection</div>
+        <h1 id="region-name">Reno / Tahoe Reno Industrial Center, 50 mile radius</h1>
+        <div class="sub" id="run-line"></div>
+        <nav class="sec">
+          <a href="#board">Ranked sites</a>
+          <a href="#hosts">Generation hosts</a>
+          <a href="#gate">Jurisdiction gate</a>
+          <a href="#nulls">What was not learned</a>
+        </nav>
+      </div>
+      <div class="tiles" id="tiles"></div>
+    </div>
+  </header>
+
+  <div class="board" id="board">
+    <div class="panel">
+      <div class="toolbar">
+        <input id="q" type="search" placeholder="Address, APN, owner, host…" aria-label="Search candidates">
+        <select id="f-jur" aria-label="Jurisdiction"><option value="">All jurisdictions</option></select>
+        <select id="f-fuel" aria-label="Anchor fuel"><option value="">All host fuels</option></select>
+        <select id="f-sort" aria-label="Sort">
+          <option value="rank">Rank</option>
+          <option value="score">Weighted score</option>
+          <option value="acres">Acres</option>
+          <option value="dist">Distance to host</option>
+          <option value="covered">Weight covered</option>
+        </select>
+        <span class="count" id="count"></span>
+      </div>
+      <div class="tbl-wrap">
+        <table id="tbl">
+          <thead><tr>
+            <th class="r">#</th><th>Cut</th><th>Parcel</th><th>Host</th><th class="r">Acres</th><th>Score</th><th>Screens</th>
+          </tr></thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+      <div class="legend">
+        <span><i class="s-PASS"></i>pass</span><span><i class="s-FAIL"></i>fail</span><span><i class="s-UNKNOWN"></i>unknown, not learned</span>
+        <span style="margin-left:auto">Score bar: weighted score. Tick: weight covered by data.</span>
+      </div>
+    </div>
+    <aside class="panel detail" id="detail"><div class="empty">Pick a parcel.</div></aside>
+  </div>
+
+  <section class="blk" id="hosts">
+    <h2>Generation hosts</h2>
+    <p class="lead">Every operating plant in the radius the search treats as a possible power source. Spare MW is blank until a utility or operator record says otherwise. Nobody has asked these operators yet.</p>
+    <div class="panel tbl-wrap"><table id="hosts-tbl"><thead><tr>
+      <th>Plant</th><th>Fuel</th><th class="r">Spare MW</th><th>Host posture</th><th>Connection</th><th>Fiber</th><th class="r">Parcels anchored</th>
+    </tr></thead><tbody></tbody></table></div>
+  </section>
+
+  <section class="blk" id="gate">
+    <h2>Jurisdiction gate</h2>
+    <p class="lead">Permitted by right is two checks joined by AND: the code text, and the policy surface above it. A council resolution never appears in the code, so a code-only reading can pass a closed city.</p>
+    <div class="jgrid" id="jgrid"></div>
+  </section>
+
+  <section class="blk" id="nulls">
+    <h2>What was not learned</h2>
+    <p class="lead">A fetch that failed, timed out or was never attempted is recorded with the method tried. It leaves its screen UNKNOWN. It is never a negative finding.</p>
+    <div class="panel tbl-wrap"><table id="nulls-tbl"><thead><tr>
+      <th class="r">Rows</th><th>Outcome</th><th>Method tried</th><th>Last attempt</th>
+    </tr></thead><tbody></tbody></table></div>
+  </section>
+
+  <div class="foot" id="foot"></div>
+</div>
+
+<script src="data.js"></script>
+<script>
+(function(){
+  const D = window.SITES_DATA;
+  if(!D){ document.getElementById('rows').innerHTML='<tr><td colspan="7" class="empty">data.js missing. Run search/app/export.py.</td></tr>'; return; }
+  const $ = s => document.querySelector(s);
+  const esc = s => String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const fmt = (n,d=0) => n==null?'—':Number(n).toLocaleString(undefined,{maximumFractionDigits:d,minimumFractionDigits:d});
+  const pct = n => n==null?'—':(n*100).toFixed(0)+'%';
+  const ft = n => n==null?'—':(n>=5280? (n/5280).toFixed(1)+' mi' : fmt(n)+' ft');
+  const title = s => s?String(s).toLowerCase().replace(/_/g,' ').replace(/\b\w/g,c=>c.toUpperCase()):'—';
+  const cutLabel = {FINALIST:'Finalist',NEAR_MISS:'Near miss',BELOW_CUT:'Below cut',FATAL_1:'Fatal ×1',FATAL_2:'Fatal ×2',FATAL_3:'Fatal ×3'};
+  const cutOrder = ['FINALIST','NEAR_MISS','BELOW_CUT','FATAL_1','FATAL_2','FATAL_3'];
+  const metricLabel = k => k.replace(/_/g,' ').replace(/^\w/,c=>c.toUpperCase());
+  const parcelName = p => p.address && p.address!=='0' ? p.address : ('APN '+p.apn);
+
+  // header
+  $('#region-name').textContent = D.region.name;
+  const r = D.runs.rank, s = D.runs.screen, sc = D.runs.score;
+  $('#run-line').innerHTML = `Ranked ${esc(r.finished_at.replace('T',' ').replace('Z',' UTC'))} · ${esc(r.notes)} · ${fmt(D.summary.parcels_in_db)} parcels in the county rolls · scoring v${D.scoring_version}`;
+
+  // tiles = cut filter
+  let cutFilter = '';
+  const tiles = $('#tiles');
+  const cutCounts = D.summary.cuts;
+  const tileDefs = [['', 'All', D.summary.candidates]].concat(cutOrder.filter(c=>cutCounts[c]).map(c=>[c, cutLabel[c], cutCounts[c]]));
+  tiles.innerHTML = tileDefs.map(([k,l,n]) => `<button class="tile ${k==='FINALIST'?'finalist':''} ${k.startsWith('FATAL')?'fatal':''} ${k===cutFilter?'on':''}" data-cut="${k}"><b class="num">${n}</b><span>${esc(l)}</span></button>`).join('');
+  tiles.addEventListener('click', e => { const b=e.target.closest('.tile'); if(!b) return; cutFilter=b.dataset.cut; [...tiles.children].forEach(t=>t.classList.toggle('on',t.dataset.cut===cutFilter)); render(); });
+
+  // filters
+  const jurs = [...new Set(D.candidates.map(c=>c.parcel.jurisdiction))].sort();
+  $('#f-jur').insertAdjacentHTML('beforeend', jurs.map(j=>`<option>${esc(j)}</option>`).join(''));
+  const fuels = [...new Set(D.candidates.map(c=>c.anchor.fuel).filter(Boolean))].sort();
+  $('#f-fuel').insertAdjacentHTML('beforeend', fuels.map(f=>`<option value="${esc(f)}">${esc(title(f))}</option>`).join(''));
+  ['#q','#f-jur','#f-fuel','#f-sort'].forEach(id => $(id).addEventListener('input', render));
+
+  let selected = null;
+  function filtered(){
+    const q = $('#q').value.trim().toLowerCase(), j=$('#f-jur').value, f=$('#f-fuel').value, sort=$('#f-sort').value;
+    let rows = D.candidates.filter(c =>
+      (!cutFilter || c.cut===cutFilter) &&
+      (!j || c.parcel.jurisdiction===j) &&
+      (!f || c.anchor.fuel===f) &&
+      (!q || [c.parcel.address,c.parcel.apn,c.parcel.apn_raw,c.parcel.owner,c.anchor.name,c.parcel.city,c.parcel.zoning].some(v=>v && String(v).toLowerCase().includes(q))));
+    const key = {rank:c=>c.rank, score:c=>-(c.weighted_score||0), acres:c=>-(c.parcel.acres||0), dist:c=>(c.anchor.distance_ft==null?1e12:c.anchor.distance_ft), covered:c=>-(c.weight_covered||0)}[sort];
+    return rows.sort((a,b)=>key(a)-key(b));
+  }
+  function render(){
+    const rows = filtered();
+    $('#count').textContent = `${rows.length} of ${D.candidates.length}`;
+    $('#rows').innerHTML = rows.map(c => `
+      <tr class="row ${selected===c.rank?'sel':''}" tabindex="0" data-rank="${c.rank}">
+        <td class="r num">${c.rank}</td>
+        <td><span class="chip c-${c.cut}">${esc(cutLabel[c.cut]||c.cut)}</span></td>
+        <td><div class="addr">${esc(parcelName(c.parcel))}</div><div class="apn">${esc(c.parcel.apn)} · ${esc(c.parcel.jurisdiction)}</div></td>
+        <td class="host" title="${esc(c.anchor.name||'')}">${c.anchor.name?`<div>${esc(c.anchor.name)}</div><div class="apn">${esc(title(c.anchor.fuel))} · ${ft(c.anchor.distance_ft)}</div>`:'—'}</td>
+        <td class="r num">${fmt(c.parcel.acres,1)}</td>
+        <td><div style="display:flex;align-items:center;gap:8px"><div class="bar"><i style="width:${(c.weighted_score||0)*100}%"></i><i class="cov" style="width:${(c.weight_covered||0)*100}%"></i></div><span class="num">${pct(c.weighted_score)}</span></div></td>
+        <td><span class="strip" title="${c.screens.map(s=>s.label+': '+s.result).join('\n')}">${c.screens.map(s=>`<i class="s-${s.result}"></i>`).join('')}</span></td>
+      </tr>`).join('') || '<tr><td colspan="7" class="empty">Nothing matches.</td></tr>';
+  }
+  $('#rows').addEventListener('click', e => { const tr=e.target.closest('tr.row'); if(tr) select(+tr.dataset.rank); });
+  $('#rows').addEventListener('keydown', e => { const tr=e.target.closest('tr.row'); if(tr && (e.key==='Enter'||e.key===' ')){ e.preventDefault(); select(+tr.dataset.rank); } });
+
+  function select(rank){
+    selected = rank;
+    const c = D.candidates.find(x=>x.rank===rank);
+    document.querySelectorAll('tr.row').forEach(tr=>tr.classList.toggle('sel',+tr.dataset.rank===rank));
+    const p=c.parcel, a=c.anchor;
+    const covered = c.metrics.filter(m=>m.value!=null).length;
+    const flood = p.flood.length ? p.flood.map(f=>`${f.zone}${f.subtype?' · '+f.subtype:''} → ${f.class.replace(/_/g,' ')}`).join('; ') : 'no overlay row';
+    $('#detail').innerHTML = `
+      <div class="head">
+        <div class="eyebrow">Rank ${c.rank} of ${D.candidates.length}</div>
+        <h2>${esc(parcelName(p))}</h2>
+        <div class="meta">${esc(p.city?title(p.city):'')}${p.city?' · ':''}${esc(p.jurisdiction)} · APN <span class="num">${esc(p.apn)}</span> · ${fmt(p.acres,2)} acres</div>
+        <div class="chips"><span class="chip c-${c.cut}">${esc(cutLabel[c.cut]||c.cut)}</span><span class="chip c-${p.tier}">${esc(p.tier)} parcel record</span><span class="chip c-UNKNOWN">Availability ${esc(title(c.availability))}</span><span class="chip c-NEAR_MISS">Field ${esc(title(c.field_status))}</span></div>
+      </div>
+      <div class="sec">
+        <div class="kpi">
+          <div><b class="num">${pct(c.weighted_score)}</b><span>weighted score</span></div>
+          <div><b class="num">${pct(c.weight_covered)}</b><span>weight covered · ${covered} of ${c.metrics.length} metrics graded</span></div>
+          <div class="ghost"><b class="num">${pct(c.averaged_score)}</b><span>an average would have said</span></div>
+        </div>
+      </div>
+      <div class="sec">
+        <h3>Seven fatal screens · ${c.screens.filter(s=>s.result==='FAIL').length} fail · ${c.unknown_screens} unknown</h3>
+        ${c.screens.map(s=>`<div class="screen"><span class="chip c-${s.result}">${s.result}</span><div class="why"><b>${esc(s.label)}</b>${esc(s.reason||'')}${s.tier?` <span class="chip c-${s.tier}" style="margin-left:4px">${s.tier}</span>`:''}</div></div>`).join('')}
+      </div>
+      <div class="sec">
+        <h3>Graded metrics · weighted, not averaged</h3>
+        ${c.metrics.map(m=>`<div class="metric ${m.value==null?'miss':''}" title="${esc(D.metric_meta[m.metric]?.comment||'')}"><span>${esc(metricLabel(m.metric))}</span><span class="g num">${m.value==null?'—':m.value}</span><div class="mb"><i style="width:${m.weight?Math.min(100,(m.contribution/m.weight)*100):0}%"></i></div><span class="num" style="text-align:right;color:var(--muted)">w ${m.weight.toFixed(2)}</span></div>`).join('')}
+        <div class="note" style="margin-top:8px">A dash is an ungraded metric. It adds 0 to the score and its full weight to the denominator.</div>
+      </div>
+      <div class="sec">
+        <h3>Power source</h3>
+        ${a.name?`<dl class="facts"><dt>Host</dt><dd>${esc(a.name)}</dd><dt>Fuel</dt><dd>${esc(title(a.fuel))}${a.carbon_free?` · carbon free: ${esc(a.carbon_free)}`:''}</dd><dt>Distance</dt><dd class="num">${ft(a.distance_ft)}</dd>${a.curtailed?`<dt>Curtailed</dt><dd>${esc(a.curtailed)}</dd>`:''}</dl>`:'<div class="note">No generation asset anchors this parcel.</div>'}
+      </div>
+      <div class="sec">
+        <h3>Why it is in the universe</h3>
+        <div class="note">${esc(p.greenfield_reason||c.notes||'—')}</div>
+      </div>
+      <div class="sec">
+        <h3>Parcel record</h3>
+        <dl class="facts">
+          <dt>Owner</dt><dd>${esc(p.owner||'—')}${p.owner_state?` (${esc(p.owner_state)})`:''}</dd>
+          <dt>Zoning</dt><dd>${esc(p.zoning||'—')}${p.zoning_desc&&p.zoning_desc!==p.zoning?` · ${esc(p.zoning_desc)}`:''}</dd>
+          <dt>Land</dt><dd>${esc(title(p.land_class))} · ${esc(title(p.ownership_class))}${p.land_use?` · use code ${esc(p.land_use)}`:''}</dd>
+          <dt>Improvements</dt><dd class="num">${p.improvement_value?'$'+fmt(p.improvement_value):'none assessed'}${p.sqft?` · ${fmt(p.sqft)} sq ft`:''}${p.year_built?` · built ${p.year_built}`:''}</dd>
+          <dt>Last sale</dt><dd class="num">${p.last_sale_year?`${p.last_sale_year}${p.sale_price?' · $'+fmt(p.sale_price):''}`:'—'}</dd>
+          <dt>Water / sewer</dt><dd>${esc(p.water||'—')} / ${esc(p.sewer||'—')}</dd>
+          <dt>Flood</dt><dd>${esc(flood)}</dd>
+          <dt>Location</dt><dd class="num">${p.lat!=null?`${p.lat.toFixed(5)}, ${p.lon.toFixed(5)}`:'—'}</dd>
+          <dt>Not learned</dt><dd>${c.nulls} null rows for this parcel</dd>
+          <dt>Source</dt><dd>${p.source_url?`<a href="${esc(p.source_url)}" target="_blank" rel="noopener">county parcel service</a>`:'—'}</dd>
+        </dl>
+      </div>`;
+    if(window.innerWidth<=980) $('#detail').scrollIntoView({behavior:'smooth',block:'start'});
+  }
+
+  // hosts
+  $('#hosts-tbl tbody').innerHTML = D.hosts.map(h=>`<tr>
+    <td><div class="addr">${esc(h.name)}</div><div class="apn">${esc(h.asset_id)}</div></td>
+    <td>${esc(title(h.fuel))}<div class="apn">${esc(title(h.fuel_class))}</div></td>
+    <td class="r num">${h.spare_mw==null?'—':fmt(h.spare_mw,1)}</td>
+    <td><span class="chip c-${h.posture==='UNKNOWN'?'UNKNOWN':'PASS'}">${esc(h.posture)}</span></td>
+    <td>${esc(title(h.point_of_connection))}</td>
+    <td><span class="chip c-${h.fiber==='UNKNOWN'?'UNKNOWN':(h.fiber==='FAIL'?'FAIL':'PASS')}">${esc(h.fiber)}</span></td>
+    <td class="r num">${h.candidates}</td></tr>`).join('');
+
+  // jurisdictions
+  $('#jgrid').innerHTML = D.jurisdictions.map(j=>{
+    const closed = j.checks.some(k=>k.result==='FAIL');
+    return `<div class="jcard ${closed?'closed':''}">
+      <h3>${esc(j.name)}</h3>
+      <div class="k">${esc(j.kind)} · ${j.candidates} ranked parcel${j.candidates===1?'':'s'}</div>
+      ${j.checks.length ? j.checks.map(k=>`<div class="chk"><span class="chip c-${k.result}">${k.result}</span> <b>${esc(k.check_kind.replace('_',' '))}</b>${k.effective_from?` <span class="num">${esc(k.effective_from)} → ${esc(k.effective_to||'open')}</span>`:''}<div class="why">${esc(k.finding)}</div></div>`).join('')
+        : `<div class="chk"><span class="chip c-UNKNOWN">UNKNOWN</span> <b>no check recorded</b><div class="why">Neither the code text nor the policy surface has been read for this jurisdiction. Its parcels screen UNKNOWN on permitted-by-right.</div></div>`}
+    </div>`;}).join('');
+
+  // nulls
+  $('#nulls-tbl tbody').innerHTML = D.nulls_summary.map(n=>`<tr><td class="r num">${fmt(n.n)}</td><td><span class="chip c-${n.outcome==='NOT_ATTEMPTED'?'UNKNOWN':'FAIL'}">${esc(n.outcome)}</span></td><td style="overflow-wrap:anywhere">${esc(n.method)}</td><td class="num">${esc((n.last_at||'').slice(0,10))}</td></tr>`).join('');
+
+  $('#foot').innerHTML = `Exported ${esc(D.generated_at.replace('T',' ').replace('Z',' UTC'))} from search/sites.db by search/app/export.py. Screen run ${s?s.id:'—'}, score run ${sc?sc.id:'—'}, rank run ${r.id}. ${fmt(D.summary.nulls)} null rows in the region. Nothing on this page is computed here; every number is a row the harness wrote.`;
+
+  render();
+  const first = D.candidates.find(c=>c.cut==='FINALIST') || D.candidates[0];
+  if(first) select(first.rank);
+})();
+</script>
