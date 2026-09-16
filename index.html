@@ -441,7 +441,7 @@
       <a href="#/">Home</a>
       <a href="#/strategy">Development</a>
       <a href="#/geothermal">Geothermal</a>
-      <a href="#/specs">Standard Module Designs</a>
+      <a href="#/module-designs">Standard Module Designs</a>
       <a href="#/designs">Data Centers</a>
       <a href="#/search">Site Search</a>
       <a href="#/investors">Investors</a>
@@ -744,11 +744,11 @@
   </div>
 </div>
 
-<!-- SITE AND BUILDING SPECIFICATIONS ===================================== -->
-<div class="page" id="/specs" data-title="Standard Deployment — Rhyolite Geo">
+<!-- STANDARD MODULE DESIGNS ================================================ -->
+<div class="page" id="/module-designs" data-title="Standard Module Designs — Rhyolite Geo">
   <div class="wrap">
     <section>
-      <p class="eyebrow">Standard deployment</p>
+      <p class="eyebrow">Standard module designs</p>
       <h2>The standard kit, and what it needs around it</h2>
       <p>These are the design figures the standard kit is built to. They are a planning basis, not construction drawings, and they vary with the parcel.</p>
       <p>The figure that matters most is the first one in the table. These buildings are powered on the generation side of the meter, at a plant that is already running, which is what sets the load, the cooling and the schedule. That arrangement is described on <a href="#/strategy">Development</a>, and the resource behind it on <a href="#/geothermal">Geothermal</a>.</p>
@@ -1095,6 +1095,7 @@
 
   function route() {
     var h = location.hash.replace(/^#/, '') || '/';
+    if (h === '/specs') h = '/module-designs';   // old slug, kept so existing links resolve
     if (!pages.some(function (p) { return p.id === h; })) h = '/';
     pages.forEach(function (p) { p.classList.toggle('on', p.id === h); });
     links.forEach(function (a) {
