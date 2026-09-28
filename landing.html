@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rhyolite Geo Inc. — We build where the power already is</title>
+<meta name="description" content="Modular 500 kW to 2 MW data centers sited at alternative generation that is already permitted, interconnected and running.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600&family=Chivo+Mono:wght@300;400&display=swap">
+<style>
+:root{
+  --ground:#15171a; --ground-deep:#101215; --ground-raised:#1b1e22;
+  --bone:#ece7df; --bone-quiet:#a9a49c; --bone-faint:#8f8a82;
+  --rule:#2b2f34; --brass:#c39a62;
+  --measure:64ch; --gut:clamp(1.25rem,5vw,3.5rem);
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--ground);color:var(--bone);
+  font:400 clamp(16px,1.05vw,18px)/1.65 Archivo,system-ui,-apple-system,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--brass);color:var(--ground-deep)}
+h1,h2,h3{font-weight:500;letter-spacing:-.02em;line-height:1.05;margin:0}
+p{margin:0}
+a{color:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:var(--gut)}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:var(--gut);top:12px;z-index:50;background:var(--brass);color:var(--ground-deep);padding:8px 14px}
+
+/* hero */
+.hero{position:relative;min-height:min(92svh,860px);display:flex;flex-direction:column;
+  justify-content:flex-end;overflow:hidden;isolation:isolate}
+.hero video,.hero img.bg{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 64%;
+  z-index:-2;filter:saturate(.92) contrast(1.04)}
+.hero::after{
+  content:"";position:absolute;inset:0;z-index:-1;
+  background:
+    linear-gradient(180deg,rgba(16,18,21,.62) 0%,rgba(16,18,21,.18) 34%,rgba(16,18,21,.72) 76%,var(--ground) 100%),
+    radial-gradient(120% 78% at 18% 86%,rgba(16,18,21,.66),transparent 62%)}
+.topbar{position:relative;z-index:2;display:flex;align-items:baseline;gap:1.4rem;
+  padding:clamp(1.1rem,2.4vw,1.8rem) 0;margin-bottom:auto}
+.mark{font-family:"Chivo Mono",ui-monospace,monospace;font-size:.82rem;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--bone)}
+.topbar nav{margin-left:auto;display:flex;gap:1.4rem;font-size:.86rem;color:var(--bone-quiet)}
+.topbar nav a{text-decoration:none}
+.topbar nav a:hover{color:var(--bone)}
+.hero .wrap.copy{position:relative;z-index:2;padding-bottom:clamp(2.6rem,7vw,5.5rem)}
+.hero h1{font-size:clamp(2.35rem,6.6vw,5.1rem);max-width:17ch;text-wrap:balance}
+.hero h1 em{font-style:normal;color:var(--brass)}
+.hero .lede{margin-top:clamp(1rem,2vw,1.5rem);max-width:54ch;font-size:clamp(1rem,1.35vw,1.2rem);
+  color:var(--bone-quiet);font-weight:300}
+.cta{display:inline-flex;align-items:center;gap:.7rem;margin-top:clamp(1.6rem,3vw,2.4rem);
+  background:var(--brass);color:var(--ground-deep);text-decoration:none;font-weight:500;
+  padding:.85rem 1.5rem;transition:transform .3s var(--ease),background .25s}
+.cta:hover{background:#d4ac74;transform:translateY(-2px)}
+.cta span{font-family:"Chivo Mono",monospace;font-size:.9em}
+.cap{position:absolute;right:var(--gut);bottom:1.1rem;z-index:2;
+  font-family:"Chivo Mono",monospace;font-size:.68rem;letter-spacing:.12em;
+  text-transform:uppercase;color:rgba(236,231,223,.42)}
+
+/* sections */
+section{padding-block:clamp(4rem,10vw,8rem);border-top:1px solid var(--rule)}
+.eyebrow{font-family:"Chivo Mono",monospace;font-size:.72rem;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--brass);margin-bottom:1.3rem}
+h2{font-size:clamp(1.8rem,3.6vw,2.9rem);max-width:20ch;text-wrap:balance}
+.sub{margin-top:1.2rem;max-width:var(--measure);color:var(--bone-quiet);font-weight:300}
+
+/* figures */
+.figs{margin-top:clamp(2.5rem,5vw,4rem);display:grid;gap:1px;background:var(--rule);
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));border:1px solid var(--rule)}
+.fig{background:var(--ground);padding:clamp(1.4rem,2.6vw,2rem)}
+.fig b{display:block;font-family:"Chivo Mono",monospace;font-weight:400;color:var(--brass);
+  font-size:clamp(1.55rem,3.1vw,2.3rem);letter-spacing:-.02em;line-height:1.1}
+.fig span{display:block;margin-top:.6rem;font-size:.88rem;color:var(--bone-faint);max-width:26ch}
+
+/* steps */
+.steps{margin-top:clamp(2.5rem,5vw,4rem);display:grid;gap:clamp(1.8rem,3.5vw,3rem);
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr))}
+.step{border-top:1px solid var(--rule);padding-top:1.4rem}
+.step i{font-style:normal;font-family:"Chivo Mono",monospace;font-size:.72rem;
+  letter-spacing:.2em;color:var(--brass)}
+.step h3{margin-top:.9rem;font-size:1.2rem;letter-spacing:-.01em;line-height:1.3}
+.step p{margin-top:.8rem;color:var(--bone-quiet);font-size:.95rem;font-weight:300}
+
+/* contact */
+#contact{background:var(--ground-deep)}
+#contact .wrap{display:flex;flex-wrap:wrap;gap:2rem 3rem;align-items:flex-end}
+#contact .l{flex:1 1 22rem}
+.mail{font-family:"Chivo Mono",monospace;font-size:clamp(1.05rem,2.3vw,1.6rem);
+  color:var(--brass);text-decoration:none;border-bottom:1px solid rgba(195,154,98,.35);
+  padding-bottom:.2rem;transition:border-color .25s}
+.mail:hover{border-bottom-color:var(--brass)}
+footer{border-top:1px solid var(--rule);padding-block:2rem;font-size:.8rem;color:var(--bone-faint)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:1rem 2rem;justify-content:space-between}
+
+@media (max-width:640px){
+  .topbar{flex-wrap:wrap;gap:.7rem 1rem}
+  .topbar nav{margin-left:0;flex-wrap:wrap;gap:1rem;font-size:.8rem}
+  .hero h1{max-width:none}
+}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .hero video{display:none}
+  .cta{transition:none}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#thesis">Skip to the thesis</a>
+
+<header class="hero">
+  <video autoplay muted loop playsinline poster="assets/hero-plant.jpg" aria-hidden="true">
+    <source src="assets/hero-plant.mp4" type="video/mp4">
+  </video>
+  <img class="bg" src="assets/hero-plant.jpg" alt="" hidden>
+
+  <div class="wrap topbar">
+    <span class="mark">Rhyolite&nbsp;Geo&nbsp;Inc.</span>
+    <nav>
+      <a href="#thesis">Thesis</a>
+      <a href="#figures">Figures</a>
+      <a href="#how">How</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+
+  <div class="wrap copy">
+    <h1>We build where the power <em>already is</em>.</h1>
+    <p class="lede">Modular 500 kW to 2 MW data centers sited at alternative generation that is already
+      permitted, interconnected and running, then phased toward campuses of 2 to 30 MW.</p>
+    <a class="cta" href="#contact">Ask to be kept posted <span>&rarr;</span></a>
+  </div>
+  <p class="cap">Illustrative rendering</p>
+</header>
+
+<main>
+<section id="thesis">
+  <div class="wrap">
+    <p class="eyebrow">The thesis</p>
+    <h2>The long items are already done.</h2>
+    <p class="sub">A conventional data center schedule is dominated by work we do not have to do.
+      Siting at generation that is already operating removes it, item by item. Behind the meter, the
+      path from turbine to rack is measured in feet and the power never reaches transmission.</p>
+    <div class="steps">
+      <div class="step">
+        <i>01</i>
+        <h3>The generation is already permitted and running</h3>
+        <p>We site at plants that cleared their own approvals years ago. The long permitting fight
+          sits behind the host, not ahead of us.</p>
+      </div>
+      <div class="step">
+        <i>02</i>
+        <h3>The interconnection already exists</h3>
+        <p>The host plant is already connected, and nobody counts it. There is no queue position to
+          hold and no new transmission to build.</p>
+      </div>
+      <div class="step">
+        <i>03</i>
+        <h3>Utility equipment is off the critical path</h3>
+        <p>The equipment with the worst lead time is the equipment these sites never order. Removes
+          twelve to eighteen months of lead time.</p>
+      </div>
+      <div class="step">
+        <i>04</i>
+        <h3>The kit is standard, the shell is not</h3>
+        <p>One interior package that never changes, engineered once rather than repeated per site,
+          ordered ahead and assembled.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="figures">
+  <div class="wrap">
+    <p class="eyebrow">The numbers</p>
+    <h2>Why this resource, in the figures that decide it.</h2>
+    <p class="sub">Design figures for the standard kit, a planning basis, not construction drawings.</p>
+    <div class="figs">
+      <div class="fig"><b>500 kW</b><span>Single building, first phase</span></div>
+      <div class="fig"><b>2 MW</b><span>Phased per site, by repeating the building</span></div>
+      <div class="fig"><b>2&ndash;30 MW</b><span>Larger format, per project</span></div>
+      <div class="fig"><b>85&ndash;95%</b><span>Capacity factor, geothermal, against 15&ndash;25% for solar PV</span></div>
+      <div class="fig"><b>0</b><span>Fuel cost, and it stays there for 20 to 25 years</span></div>
+      <div class="fig"><b>90&ndash;97%</b><span>Lower lifecycle carbon than a natural gas combined cycle plant</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <p class="eyebrow">Site selection</p>
+    <h2>A data problem before real estate.</h2>
+    <p class="sub">A conventional search starts with a broker and the small set of buildings somebody
+      happened to be marketing. We start from the opposite end: the whole population of candidate
+      parcels in a region, pulled from federal, state and county records into a single keyed map, so
+      the narrowing happens in software and field time is spent only on what survives.</p>
+    <div class="steps">
+      <div class="step">
+        <i>Screen</i>
+        <h3>Service already energized</h3>
+        <p>Three-phase service live at the property today, confirmed by the utility account record,
+          not by a panel schedule.</p>
+      </div>
+      <div class="step">
+        <i>Screen</i>
+        <h3>Fiber lit, and a second way out</h3>
+        <p>One carrier confirmed by written quote, plus at least one buildable second path.</p>
+      </div>
+      <div class="step">
+        <i>Screen</i>
+        <h3>Permitted by right</h3>
+        <p>The use is allowed under the existing zoning. We do not buy a rezoning fight.</p>
+      </div>
+    </div>
+    <p class="sub" style="margin-top:2.2rem">The screens are pass or fail, applied in order, and a
+      site that misses one is not negotiated. It is dropped.</p>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="l">
+      <p class="eyebrow">Contact</p>
+      <h2>Ask to be kept posted.</h2>
+    </div>
+    <a class="mail" href="mailto:info@rhydev.com?subject=Rhyolite%20Geo%20%E2%80%94%20investor%20updates">info@rhydev.com</a>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Rhyolite Geo Inc.</span>
+    <span>Figures are a planning basis, not construction drawings.</span>
+  </div>
+</footer>
+</body>
+</html>
