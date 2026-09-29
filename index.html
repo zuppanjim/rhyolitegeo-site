@@ -357,6 +357,18 @@
   .lp .lp-arm{border-top:3px solid var(--oxide); padding-top:16px}
   .lp .lp-call{margin-top:54px; padding-top:30px; border-top:1px solid var(--line)}
   .lp .lp-call .lp-sub{margin-bottom:24px}
+  /* photographs: plants and machines built by others */
+  .lp .lp-shots{margin-top:54px; padding-top:30px; border-top:1px solid var(--line)}
+  .lp .lp-shots .eyebrow{margin:0 0 18px}
+  .lp .lp-shot{margin:0}
+  .lp .lp-shot img{display:block; width:100%; height:auto; border-radius:3px; background:var(--sunk)}
+  .lp .lp-shot figcaption{margin-top:10px; font-family:var(--mono); font-size:11px; line-height:1.6; letter-spacing:.1em; text-transform:uppercase; color:var(--muted)}
+  .lp .lp-shot figcaption span{display:block}
+  .lp .lp-shot figcaption a{color:inherit; text-decoration:underline; text-decoration-color:var(--line-2); text-underline-offset:3px}
+  .lp .lp-shot figcaption a:hover{color:var(--oxide)}
+  .lp .lp-shot-pair{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:30px; margin-top:30px; align-items:start}
+  .lp .lp-shot-pair img{aspect-ratio:16/9; object-fit:cover}
+  .lp .lp-shots .lp-shot-note{max-width:none; margin:22px 0 0; font-family:var(--mono); font-size:11px; line-height:1.6; letter-spacing:.1em; text-transform:uppercase; color:var(--muted)}
   .lp .lp-arm h3{font-size:21px; margin:0 0 10px}
   .lp .lp-arm p{font-size:16.5px; color:var(--ink-2); margin:0}
 
@@ -379,6 +391,7 @@
     .lp .lp-nums .div{border-left:0; padding-left:0}
     .lp .lp-steps{grid-template-columns:1fr; gap:26px}
     .lp .lp-two,.lp .lp-close{grid-template-columns:1fr}
+    .lp .lp-shot-pair{grid-template-columns:1fr}
     .lp .lp-btn{width:100%; text-align:center}
   }
 
@@ -486,6 +499,24 @@
           <h3>Phase two: the fleet</h3>
           <p>We put as much of our own generation as possible to work in our own modular data centers: many small sites, networked into one resilient fabric.</p>
         </div>
+      </div>
+      <div class="lp-shots">
+        <p class="eyebrow">The machines</p>
+        <figure class="lp-shot">
+          <img src="assets/turbine-tracy-nevada.jpg" alt="A gas-fired power station in the Nevada desert: tan steel structures wrapped in pipework, two stacks, a storm sky behind and sagebrush in front" loading="lazy" width="1920" height="800">
+          <figcaption>Gas-fired power station &middot; Tracy Generating Station, Nevada <span>Photo <a href="https://commons.wikimedia.org/wiki/File:Tracy_Generating_Station,_Nevada.jpg" rel="noopener">Dreamyshade</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener">CC BY-SA 4.0</a>, cropped</span></figcaption>
+        </figure>
+        <div class="lp-shot-pair">
+          <figure class="lp-shot">
+            <img src="assets/turbine-open-casing.jpg" alt="An industrial gas turbine with its casing open, the blade rows of the rotor exposed" loading="lazy" width="1600" height="1042">
+            <figcaption>Industrial gas turbine, casing open <span>Photo <a href="https://commons.wikimedia.org/wiki/File:IGT_Blades.jpg" rel="noopener">Nabonaco</a>, public domain</span></figcaption>
+          </figure>
+          <figure class="lp-shot">
+            <img src="assets/turbine-uranquinty-nsw.jpg" alt="Four gas turbine units with exhaust stacks in a row across dry grassland" loading="lazy" width="1600" height="834">
+            <figcaption>Four Siemens V94.2 gas turbines &middot; Uranquinty, New South Wales <span>Photo <a href="https://commons.wikimedia.org/wiki/File:Uranquinty_Power_Station_1.jpg" rel="noopener">Bidgee</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0/" rel="noopener">CC BY-SA 3.0</a>, cropped</span></figcaption>
+          </figure>
+        </div>
+        <p class="lp-shot-note">Plants and machines built and run by others. None is a Rhyolite Geo facility.</p>
       </div>
       <div class="lp-call">
         <p class="lp-def">This is a call to arms. We are looking for <em>a few exceptional individuals</em> to be part of this adventure.</p>
