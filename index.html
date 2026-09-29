@@ -354,6 +354,7 @@
     max-width:62ch; margin:0 0 34px;
   }
   .lp .lp-who .lp-two{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .lp .lp-who .lp-three{grid-template-columns:repeat(3,minmax(0,1fr)); gap:30px 48px}
   .lp .lp-arm{border-top:3px solid var(--oxide); padding-top:16px}
   .lp .lp-call{margin-top:54px; padding-top:30px; border-top:1px solid var(--line)}
   .lp .lp-call .lp-sub{margin-bottom:24px}
@@ -391,6 +392,7 @@
     .lp .lp-nums .div{border-left:0; padding-left:0}
     .lp .lp-steps{grid-template-columns:1fr; gap:26px}
     .lp .lp-two,.lp .lp-close{grid-template-columns:1fr}
+    .lp .lp-who .lp-three{grid-template-columns:1fr}
     .lp .lp-shot-pair{grid-template-columns:1fr}
     .lp .lp-btn{width:100%; text-align:center}
   }
@@ -488,16 +490,19 @@
   <div class="wrap">
     <section class="lp-who">
       <p class="eyebrow">Who we are</p>
-      <p class="lp-def">Rhyolite Geo Inc. is building toward <em>gigawatt-scale power, delivered direct to AI factories</em>. We secure natural gas in volume, generate at existing distribution hubs, and hand the power to the load <em>behind the meter</em> &mdash; bring your own power, at a scale meant to reset the floor of this market.</p>
-      <p class="lp-sub">Then we use it ourselves. As much of that generation as we can carry goes into our own fleet of modular data centers, spread across a resilient fabric of nodes: out of many, one. It is a wider road than the geothermal one we started on, and deliberately so. Gas carries the load; solar, wind, geothermal and nuclear neighbors buffer it. The market we serve is bound by a single resource, power, and its appetite for growth has no precedent. The company is a startup and it is early. The people are not new to this.</p>
-      <div class="lp-two">
+      <p class="lp-def">Rhyolite Geo Inc. develops <em>power systems for AI factories</em>. We build them from solar, geothermal and wind, and the larger systems from natural gas generation. Each one is coupled to the modular AI factory it powers, and high-speed fiber joins the sites <em>into one larger system</em>.</p>
+      <div class="lp-two lp-three">
         <div class="lp-arm">
-          <h3>Phase one: the power</h3>
-          <p>We develop the natural gas logistics and markets that secure the volume, generate at existing distribution hubs, and deliver direct to AI factories. Co-locating beside solar, wind, geothermal and nuclear providers buffers the gas we burn.</p>
+          <h3>One: the power</h3>
+          <p>We develop power systems from alternative energy: solar, geothermal and wind. The larger systems are built from natural gas generation.</p>
         </div>
         <div class="lp-arm">
-          <h3>Phase two: the fleet</h3>
-          <p>We put as much of our own generation as possible to work in our own modular data centers: many small sites, networked into one resilient fabric.</p>
+          <h3>Two: the AI factories</h3>
+          <p>Each power system is coupled to modular AI factories, so the load is built to the power that stands beside it.</p>
+        </div>
+        <div class="lp-arm">
+          <h3>Three: the network</h3>
+          <p>High-speed Ethernet over fiber joins the smaller data centers as nodes, several at a time, into one larger joined system.</p>
         </div>
       </div>
       <div class="lp-shots">
@@ -519,7 +524,6 @@
         <p class="lp-shot-note">Plants and machines built and run by others. None is a Rhyolite Geo facility.</p>
       </div>
       <div class="lp-call">
-        <p class="lp-def">This is a call to arms. We are looking for <em>a few exceptional individuals</em> to be part of this adventure.</p>
         <p class="lp-sub">If you&rsquo;d like to talk, send us an email.</p>
         <p><a class="lp-btn solid" href="mailto:info@rhydev.com">Send us an email</a></p>
       </div>
