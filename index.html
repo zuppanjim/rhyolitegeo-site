@@ -402,7 +402,7 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--line);padding-top:20px
 
 <section class="hero" aria-roledescription="carousel" aria-label="What Rhyolite Geo does" style="padding:0">
   <img class="poster" src="assets/hero-plant.jpg" alt="">
-  <video id="vid" autoplay muted loop playsinline poster="assets/hero-plant.jpg"><source src="assets/hero-plant.mp4" type="video/mp4"></video>
+  <video id="vid" autoplay muted loop playsinline poster="assets/hero-plant.jpg"><source src="assets/hero-plant-smooth.mp4" type="video/mp4"></video>
   <div class="wrap">
     <div class="slides">
       <div class="slide" aria-hidden="false">
@@ -1244,8 +1244,7 @@ function auto(){clearInterval(timer);if(!matchMedia('(prefers-reduced-motion: re
 dots.forEach((d,k)=>d.addEventListener('click',()=>{set(k);auto();}));
 auto();
 const vid=document.getElementById('vid');
-const slow=()=>{vid.defaultPlaybackRate=0.4;vid.playbackRate=0.4;};
-slow();vid.addEventListener('loadedmetadata',slow);vid.addEventListener('play',slow);
+// the clip is already slowed with in-between frames and a crossfaded loop, so it plays at normal speed
 if(matchMedia('(prefers-reduced-motion: reduce)').matches){vid.removeAttribute('autoplay');vid.pause();}
 
 // ===== motion =====
