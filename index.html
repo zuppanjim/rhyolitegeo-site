@@ -265,7 +265,10 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--line);padding-top:20px
 .xnav{display:flex;flex-direction:column;border-left:1px solid #3a2c20;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em}
 .xnav span{padding:22px 16px 10px;color:#7d6b57}
 .xnav button{all:unset;cursor:pointer;padding:13px 16px;color:#BFAF97;border-top:1px solid #2a1f17;border-left:3px solid transparent}
-.xnav button:last-child{border-bottom:1px solid #2a1f17}
+.xnav [data-view="cap"]{border-bottom:1px solid #2a1f17}
+.xnav .halls{display:flex;gap:6px;padding:0 16px 18px}
+.xnav .halls button{flex:1;text-align:center;padding:8px 0;border:1px solid #3a2c20}
+.xnav .halls button[aria-pressed="true"]{border:1px solid #E9A275;background:#E9A275;color:#1c140c}
 .xnav button:hover{color:#FBF6EC;background:#241a12}
 .xnav button[aria-pressed="true"]{color:#E9A275;border-left-color:#E9A275;background:#241a12}
 .xnav button:focus-visible{outline:2px solid #FBF6EC;outline-offset:-2px}
@@ -277,7 +280,7 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--line);padding-top:20px
 .hud .pick span{width:44px}
 .hud .pick button{padding:6px 9px}
 .hud .sw{display:inline-block;width:18px;height:3px;margin-right:8px;vertical-align:middle}
-@media (max-width:1100px){.xcon{grid-template-columns:1.5fr 1fr}.xnav{grid-column:1/-1;grid-row:2;flex-direction:row;flex-wrap:wrap;border-left:0;border-top:1px solid #3a2c20}.xnav span{display:none}.xnav button{border:0;border-bottom:3px solid transparent;border-left:0}.xnav button:last-child{border:0}.xnav button[aria-pressed="true"]{border-bottom:3px solid #E9A275}}
+@media (max-width:1100px){.xcon{grid-template-columns:1.5fr 1fr}.xnav{grid-column:1/-1;grid-row:2;flex-direction:row;flex-wrap:wrap;border-left:0;border-top:1px solid #3a2c20}.xnav span{display:none}.xnav button{border:0;border-bottom:3px solid transparent;border-left:0}.xnav [data-view="cap"]{border:0}.xnav .halls{padding:8px 12px;margin-left:auto;gap:6px}.xnav .halls button{flex:none;min-width:34px;padding:8px 0;border:1px solid #3a2c20}.xnav .halls button[aria-pressed="true"]{border:1px solid #E9A275}.xnav button[aria-pressed="true"]{border-bottom:3px solid #E9A275}}
 @media (max-width:900px){.xcon{grid-template-columns:1fr}.xcon .hud{border-left:0;border-top:1px solid #3a2c20}}
 .motion .scan{animation:scan 8s linear infinite}
 @keyframes scan{from{transform:translateX(-300px)}to{transform:translateX(1700px)}}
@@ -1099,7 +1102,7 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--line);padding-top:20px
 <section><div class="wrap">
   <span class="eyebrow">The fabric, in motion</span>
   <h2 style="margin-top:12px;max-width:26ch">Cut a span. Take a site down. Watch it route around.</h2>
-  <p class="lede" style="margin-top:18px">Six sites on a ring of dedicated fiber with one cross-link. Click a span to cut it or a site to take it offline, and the fabric finds the next shortest path. The view menu switches the picture: the topology, the optics each span needs, any path between two sites, the latency a training step pays, and the capacity on the glass.</p>
+  <p class="lede" style="margin-top:18px">Six to nine halls on a ring of dedicated fiber with one cross-link. Click a span to cut it or a site to take it offline, and the fabric finds the next shortest path. Pick six, seven, eight or nine halls, and the view menu switches the picture: the topology, the optics each span needs, any path between two sites, the latency a training step pays, and the capacity on the glass.</p>
   <div class="xcon">
     <svg id="xnet" viewBox="0 0 560 400" role="img" aria-label="Interactive simulation: six sites joined by fiber; cutting spans or removing sites reroutes traffic"></svg>
     <div class="hud">
@@ -1166,6 +1169,8 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--line);padding-top:20px
       <button type="button" data-view="path" aria-pressed="false">PATH</button>
       <button type="button" data-view="reduce" aria-pressed="false">ALL-REDUCE</button>
       <button type="button" data-view="cap" aria-pressed="false">CAPACITY</button>
+      <span>HALLS</span>
+      <div class="halls"><button type="button" data-halls="6" aria-pressed="true">6</button><button type="button" data-halls="7" aria-pressed="false">7</button><button type="button" data-halls="8" aria-pressed="false">8</button><button type="button" data-halls="9" aria-pressed="false">9</button></div>
     </nav>
   </div>
 </div></section>
@@ -1537,32 +1542,49 @@ function packets(g,d,dur,lag,colors){
   const grid=el('g',{stroke:'#2a1f17','stroke-width':1},svg);
   for(let x=0;x<=560;x+=40)el('line',{x1:x,y1:0,x2:x,y2:400},grid);
   for(let y=0;y<=400;y+=40)el('line',{x1:0,y1:y,x2:560,y2:y},grid);
-  const P='ABCDEF'.split('').map((n,i)=>{const a=-Math.PI/2+i*TAU/6;return{n,x:280+190*Math.cos(a),y:200+150*Math.sin(a),up:true};});
-  // the ring is spans 0-5 in geographic order (5 is the closure F-A); 6 is the cross-link
-  const L=[[0,1,80],[1,2,120],[2,3,95],[3,4,140],[4,5,70],[5,0,110],[2,5,190]].map(([a,b,km])=>({a,b,km,up:true,on:true}));
-  const OPT=km=>km<=80?['ZR','#7FB8CC']:km<=120?['ZR+','#E9B95A']:['AMP','#C77DDB'];
   const gL=el('g',{fill:'none'},svg), gR=el('g',{fill:'none'},svg), gP=el('g',{},svg), gN=el('g',{},svg);
-  L.forEach((l,i)=>{
-    const A=P[l.a],B=P[l.b]; l.d=`M${A.x.toFixed(1)} ${A.y.toFixed(1)}L${B.x.toFixed(1)} ${B.y.toFixed(1)}`;
-    l.p=el('path',{d:l.d,stroke:'#7FB8CC','stroke-width':1.6},gL);
-    l.h=el('path',{d:l.d,stroke:'transparent','stroke-width':20,style:'cursor:pointer'},gL); l.h.addEventListener('click',()=>{l.up=!l.up;upd();});
-    const mx=(A.x+B.x)/2, my=(A.y+B.y)/2, ox=(mx-280)*.12, oy=(my-200)*.12;
-    l.t=el('text',{x:(mx+ox).toFixed(1),y:(my+oy+4).toFixed(1),'text-anchor':'middle','font-family':MONO,'font-size':10.5,fill:'#9C8B74','pointer-events':'none'},gL);
-    l.pk=el('g',{},gP); packets(l.pk,l.d,1.4+i*.21,i*.3,['#CFEAF3','#E9A275']);
-  });
   const route=el('path',{class:'flow',stroke:'#E9A275','stroke-width':4,'stroke-opacity':.8,'stroke-linejoin':'round'},gR);
-  P.forEach((p,i)=>{
-    p.g=el('g',{transform:`translate(${p.x.toFixed(1)} ${p.y.toFixed(1)})`,style:'cursor:pointer'},gN);
-    el('circle',{r:34,fill:'url(#xnglow2)'},p.g);
-    p.ring=el('circle',{r:13,fill:'none',stroke:'#E9A275','stroke-width':1.2,class:'pin'},p.g);
-    p.box=el('rect',{x:-12,y:-12,width:24,height:24,fill:'#1c140c',stroke:'#E9A275','stroke-width':1.6},p.g);
-    el('text',{y:4.5,'text-anchor':'middle','font-family':'Archivo, sans-serif','font-weight':700,'font-size':13,fill:'#FBF6EC'},p.g).textContent=p.n;
-    p.g.addEventListener('click',()=>{p.up=!p.up;upd();});
-  });
+  // ring span lengths in geographic order; the last span of each ring is the closure back to A
+  const RK=[80,120,95,140,70,85,105,90], CLOSE=110, WORD=['','one','two','three','four','five','six','seven','eight','nine'];
+  const OPT=km=>km<=80?['ZR','#7FB8CC']:km<=120?['ZR+','#E9B95A']:['AMP','#C77DDB'];
+  const $=id=>document.getElementById(id), ms=km=>(km*.005).toFixed(2)+' ms', us=km=>Math.round(km*5)+' µs';
+  let N=6, P=[], L=[], view='fail', topo='mesh', src=0, dst=3;
+  function build(n){
+    N=n; [gL,gP,gN].forEach(g=>g.replaceChildren());
+    P='ABCDEFGHI'.slice(0,N).split('').map((n,i)=>{const a=-Math.PI/2+i*TAU/N;return{n,x:280+190*Math.cos(a),y:200+150*Math.sin(a),up:true};});
+    // the ring is spans 0..N-1 (N-1 is the closure), span N is the cross-link from C across to the last site, scaled off the six-site 190 km
+    const ring=RK.slice(0,N-1).concat(CLOSE).map((km,i)=>[i,(i+1)%N,km]);
+    const g6=Math.hypot(190*(Math.cos(-Math.PI/2+2*TAU/6)-Math.cos(-Math.PI/2+5*TAU/6)),150*(Math.sin(-Math.PI/2+2*TAU/6)-Math.sin(-Math.PI/2+5*TAU/6)));
+    const gx=Math.hypot(P[2].x-P[N-1].x,P[2].y-P[N-1].y);
+    L=ring.concat([[2,N-1,Math.round(190*gx/g6/5)*5]]).map(([a,b,km])=>({a,b,km,up:true,on:true}));
+    L.forEach((l,i)=>{
+      const A=P[l.a],B=P[l.b]; l.d=`M${A.x.toFixed(1)} ${A.y.toFixed(1)}L${B.x.toFixed(1)} ${B.y.toFixed(1)}`;
+      l.p=el('path',{d:l.d,stroke:'#7FB8CC','stroke-width':1.6},gL);
+      l.h=el('path',{d:l.d,stroke:'transparent','stroke-width':20,style:'cursor:pointer'},gL); l.h.addEventListener('click',()=>{l.up=!l.up;upd();});
+      const mx=(A.x+B.x)/2, my=(A.y+B.y)/2, ox=(mx-280)*.12, oy=(my-200)*.12;
+      l.t=el('text',{x:(mx+ox).toFixed(1),y:(my+oy+4).toFixed(1),'text-anchor':'middle','font-family':MONO,'font-size':10.5,fill:'#9C8B74','pointer-events':'none'},gL);
+      l.pk=el('g',{},gP); packets(l.pk,l.d,1.4+i*.21,i*.3,['#CFEAF3','#E9A275']);
+    });
+    P.forEach(p=>{
+      p.g=el('g',{transform:`translate(${p.x.toFixed(1)} ${p.y.toFixed(1)})`,style:'cursor:pointer'},gN);
+      el('circle',{r:34,fill:'url(#xnglow2)'},p.g);
+      p.ring=el('circle',{r:13,fill:'none',stroke:'#E9A275','stroke-width':1.2,class:'pin'},p.g);
+      p.box=el('rect',{x:-12,y:-12,width:24,height:24,fill:'#1c140c',stroke:'#E9A275','stroke-width':1.6},p.g);
+      el('text',{y:4.5,'text-anchor':'middle','font-family':'Archivo, sans-serif','font-weight':700,'font-size':13,fill:'#FBF6EC'},p.g).textContent=p.n;
+      p.g.addEventListener('click',()=>{p.up=!p.up;upd();});
+    });
+    // endpoint pickers for the path view
+    ['xn-from','xn-to'].forEach((id,k)=>{const box=$(id); box.querySelectorAll('button').forEach(b=>b.remove());
+      P.forEach((p,i)=>{const b=document.createElement('button'); b.type='button'; b.textContent=p.n;
+        b.addEventListener('click',()=>{if(k)dst=i;else src=i;upd();}); box.appendChild(b); p[k?'tb':'fb']=b;});});
+    src=0; dst=Math.floor(N/2); setTopo(topo);
+    document.querySelectorAll('[data-halls]').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.halls===N));
+  }
+  function setTopo(t){topo=t; L[N-1].on=t!=='line'; L[N].on=t==='mesh';}
   const live=l=>l.on&&l.up&&P[l.a].up&&P[l.b].up;
   function sp(s,skip){
-    const n=6, dist=Array(n).fill(Infinity), prev=Array(n).fill(-1), done=Array(n).fill(false); dist[s]=0;
-    for(let k=0;k<n;k++){let u=-1;for(let v=0;v<n;v++)if(!done[v]&&P[v].up&&(u<0||dist[v]<dist[u]))u=v;
+    const dist=Array(N).fill(Infinity), prev=Array(N).fill(-1), done=Array(N).fill(false); dist[s]=0;
+    for(let k=0;k<N;k++){let u=-1;for(let v=0;v<N;v++)if(!done[v]&&P[v].up&&(u<0||dist[v]<dist[u]))u=v;
       if(u<0||dist[u]===Infinity)break; done[u]=true;
       L.forEach(l=>{if(l===skip||!live(l))return;const v=l.a===u?l.b:l.b===u?l.a:-1;
         if(v>=0&&dist[u]+l.km<dist[v]){dist[v]=dist[u]+l.km;prev[v]=u;}});}
@@ -1571,14 +1593,9 @@ function packets(g,d,dur,lag,colors){
   const walk=(r,t)=>{const pts=[];for(let v=t;v>=0;v=r.prev[v])pts.unshift(v);return pts;};
   const line=pts=>pts.map((v,k)=>(k?'L':'M')+P[v].x.toFixed(1)+' '+P[v].y.toFixed(1)).join('');
   const whole=skip=>{const ups=P.map((p,i)=>i).filter(i=>P[i].up); if(!ups.length)return true; const r=sp(ups[0],skip); return ups.every(i=>r.dist[i]<Infinity);};
-  const $=id=>document.getElementById(id), ms=km=>(km*.005).toFixed(2)+' ms', us=km=>Math.round(km*5)+' µs';
-  let view='fail', topo='mesh', src=0, dst=3;
-  const WHY={line:'A line of six sites has <b>five single points of failure</b>. Any cut strands every site beyond it, and one collective becomes two broken ones.',
-    ring:'Closing the line back on itself gives every site <b>two separate paths</b> to every other. A cut sends traffic the other way round, and the fabric runs on at longer latency instead of splitting. The closure span is the one bought for resilience rather than throughput.',
-    mesh:'The cross-link adds a third path and shortens the long way round. A cut costs less latency, and two cuts at once still leave the fabric whole in most cases.'};
-  // endpoint pickers for the path view
-  ['xn-from','xn-to'].forEach((id,k)=>P.forEach((p,i)=>{const b=document.createElement('button'); b.type='button'; b.textContent=p.n;
-    b.addEventListener('click',()=>{if(k)dst=i;else src=i;upd();}); $(id).appendChild(b); p[k?'tb':'fb']=b;}));
+  const WHY={line:()=>`A line of ${WORD[N]} sites has <b>${WORD[N-1]} single points of failure</b>. Any cut strands every site beyond it, and one collective becomes two broken ones.`,
+    ring:()=>'Closing the line back on itself gives every site <b>two separate paths</b> to every other. A cut sends traffic the other way round, and the fabric runs on at longer latency instead of splitting. The closure span is the one bought for resilience rather than throughput.',
+    mesh:()=>'The cross-link adds a third path and shortens the long way round. A cut costs less latency, and two cuts at once still leave the fabric whole in most cases.'};
   function upd(){
     // spans
     L.forEach(l=>{const on=l.on, lv=live(l), [cls,oc]=OPT(l.km);
@@ -1593,7 +1610,7 @@ function packets(g,d,dur,lag,colors){
     P.forEach((p,i)=>{p.g.style.opacity=p.up?1:.28;p.ring.style.display=p.up?'':'none';
       p.box.setAttribute('stroke',view==='path'&&(i===src||i===dst)?'#FBF6EC':'#E9A275');
       p.fb.setAttribute('aria-pressed',i===src); p.tb.setAttribute('aria-pressed',i===dst);});
-    // the highlighted route: A to D, the chosen pair, or the all-reduce ring
+    // the highlighted route: the chosen pair, or the all-reduce ring
     let d='M0 0', txt='No path', pts=[], km=0;
     if(P[src].up&&P[dst].up){const r=sp(src); if(r.dist[dst]<Infinity){pts=walk(r,dst); km=r.dist[dst]; d=line(pts); txt=pts.map(v=>P[v].n).join(' → ')+'  ·  '+ms(km);}}
     else txt='Endpoint offline';
@@ -1603,7 +1620,7 @@ function packets(g,d,dur,lag,colors){
     // failures view
     let worst=0, all=true; const up=ranks.length;
     ranks.forEach(i=>{const r=sp(i);ranks.forEach(j=>{if(j!==i){if(r.dist[j]===Infinity)all=false;else worst=Math.max(worst,r.dist[j]);}});});
-    $('xn-up').textContent=up+' / 6'; $('xn-cap').textContent=Math.round(up/6*100)+'%'; $('xn-capbar').style.width=up/6*100+'%';
+    $('xn-up').textContent=up+' / '+N; $('xn-cap').textContent=Math.round(up/N*100)+'%'; $('xn-capbar').style.width=up/N*100+'%';
     $('xn-reach').textContent=all?'Every site':'Split'; $('xn-worst').textContent=ms(worst); $('xn-route').textContent=txt;
     document.querySelector('.xn-pl').textContent='PATH '+P[src].n+' → '+P[dst].n;
     const cuts=L.filter(l=>l.on&&!l.up).length;
@@ -1614,7 +1631,7 @@ function packets(g,d,dur,lag,colors){
     const built=L.filter(l=>l.on);
     $('xn-spans').textContent=built.length; $('xn-km').textContent=built.reduce((a,l)=>a+l.km,0)+' km';
     $('xn-spof').textContent=built.filter(l=>live(l)&&!whole(l)).length;
-    $('xn-topo-why').innerHTML=WHY[topo];
+    $('xn-topo-why').innerHTML=WHY[topo]();
     document.querySelectorAll('[data-topo]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.topo===topo));
     // optics view
     const n=c=>built.filter(l=>OPT(l.km)[0]===c).length;
@@ -1624,10 +1641,10 @@ function packets(g,d,dur,lag,colors){
     $('xn-p-km').textContent=pts.length?(pts.length-1)+' · '+km+' km':'–';
     $('xn-p-ow').textContent=pts.length?ms(km):'–'; $('xn-p-rt').textContent=pts.length?ms(2*km):'–';
     // all-reduce view: 2(N-1) hops at the average hop on the ring as it stands
-    const N=ranks.length, hop=N>1&&!broken?ring/N:0;
-    $('xn-r-n').textContent=N; $('xn-r-hop').textContent=broken?'Split':N>1?us(hop):'–';
-    $('xn-r-term').textContent=broken?'No ring':N>1?ms(2*(N-1)*hop):'–';
-    $('xn-r-max').textContent=broken||N<2?'–':Math.floor(1000/(2*(N-1)*hop*.005))+' /s';
+    const R=ranks.length, hop=R>1&&!broken?ring/R:0;
+    $('xn-r-n').textContent=R; $('xn-r-hop').textContent=broken?'Split':R>1?us(hop):'–';
+    $('xn-r-term').textContent=broken?'No ring':R>1?ms(2*(R-1)*hop):'–';
+    $('xn-r-max').textContent=broken||R<2?'–':Math.floor(1000/(2*(R-1)*hop*.005))+' /s';
     // capacity view
     const lit=built.filter(live).length;
     $('xn-c-lit').textContent=lit+' / '+built.length; $('xn-c-tot').textContent=(lit*0.2).toFixed(1)+' Pb/s';
@@ -1635,11 +1652,12 @@ function packets(g,d,dur,lag,colors){
   $('xn-cut').addEventListener('click',()=>{L[2].up=!L[2].up;upd();});
   $('xn-down').addEventListener('click',()=>{P[1].up=!P[1].up;upd();});
   $('xn-reset').addEventListener('click',()=>{L.forEach(l=>l.up=true);P.forEach(p=>p.up=true);upd();});
-  document.querySelectorAll('[data-topo]').forEach(b=>b.addEventListener('click',()=>{topo=b.dataset.topo; L[5].on=topo!=='line'; L[6].on=topo==='mesh'; upd();}));
+  document.querySelectorAll('[data-topo]').forEach(b=>b.addEventListener('click',()=>{setTopo(b.dataset.topo); upd();}));
+  document.querySelectorAll('[data-halls]').forEach(b=>b.addEventListener('click',()=>{build(+b.dataset.halls); upd();}));
   document.querySelectorAll('.xnav [data-view]').forEach(b=>b.addEventListener('click',()=>{view=b.dataset.view;
     document.querySelectorAll('.xnav [data-view]').forEach(x=>x.setAttribute('aria-pressed',x===b));
     document.querySelectorAll('.hud [data-m]').forEach(x=>x.hidden=x.dataset.m!==view); upd();}));
-  upd();
+  build(6); upd();
 })();
 
 (function(){
