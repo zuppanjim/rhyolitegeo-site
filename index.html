@@ -1547,15 +1547,16 @@ function packets(g,d,dur,lag,colors){
   const RK=[80,120,95,140,70,85,105,90], CLOSE=110, WORD=['','one','two','three','four','five','six','seven','eight','nine'];
   const OPT=km=>km<=80?['ZR','#7FB8CC']:km<=120?['ZR+','#E9B95A']:['AMP','#C77DDB'];
   const $=id=>document.getElementById(id), ms=km=>(km*.005).toFixed(2)+' ms', us=km=>Math.round(km*5)+' µs';
-  let N=6, P=[], L=[], view='fail', topo='mesh', src=0, dst=3;
+  let N=6, HB=2, P=[], L=[], view='fail', topo='mesh', src=0, dst=3;
   function build(n){
-    N=n; [gL,gP,gN].forEach(g=>g.replaceChildren());
+    // the cross-link runs from the hub to the last site; the hub moves round as the ring grows so the link keeps splitting it in half
+    N=n; HB=N<8?2:N-5; [gL,gP,gN].forEach(g=>g.replaceChildren());
     P='ABCDEFGHI'.slice(0,N).split('').map((n,i)=>{const a=-Math.PI/2+i*TAU/N;return{n,x:280+190*Math.cos(a),y:200+150*Math.sin(a),up:true};});
     // the ring is spans 0..N-1 (N-1 is the closure), span N is the cross-link from C across to the last site, scaled off the six-site 190 km
     const ring=RK.slice(0,N-1).concat(CLOSE).map((km,i)=>[i,(i+1)%N,km]);
     const g6=Math.hypot(190*(Math.cos(-Math.PI/2+2*TAU/6)-Math.cos(-Math.PI/2+5*TAU/6)),150*(Math.sin(-Math.PI/2+2*TAU/6)-Math.sin(-Math.PI/2+5*TAU/6)));
-    const gx=Math.hypot(P[2].x-P[N-1].x,P[2].y-P[N-1].y);
-    L=ring.concat([[2,N-1,Math.round(190*gx/g6/5)*5]]).map(([a,b,km])=>({a,b,km,up:true,on:true}));
+    const gx=Math.hypot(P[HB].x-P[N-1].x,P[HB].y-P[N-1].y);
+    L=ring.concat([[HB,N-1,Math.round(190*gx/g6/5)*5]]).map(([a,b,km])=>({a,b,km,up:true,on:true}));
     L.forEach((l,i)=>{
       const A=P[l.a],B=P[l.b]; l.d=`M${A.x.toFixed(1)} ${A.y.toFixed(1)}L${B.x.toFixed(1)} ${B.y.toFixed(1)}`;
       l.p=el('path',{d:l.d,stroke:'#7FB8CC','stroke-width':1.6},gL);
@@ -1586,14 +1587,14 @@ function packets(g,d,dur,lag,colors){
     src=0; dst=Math.floor(N/2); setTopo(topo);
     document.querySelectorAll('[data-halls]').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.halls===N));
   }
-  const lastN=()=>P[N-1].n;
+  const lastN=()=>P[N-1].n, hub=()=>P[HB].n, nxt=()=>P[HB+1].n;
   const SCN=[
-    {k:'cut',l:()=>'✂ CUT C–D',s:()=>[2],p:()=>[],w:()=>'One span cut. The ring sends C–D traffic the long way round, and protection switching moves it in about 50 ms.'},
-    {k:'xl',l:()=>'✂ CUT C–'+lastN(),s:()=>[N],p:()=>[],w:()=>'The cross-link goes. The fabric falls back to a plain ring: still whole, with the long way round now the only way round.'},
-    {k:'two',l:()=>'✂ TWO CUTS',s:()=>[2,N-1],p:()=>[],w:()=>'C–D and the closure '+lastN()+'–A cut at once. A plain ring would split in two here; the cross-link is what holds the fabric together.'},
-    {k:'duct',l:()=>'⛏ BACKHOE AT C',s:()=>[2,N],p:()=>[],w:()=>'One trench out of C carries both C–D and the cross-link, and a backhoe takes both. Spans that share a duct fail together, which is why the two directions ride separate ducts where the right of way allows.'},
+    {k:'cut',l:()=>'✂ CUT '+hub()+'–'+nxt(),s:()=>[HB],p:()=>[],w:()=>'One span cut. The ring sends '+hub()+'–'+nxt()+' traffic the long way round, and protection switching moves it in about 50 ms.'},
+    {k:'xl',l:()=>'✂ CUT '+hub()+'–'+lastN(),s:()=>[N],p:()=>[],w:()=>'The cross-link goes. The fabric falls back to a plain ring: still whole, with the long way round now the only way round.'},
+    {k:'two',l:()=>'✂ TWO CUTS',s:()=>[HB,N-1],p:()=>[],w:()=>hub()+'–'+nxt()+' and the closure '+lastN()+'–A cut at once. A plain ring would split in two here; the cross-link is what holds the fabric together.'},
+    {k:'duct',l:()=>'⛏ BACKHOE AT '+hub(),s:()=>[HB,N],p:()=>[],w:()=>'One trench out of '+hub()+' carries both '+hub()+'–'+nxt()+' and the cross-link, and a backhoe takes both. Spans that share a duct fail together, which is why the two directions ride separate ducts where the right of way allows.'},
     {k:'b',l:()=>'⏻ SITE B OFFLINE',s:()=>[],p:()=>[1],w:()=>'B loses power. Its compute leaves the fabric, and traffic between A and C routes around it.'},
-    {k:'hub',l:()=>'⏻ HUB C OFFLINE',s:()=>[],p:()=>[2],w:()=>'C is the site the cross-link lands on. Losing it takes the cross-link with it, and the rest runs as a ring with one site missing.'},
+    {k:'hub',l:()=>'⏻ HUB '+hub()+' OFFLINE',s:()=>[],p:()=>[HB],w:()=>hub()+' is the site the cross-link lands on. Losing it takes the cross-link with it, and the rest runs as a ring with one site missing.'},
     {k:'reg',l:()=>'⚡ REGIONAL OUTAGE',s:()=>[],p:()=>[3,4],w:()=>'A storm or grid event takes D and E down together. Sites that sit close share weather and grid, so the fabric plans for neighbours failing as a pair.'},
     {k:'rnd',l:()=>'🎲 RANDOM CUT',w:()=>'A span picked at random. Click again for another.'}];
   let act='';
