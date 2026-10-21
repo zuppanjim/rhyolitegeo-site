@@ -485,7 +485,7 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--line);padding-top:20px
   <span class="eyebrow">Featured project</span>
   <h2 style="margin-top:12px">Glass Ball, Okmulgee County, Oklahoma</h2>
   <div class="feature">
-    <figure><img class="kb" src="assets/hero-datacenter.jpg" alt="Aerial rendering of a modular data center on its own site with its own generation" loading="lazy"><figcaption>Illustrative design rendering</figcaption></figure>
+    <figure><svg id="gbplan" viewBox="0 0 640 560" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Animated plan of the Glass Ball parcel beside I-40, east of Henryetta: the gas lateral comes in from the south and the hall's 24 rows come on one at a time, among hay fields, post oaks, a creek, a stock pond and cattle" style="position:absolute;inset:0;width:100%;height:100%;display:block"></svg><figcaption>Illustration · the parcel from above, not to scale</figcaption></figure>
     <div class="body">
       <span class="tag">In development · drawing set REV B</span>
       <p style="font-size:19px">A 91.5 acre parcel beside I-40, east of Henryetta. The hall and its power are drawn at one size for the first time: every row of racks has its own fuel cell stamp and its own 800 volt DC bus, with no rectifier and no UPS between the gas pipe and the rack.</p>
@@ -495,7 +495,6 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--line);padding-top:20px
         <div><dt>Fuel cell stamps</dt><dd>36</dd></div>
         <div><dt>First power</dt><dd>Market dependent</dd></div>
       </dl>
-      <a class="btn arrow" href="#glass-ball" style="align-self:flex-start">Read the project</a>
     </div>
   </div>
 </div></section>
@@ -1374,6 +1373,61 @@ function route(g,y0,terms,cls,stroke,w){let d='';for(let x=0;x<=2*SW;x+=10)d+=(x
   for(let x=-20;x<SW;x+=46)el('rect',{x,y:near(x)+10,width:3,height:22},fg);
   [16,24].forEach(o=>{let d='';for(let x=-20;x<=SW;x+=23)d+=(x>-20?'L':'M')+x+' '+(near(x)+o).toFixed(1);el('path',{d,stroke:'#140E09','stroke-width':1,fill:'none'},v);});
   el('rect',{x:0,y:688,width:SW,height:12,fill:'#140E09'},v);
+})();
+
+// featured project: the parcel from above, I-40 along the top, Henryetta off to the west, the rows coming on one at a time
+(function(){
+  const v=document.getElementById('gbplan'); if(!v)return;
+  const mono='IBM Plex Mono, ui-monospace, monospace';
+  el('rect',{width:640,height:560,fill:'#CDBF95'},v);
+  // quarter sections in hay, wheat stubble and pasture
+  [[0,0,210,250,'#C4B88A'],[210,300,430,260,'#D3C59C'],[0,250,210,310,'#BDB283'],[470,0,170,130,'#D6C9A2']].forEach(([x,y,w,h,c])=>el('rect',{x,y,width:w,height:h,fill:c},v));
+  [210,470].forEach(x=>el('path',{d:`M${x} 0V560`,stroke:'#A89A72','stroke-width':1,'stroke-dasharray':'2 5'},v));
+  // the creek, a stock pond, and post oaks along the draws
+  el('path',{d:'M0 470C60 440 110 500 170 470S260 420 300 455 380 540 420 560',stroke:'#86A9BF','stroke-width':4,fill:'none'},v);
+  el('ellipse',{cx:110,cy:360,rx:26,ry:16,fill:'#8DB0C4'},v);
+  const oak=(x,y,n)=>{for(let i=0;i<n;i++)el('circle',{cx:x+((i*37)%41)-20,cy:y+((i*23)%29)-14,r:7+(i%3)*2,fill:i%2?'#6F774F':'#7D8659'},v);};
+  oak(60,440,9); oak(190,480,7); oak(340,520,8); oak(40,190,6); oak(600,450,9); oak(560,230,5);
+  // cattle by the pond
+  [[150,338],[160,352],[86,390],[176,372],[70,330]].forEach(([x,y])=>el('ellipse',{cx:x,cy:y,rx:4,ry:2.2,fill:'#4A3A2C'},v));
+  // I-40 with traffic both ways, and the fiber in its right-of-way
+  el('rect',{x:0,y:96,width:640,height:44,fill:'#9A948B'},v);
+  el('rect',{x:0,y:116,width:640,height:4,fill:'#B5AE9F'},v);
+  [104,132].forEach(y=>el('path',{d:`M0 ${y}H640`,stroke:'#F2EBDD','stroke-width':1.2,'stroke-dasharray':'10 12'},v));
+  el('path',{class:'flow',d:'M0 150H640',stroke:'#3E7FA8','stroke-width':1.6,fill:'none'},v);
+  const lane=(y,t,rev)=>{const g=el('g',{class:'pan',style:`--t:${t}s${rev?';animation-direction:reverse':''}`},v);
+    for(let x=rev?-1600:0,i=0;x<(rev?0:1600);x+=70+(i*53)%110,i++)el('rect',{x,y,width:11,height:5,rx:1.5,fill:['#F4EEE2','#5B6770','#A84E22','#2F2B27'][i%4]},g);};
+  lane(99,60,false); lane(126,75,true);
+  el('text',{x:16,y:88,'font-family':mono,'font-size':11,fill:'#4A3F33'},v).textContent='← HENRYETTA';
+  const sh=el('g',{transform:'translate(586 70)'},v);
+  el('path',{d:'M0 0H24V12Q24 24 12 28Q0 24 0 12Z',fill:'#2F5A8C',stroke:'#F2EBDD','stroke-width':1.5},sh);
+  el('text',{x:12,y:17,'text-anchor':'middle','font-family':'Archivo, sans-serif','font-weight':700,'font-size':10,fill:'#F2EBDD'},sh).textContent='40';
+  // the gas lateral, in from the south
+  el('path',{class:'flow slow',d:'M640 520H520V378H432',stroke:'#C2622F','stroke-width':3,fill:'none'},v);
+  // the parcel, the hall on its spine, and the rows
+  el('path',{d:'M250 176H560V496H250Z',fill:'#BFAE84',stroke:'#A84E22','stroke-width':1.5,'stroke-dasharray':'6 4'},v);
+  el('text',{x:256,y:192,'font-family':mono,'font-size':10,fill:'#6B4A2E'},v).textContent='91.5 ACRES';
+  el('rect',{x:300,y:210,width:132,height:256,fill:'#A89676'},v);
+  el('rect',{x:360,y:214,width:12,height:248,fill:'#56616A'},v);
+  el('path',{d:'M366 150V214',stroke:'#7A6E5C','stroke-width':6},v);
+  const rows=[];
+  for(let k=0;k<12;k++)[[306,52],[374,52]].forEach(([x,w],s)=>{
+    const r=el('rect',{x,y:216+k*20.4,width:w,height:13,rx:6.5,fill:'#8A7B63'},v);
+    rows.push(r);});
+  // two rows at a time is one pod: the order the hall comes up in
+  const order=[]; for(let k=0;k<12;k++)order.push(rows[2*k],rows[2*k+1]);
+  for(let j=0;j<6;j++)el('rect',{x:440,y:260+j*14,width:16,height:9,fill:'#D9D2C2',stroke:'#8A7B63','stroke-width':.8},v);
+  el('text',{x:440,y:250,'font-family':mono,'font-size':9,fill:'#6B4A2E'},v).textContent='COOLING';
+  const cnt=el('text',{x:300,y:486,'font-family':mono,'font-size':11,fill:'#3A2E22'},v);
+  const N=el('g',{transform:'translate(612 490)'},v);
+  el('path',{d:'M0 -14L6 4L0 0L-6 4Z',fill:'#3A2E22'},N); el('text',{x:0,y:18,'text-anchor':'middle','font-family':mono,'font-size':10,fill:'#3A2E22'},N).textContent='N';
+  const show=n=>{order.forEach((r,i)=>{r.setAttribute('fill',i<n?'#E9A84F':'#8A7B63');r.setAttribute('filter',i<n?'url(#rowglow)':'');}); cnt.textContent=`ROWS ON  ${String(n).padStart(2,'0')} / 24`;};
+  const f=el('filter',{id:'rowglow',x:'-20%',y:'-60%',width:'140%',height:'220%'},el('defs',{},v));
+  el('feGaussianBlur',{stdDeviation:1.6,result:'b'},f); const mg=el('feMerge',{},f); el('feMergeNode',{in:'b'},mg); el('feMergeNode',{in:'SourceGraphic'},mg);
+  if(!motion){show(24);return;}
+  let n=0, tick=0;
+  show(0);
+  setInterval(()=>{if(v.closest('main').hidden)return; tick++; if(n<24){n++;show(n);} else if(tick>n+6){n=0;tick=0;show(0);}},1400);
 })();
 
 // geothermal: four in the morning, the plant and the engines still running
