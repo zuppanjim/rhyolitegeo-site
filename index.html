@@ -276,6 +276,11 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--line);padding-top:20px
 .qtip a{font-family:var(--mono);font-size:13px;color:#A8321F}
 .motion .flap{animation:flap .32s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:center}
 @keyframes flap{to{transform:scaleY(.45)}}
+.motion .fl{animation:fl .7s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 100%}
+.motion .fl.in{animation-duration:.43s}
+@keyframes fl{0%,100%{transform:scale(1,1) skewX(0)}17%{transform:scale(.9,1.1) skewX(-5deg)}36%{transform:scale(1.06,.88) skewX(3deg)}52%{transform:scale(.95,1.16) skewX(-2deg)}71%{transform:scale(1.05,.93) skewX(5deg)}86%{transform:scale(.97,1.06) skewX(-3deg)}}
+.motion .glow{animation:glow 1.1s ease-in-out infinite}
+@keyframes glow{0%,100%{opacity:.55}23%{opacity:.8}47%{opacity:.42}68%{opacity:.75}84%{opacity:.5}}
 .motion .qpop{animation:qpop 5s ease-in-out infinite;transform-box:fill-box;transform-origin:0 100%}
 @keyframes qpop{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px) rotate(-3deg)}}
 @keyframes tw{to{opacity:.25}}
@@ -1693,8 +1698,19 @@ function route(g,y0,terms,cls,stroke,w){let d='';for(let x=0;x<=2*SW;x+=10)d+=(x
     el('ellipse',{cx:x+S(14),cy:y-S(18),rx:S(17),ry:S(14),fill:'#F6E2B8',stroke:P.dark,'stroke-width':1.2},q);
     el('text',{x:x+S(14),y:y-S(11),'text-anchor':'middle','font-family':'Archivo, sans-serif','font-weight':800,'font-size':S(20),fill:P.red},q).textContent='?';
   }
+  // a burning torch in a raised hand: a glow, a wrapped head, two flames that flicker out of step
+  const tdefs=el('defs',{},v), tg=el('radialGradient',{id:'tglow'},tdefs);
+  el('stop',{offset:0,'stop-color':'#FFB347','stop-opacity':.75},tg);el('stop',{offset:1,'stop-color':'#FF7A1A','stop-opacity':0},tg);
+  function torch(g,x,y,s,i){
+    const S=n=>+(n*s).toFixed(1), hx=x+S(16), hy=y-S(90), d=`animation-delay:-${((i*.37)%1).toFixed(2)}s`;
+    el('circle',{class:'glow',cx:hx+S(3),cy:hy-S(34),r:S(46),fill:'url(#tglow)',style:d},g);
+    el('path',{d:`M${hx-S(1)} ${hy+S(10)}L${hx+S(3)} ${hy-S(24)}`,stroke:'#4A3020','stroke-width':S(3.2),'stroke-linecap':'round'},g);
+    el('path',{d:`M${hx-S(2)} ${hy-S(20)}h${S(10)}l${S(-1)} ${S(-7)}h${S(-8)}Z`,fill:'#2A1C12'},g);
+    el('path',{class:'fl',style:d,d:`M${hx+S(3)} ${hy-S(52)}C${hx+S(9)} ${hy-S(42)} ${hx+S(13)} ${hy-S(34)} ${hx+S(8)} ${hy-S(27)}H${hx-S(2)}C${hx-S(7)} ${hy-S(35)} ${hx-S(2)} ${hy-S(41)} ${hx+S(3)} ${hy-S(52)}Z`,fill:'#F26A1B'},g);
+    el('path',{class:'fl in',style:d,d:`M${hx+S(3)} ${hy-S(42)}C${hx+S(7)} ${hy-S(36)} ${hx+S(8)} ${hy-S(31)} ${hx+S(6)} ${hy-S(27)}H${hx}C${hx-S(3)} ${hy-S(31)} ${hx} ${hy-S(36)} ${hx+S(3)} ${hy-S(42)}Z`,fill:'#FFD36B'},g);
+  }
   const kinds=['witch','pumpkin','ghost','devil','cat','scarecrow','vampire'], body=[P.red,P.green,P.orange,P.brown];
-  const crowd=el('g',{},v), bubbles=el('g',{},v);
+  const crowd=el('g',{},v), torches=el('g',{},v), bubbles=el('g',{},v);
   [[600,.62,40],[645,.8,50],[694,1,62]].forEach(([y,s,step],row)=>{
     let n=0;
     for(let x=660+row*13;x<1590;x+=step+((x*7+row*3)%17)){
@@ -1702,6 +1718,7 @@ function route(g,y0,terms,cls,stroke,w){let d='';for(let x=0;x<=2*SW;x+=10)d+=(x
       if(Math.abs(x-1180)<40&&row===0)continue;
       fig(el('g',{class:'look',style:`animation-delay:-${((i*2.3)%14).toFixed(1)}s`},crowd),x,y+(i*13)%7,s,kind,body[(i+row*2)%4],up,i);
       if(up&&(i+row)%2===0)ask(bubbles,x+16*s,y-98*s,s,i);
+      else if(up&&kind!=='ghost')torch(torches,x,y+(i*13)%7,s,i);
     }
   });
   const hero=v.parentNode, tip=hero.querySelector('.qtip');
