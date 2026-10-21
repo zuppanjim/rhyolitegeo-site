@@ -1115,10 +1115,10 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--line);padding-top:20px
         <div class="row" style="flex-direction:column"><span class="xn-pl">PATH A → D</span><b id="xn-route" style="font-size:17px">–</b></div>
         <div class="row"><span>PROTECTION</span><b id="xn-prot" style="font-size:15px">Standing by</b></div>
         <div class="ctl">
-          <button type="button" id="xn-cut" aria-pressed="false">✂ CUT C–D</button>
-          <button type="button" id="xn-down" aria-pressed="false">⏻ SITE B OFFLINE</button>
+          <span id="xn-scn" style="display:contents"></span>
           <button type="button" id="xn-reset">↺ RESTORE</button>
         </div>
+        <p class="why" id="xn-fail-why">Pick a failure, or click any span or site on the map.</p>
       </div>
       <div data-m="topo" hidden>
         <div class="ctl">
@@ -1576,9 +1576,28 @@ function packets(g,d,dur,lag,colors){
     ['xn-from','xn-to'].forEach((id,k)=>{const box=$(id); box.querySelectorAll('button').forEach(b=>b.remove());
       P.forEach((p,i)=>{const b=document.createElement('button'); b.type='button'; b.textContent=p.n;
         b.addEventListener('click',()=>{if(k)dst=i;else src=i;upd();}); box.appendChild(b); p[k?'tb':'fb']=b;});});
+    const box=$('xn-scn'); box.replaceChildren();
+    SCN.forEach(c=>{const b=document.createElement('button'); b.type='button'; b.textContent=c.l(); c.b=b; box.appendChild(b);
+      b.addEventListener('click',()=>{
+        if(c.k==='rnd'){const up=L.filter(l=>l.on&&l.up); if(up.length){const l=up[Math.floor(Math.random()*up.length)]; l.up=false;
+          $('xn-fail-why').textContent='Span '+P[l.a].n+'–'+P[l.b].n+' ('+l.km+' km) cut at random. Click again for another.';} upd(); return;}
+        const on=scnOn(c)&&act===c.k; if(!on){L.forEach(l=>l.up=true);P.forEach(p=>p.up=true);} act=on?'':c.k; c.s().forEach(i=>L[i].up=on); c.p().forEach(i=>P[i].up=on);
+        $('xn-fail-why').textContent=on?'Restored.':c.w(); upd();});});
     src=0; dst=Math.floor(N/2); setTopo(topo);
     document.querySelectorAll('[data-halls]').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.halls===N));
   }
+  const lastN=()=>P[N-1].n;
+  const SCN=[
+    {k:'cut',l:()=>'✂ CUT C–D',s:()=>[2],p:()=>[],w:()=>'One span cut. The ring sends C–D traffic the long way round, and protection switching moves it in about 50 ms.'},
+    {k:'xl',l:()=>'✂ CUT C–'+lastN(),s:()=>[N],p:()=>[],w:()=>'The cross-link goes. The fabric falls back to a plain ring: still whole, with the long way round now the only way round.'},
+    {k:'two',l:()=>'✂ TWO CUTS',s:()=>[2,N-1],p:()=>[],w:()=>'C–D and the closure '+lastN()+'–A cut at once. A plain ring would split in two here; the cross-link is what holds the fabric together.'},
+    {k:'duct',l:()=>'⛏ BACKHOE AT C',s:()=>[2,N],p:()=>[],w:()=>'One trench out of C carries both C–D and the cross-link, and a backhoe takes both. Spans that share a duct fail together, which is why the two directions ride separate ducts where the right of way allows.'},
+    {k:'b',l:()=>'⏻ SITE B OFFLINE',s:()=>[],p:()=>[1],w:()=>'B loses power. Its compute leaves the fabric, and traffic between A and C routes around it.'},
+    {k:'hub',l:()=>'⏻ HUB C OFFLINE',s:()=>[],p:()=>[2],w:()=>'C is the site the cross-link lands on. Losing it takes the cross-link with it, and the rest runs as a ring with one site missing.'},
+    {k:'reg',l:()=>'⚡ REGIONAL OUTAGE',s:()=>[],p:()=>[3,4],w:()=>'A storm or grid event takes D and E down together. Sites that sit close share weather and grid, so the fabric plans for neighbours failing as a pair.'},
+    {k:'rnd',l:()=>'🎲 RANDOM CUT',w:()=>'A span picked at random. Click again for another.'}];
+  let act='';
+  function scnOn(c){return c.s&&(c.s().length+c.p().length)>0&&c.s().every(i=>!L[i].up||!L[i].on)&&c.p().every(i=>!P[i].up)&&(!c.s().length||c.s().some(i=>L[i].on));}
   function setTopo(t){topo=t; L[N-1].on=t!=='line'; L[N].on=t==='mesh';}
   const live=l=>l.on&&l.up&&P[l.a].up&&P[l.b].up;
   function sp(s,skip){
@@ -1623,8 +1642,8 @@ function packets(g,d,dur,lag,colors){
     $('xn-reach').textContent=all?'Every site':'Split'; $('xn-worst').textContent=ms(worst); $('xn-route').textContent=txt;
     document.querySelector('.xn-pl').textContent='PATH '+P[src].n+' → '+P[dst].n;
     const cuts=L.filter(l=>l.on&&!l.up).length;
-    $('xn-prot').textContent=!cuts?'Standing by':all?'Switched in ~50 ms':'Fabric split';
-    $('xn-cut').setAttribute('aria-pressed',!L[2].up); $('xn-down').setAttribute('aria-pressed',!P[1].up);
+    const off=N-up; $('xn-prot').textContent=!all?'Fabric split':cuts?'Switched in ~50 ms':off?'Routing around '+off+' site'+(off>1?'s':''):'Standing by';
+    SCN.forEach(c=>c.k!=='rnd'&&c.b.setAttribute('aria-pressed',act===c.k&&scnOn(c)));
     $('xn-reset').disabled=L.every(l=>l.up)&&P.every(p=>p.up);  // nothing to restore while the network is whole
     // topology view
     const built=L.filter(l=>l.on);
@@ -1648,9 +1667,7 @@ function packets(g,d,dur,lag,colors){
     const lit=built.filter(live).length;
     $('xn-c-lit').textContent=lit+' / '+built.length; $('xn-c-tot').textContent=(lit*0.2).toFixed(1)+' Pb/s';
   }
-  $('xn-cut').addEventListener('click',()=>{L[2].up=!L[2].up;upd();});
-  $('xn-down').addEventListener('click',()=>{P[1].up=!P[1].up;upd();});
-  $('xn-reset').addEventListener('click',()=>{L.forEach(l=>l.up=true);P.forEach(p=>p.up=true);upd();});
+  $('xn-reset').addEventListener('click',()=>{L.forEach(l=>l.up=true);P.forEach(p=>p.up=true);$('xn-fail-why').textContent='Restored.';upd();});
   document.querySelectorAll('[data-topo]').forEach(b=>b.addEventListener('click',()=>{setTopo(b.dataset.topo); upd();}));
   document.querySelectorAll('[data-halls]').forEach(b=>b.addEventListener('click',()=>{build(+b.dataset.halls); upd();}));
   document.querySelectorAll('.xnav [data-view]').forEach(b=>b.addEventListener('click',()=>{view=b.dataset.view;
