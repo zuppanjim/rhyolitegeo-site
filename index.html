@@ -534,7 +534,11 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--line);padding-top:20px
   <span class="credit">Illustrative design rendering · 30 MW tilt-up campus</span>
 </div></section>
 
-<section id="reel" aria-label="Image reel">
+<section id="reel" aria-label="Image reel"><div class="wrap">
+  <span class="eyebrow">From the drawing board to the engine hall</span>
+  <h2 style="margin-top:12px;max-width:24ch">What a campus with its own power looks like</h2>
+  <p class="lede" style="margin-top:18px">Our design renderings, and the reciprocating-engine plants already running elsewhere that show what the generation side becomes. Drag or scroll to look closer.</p>
+</div>
   <div class="reel" tabindex="0" aria-label="Scrollable images"><div class="track">
     <figure><img src="assets/design-tristate.jpg" alt="30 MW tilt-up campus rendering" loading="lazy"><figcaption><b>30 MW tilt-up campus</b><span>Our illustrative design rendering</span></figcaption></figure>
     <figure><img src="assets/hero-datacenter.jpg" alt="Modular data center with its own generation" loading="lazy"><figcaption><b>Modular hall with its own generation</b><span>Our illustrative design rendering</span></figcaption></figure>
@@ -1421,14 +1425,15 @@ function route(g,y0,terms,cls,stroke,w){let d='';for(let x=0;x<=2*SW;x+=10)d+=(x
     r.racks=part((g,gc,gh)=>{[429,538].forEach(x=>{for(let j=0;j<4;j++)el('rect',{x,y:y+2+j*9,width:7,height:7,fill:gh?'none':'#E9A84F',stroke:gc||'#7A4E16','stroke-width':.6},g);});});
     // the feeder collects along both stamps' buses, crosses to its own lane in the centre corridor and runs down into the hall
     // (left pairs take the inner lanes top-down, right pairs the outer, so no feeder crosses another)
-    const left=k%2===0, by=STY[k>>1]+42, lane=left?474-(k>>1)*8:502+(k>>1)*8;
+    // blocks draw from the stamp row nearest the hall first; lanes stay keyed to the stamp row, so no feeder crosses another
+    const sr=2-(k>>1), left=k%2===0, by=STY[sr]+42, lane=left?474-sr*8:502+sr*8;
     r.feed=el('path',{d:`M${left?166:812} ${by}H${lane}V${y+20}`,pathLength:100,stroke:'#C2622F','stroke-width':3,fill:'none','stroke-linejoin':'round','stroke-dasharray':'100','stroke-dashoffset':'100',style:'transition:stroke-dashoffset 1.8s ease-in-out'},v);
-    r.st=[stamps[2*k],stamps[2*k+1]]; rows.push(r);
+    r.st=[stamps[sr*4+(k%2)*2],stamps[sr*4+(k%2)*2+1]]; rows.push(r);
   }
   // labels: what each piece of the plan is
   const lab=(x,y,t,o={})=>el('text',Object.assign({x,y,'text-anchor':'middle','font-family':mono,'font-size':15,'letter-spacing':.4,fill:'#5A4632'},o),v).textContent=t;
   lab(489,80,'BLOOM FUEL CELL STAMPS · 12',{'font-size':18,'font-weight':600});
-  for(let k=0;k<6;k++){const x=k%2?818:160; lab(k%2?x+16:x-16,STY[k>>1]+46,'B'+(k+1),{'font-size':14,'font-weight':600,fill:'#7A6B58'});}
+  for(let k=0;k<6;k++){const x=k%2?818:160; lab(k%2?x+16:x-16,STY[2-(k>>1)]+46,'B'+(k+1),{'font-size':14,'font-weight':600,fill:'#7A6B58'});}
   lab(556,414,'← GAS + DC FEEDERS',{'text-anchor':'start','font-size':14,fill:'#A84E22'});
   lab(286,466,'DRY COOLERS'); lab(688,466,'DRY COOLERS');
   [85,890].forEach(x=>{lab(x,446,'480VAC'); lab(x,464,'BLOOM FUEL CELLS');});
