@@ -46,7 +46,8 @@ section{padding-block:88px}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
 header.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--surface);border-bottom:1px solid var(--line)}
 header.bar .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:66px}
-.logo{display:block;height:46px;width:auto;max-width:62vw}
+.logo{display:block;height:74px;width:auto;max-width:62vw}
+@media (max-width:1100px){.logo{height:60px}}
 header.bar .wrap{min-height:78px}
 /* partners */
 .partners{padding-block:44px;border-bottom:1px solid var(--line)}
@@ -63,7 +64,7 @@ nav.main{display:flex;gap:26px;font-family:var(--display);font-size:15px;font-we
 nav.main a{color:var(--ink);text-decoration:none}
 nav.main a:hover,nav.main a[aria-current]{color:var(--oxide)}
 @media (max-width:820px){nav.main .hide-sm{display:none}}
-@media (max-width:560px){nav.main{gap:16px;font-size:14px}nav.main .hide-xs{display:none}header.bar .logo{max-width:140px;height:auto}}
+@media (max-width:560px){nav.main{gap:16px;font-size:14px}nav.main .hide-xs{display:none}header.bar .logo{max-width:210px;height:auto}}
 
 /* hero carousel */
 .hero{position:relative;background:#1c140c;color:var(--on-dark);overflow:hidden}
