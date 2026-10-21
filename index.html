@@ -261,6 +261,21 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--line);padding-top:20px
 @keyframes shade{0%,50%,96%,100%{transform:rotate(0)}58%,86%{transform:rotate(-135deg)}}
 .motion .pin{animation:pin 2.4s ease-out infinite;transform-box:fill-box;transform-origin:center}
 .motion .tw{animation:tw 3s ease-in-out infinite alternate}
+.ctscape::after,.ctscape .wrap{pointer-events:none}
+.ctscape .qbtn{cursor:pointer}
+.ctscape .wrap .scrolldn{pointer-events:auto;align-self:flex-start;cursor:pointer;background:rgba(28,20,12,.35);border:1px solid #E9A275;padding:9px 16px;display:inline-flex;gap:10px;align-items:center}
+.ctscape .scrolldn:hover{background:#E9A275;color:#1c140c}
+.ctscape .scrolldn span{display:inline-block}
+.motion .ctscape .scrolldn span{animation:dn 1.6s ease-in-out infinite}
+@keyframes dn{50%{transform:translateY(4px)}}
+.ctscape .qbtn:hover ellipse,.ctscape .qbtn[aria-expanded="true"] ellipse{fill:#FFF3D6;stroke:#E07A1F;stroke-width:2.4}
+.ctscape .qbtn:focus{outline:none}.ctscape .qbtn:focus-visible ellipse{stroke:#E07A1F;stroke-width:3}
+.qtip{position:absolute;z-index:3;width:min(280px,80vw);background:#FBF6EC;color:#2A180E;border-top:4px solid #E07A1F;padding:14px 16px;box-shadow:0 10px 30px rgba(0,0,0,.45);display:flex;flex-direction:column;gap:10px}
+.qtip[hidden]{display:none}
+.qtip b{font-family:var(--sans,Archivo,sans-serif);font-size:18px;line-height:1.3}
+.qtip a{font-family:var(--mono);font-size:13px;color:#A8321F}
+.motion .flap{animation:flap .32s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:center}
+@keyframes flap{to{transform:scaleY(.45)}}
 .motion .qpop{animation:qpop 5s ease-in-out infinite;transform-box:fill-box;transform-origin:0 100%}
 @keyframes qpop{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px) rotate(-3deg)}}
 @keyframes tw{to{opacity:.25}}
@@ -563,16 +578,17 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--line);padding-top:20px
 
 <!-- =================== CONTACT =================== -->
 <main id="v-contact" hidden>
-<section class="phero scape" style="padding:0">
+<section class="phero scape ctscape" style="padding:0">
   <svg class="view" id="ctview" viewBox="0 0 1600 700" preserveAspectRatio="xMaxYMax slice" role="img" aria-label="Illustrated: a brick town hall on Halloween night under an orange harvest moon, jack-o-lanterns on the steps, and a crowd in costume, witches, pumpkin heads, ghosts, devils and a vampire, with their hands up and questions over their heads"></svg>
-  <span style="position:absolute;right:16px;bottom:12px;z-index:1;font-family:var(--mono);font-size:11px;color:#BFAF97">Illustration · a town hall on Halloween night</span>
+  <span style="position:absolute;right:16px;bottom:12px;z-index:1;font-family:var(--mono);font-size:11px;color:#BFAF97">Illustration · a town hall on Halloween night · tap a question</span>
+  <div class="qtip" role="dialog" aria-live="polite" hidden><b></b><a href="mailto:info@rhydev.com">Ask us this</a></div>
   <div class="wrap">
-    <span class="eyebrow">Contact</span>
+    <button class="eyebrow scrolldn" type="button" onclick="document.getElementById('ctqs').scrollIntoView({behavior:'smooth'})">Contact <span aria-hidden="true">↓</span></button>
     <h1>Ask us anything</h1>
     <p>A site near you, a project waiting on power, a resource with output to spare. Bring the question; a person answers it.</p>
   </div>
 </section>
-<section><div class="wrap">
+<section id="ctqs"><div class="wrap">
   <span class="eyebrow">What people ask us</span>
   <h2>One inbox for every question</h2>
   <div class="qs">
@@ -1549,9 +1565,26 @@ function route(g,y0,terms,cls,stroke,w){let d='';for(let x=0;x<=2*SW;x+=10)d+=(x
   [[1208,150,22,.2],[1272,198,16,.16],[1262,126,10,.15],[1204,206,9,.13]].forEach(([cx,cy,r,o])=>el('circle',{cx,cy,r,fill:'#B85A1C','fill-opacity':o},moon));
   // bats crossing the moon
   const bats=layer(v,70);
-  [[200,120,1],[330,90,.7],[900,150,.9],[1180,110,1.2],[1500,80,.8],[1760,140,1],[2400,100,.9],[2900,60,.7]].forEach(([x,y,k])=>{
+  const flock=[[200,120,1],[330,90,.7],[900,150,.9],[1180,110,1.2],[1500,80,.8],[1760,140,1],[2400,100,.9],[2900,60,.7]];
+  for(let i=0;i<34;i++)flock.push([(i*283+90)%(2*SW),40+(i*97)%300,.55+(i*37%60)/100]);
+  // a knot of them circling the moon
+  [[1150,110,1.1],[1196,88,.8],[1300,96,.9],[1338,150,.7],[1128,214,.75],[1352,236,.95],[1270,262,.6]].forEach(b=>flock.push(b));
+  flock.forEach(([x,y,k],i)=>{
     const s=n=>(n*k).toFixed(1);
-    el('path',{d:`M${x} ${y}q${s(-8)} ${s(-8)} ${s(-18)} ${s(-4)}q${s(6)} ${s(2)} ${s(8)} ${s(7)}q${s(5)} ${s(-4)} ${s(10)} ${s(-1)}q${s(5)} ${s(-3)} ${s(10)} ${s(1)}q${s(2)} ${s(-5)} ${s(8)} ${s(-7)}q${s(-10)} ${s(-4)} ${s(-18)} ${s(4)}Z`,fill:P.dark},bats);
+    el('path',{d:`M${x} ${y}q${s(-8)} ${s(-8)} ${s(-18)} ${s(-4)}q${s(6)} ${s(2)} ${s(8)} ${s(7)}q${s(5)} ${s(-4)} ${s(10)} ${s(-1)}q${s(5)} ${s(-3)} ${s(10)} ${s(1)}q${s(2)} ${s(-5)} ${s(8)} ${s(-7)}q${s(-10)} ${s(-4)} ${s(-18)} ${s(4)}Z`,fill:P.dark,class:'flap',style:`animation-delay:-${(i*.13%.4).toFixed(2)}s`},bats);
+  });
+  // a witch on her broom, flying across the moon
+  const fly=layer(v,48);
+  [1290,1290+SW].forEach(ox=>{
+    const w=el('g',{transform:`translate(${ox} 112) scale(1.35)`,fill:P.dark},el('g',{class:'qpop'},fly));
+    el('path',{d:'M-30 3L30 9',stroke:P.dark,'stroke-width':2.6,'stroke-linecap':'round'},w);
+    el('path',{d:'M28 7L50 -3Q57 9 51 23Z'},w);
+    el('path',{d:'M-8 4L16 6L6 -26Z M6 -24Q26 -18 36 -2Q26 0 16 6Z'},w);
+    el('path',{d:'M2 -18L-22 2',stroke:P.dark,'stroke-width':3.4,'stroke-linecap':'round'},w);
+    el('circle',{cx:2,cy:-31,r:6.5},w);
+    el('path',{d:'M-4 -31L-11 -28L-4 -27Z'},w);
+    el('path',{d:'M-12 -35L14 -38L13 -35Z M-5 -36Q4 -46 18 -60Q10 -46 9 -37Z'},w);
+    el('path',{d:'M6 -28Q20 -26 24 -16',stroke:P.dark,'stroke-width':2,fill:'none'},w);
   });
   // the hills behind the town
   strip(v,x=>455+wave(x,[[2,16,.4],[5,6,1.7],[9,3,.2]]),'#4A2B18',.95);
@@ -1647,8 +1680,15 @@ function route(g,y0,terms,cls,stroke,w){let d='';for(let x=0;x<=2*SW;x+=10)d+=(x
     }
   }
   // a question over a raised hand
+  // each bubble is a button; a click opens the question that person is asking
+  const QS=['How loud is it at the fence line?','Will it raise my power bill?','How much water does it use?','Where does the gas come from?',
+    'How many local jobs, and for how long?','What happens to our road while you build?','Will we see the lights at night?','Does it pay county property tax?',
+    'What happens if the gas supply stops?','Who do I call if something goes wrong?','How tall are the buildings?','Can my business buy power from it?',
+    'What happens to the site in thirty years?','Is there anything left to see at the fence?'];
+  let nq=0;
   function ask(g,x,y,s,i){
-    const S=n=>+(n*s).toFixed(1), q=el('g',{class:'qpop',style:`animation-delay:-${((i*1.7)%5).toFixed(1)}s`},g);
+    const qn=QS[nq++%QS.length];
+    const S=n=>+(n*s).toFixed(1), q=el('g',{class:'qpop qbtn',role:'button',tabindex:0,'aria-label':'Question: '+qn,'data-q':qn,style:`animation-delay:-${((i*1.7)%5).toFixed(1)}s`},g);
     el('path',{d:`M${x+S(4)} ${y-S(6)}L${x} ${y+S(8)}L${x+S(12)} ${y-S(4)}Z`,fill:'#F6E2B8'},q);
     el('ellipse',{cx:x+S(14),cy:y-S(18),rx:S(17),ry:S(14),fill:'#F6E2B8',stroke:P.dark,'stroke-width':1.2},q);
     el('text',{x:x+S(14),y:y-S(11),'text-anchor':'middle','font-family':'Archivo, sans-serif','font-weight':800,'font-size':S(20),fill:P.red},q).textContent='?';
@@ -1664,6 +1704,25 @@ function route(g,y0,terms,cls,stroke,w){let d='';for(let x=0;x<=2*SW;x+=10)d+=(x
       if(up&&(i+row)%2===0)ask(bubbles,x+16*s,y-98*s,s,i);
     }
   });
+  const hero=v.parentNode, tip=hero.querySelector('.qtip');
+  let open=null;
+  function close(){tip.hidden=true;if(open)open.setAttribute('aria-expanded','false');open=null;}
+  function pop(b){
+    if(open===b)return close();
+    close(); open=b; b.setAttribute('aria-expanded','true');
+    const q=b.dataset.q, hr=hero.getBoundingClientRect(), br=b.getBoundingClientRect();
+    tip.querySelector('b').textContent=q;
+    tip.querySelector('a').href='mailto:info@rhydev.com?subject='+encodeURIComponent(q);
+    tip.hidden=false;
+    const w=tip.offsetWidth, h=tip.offsetHeight;
+    tip.style.left=Math.max(8,Math.min(hr.width-w-8,br.left-hr.left+br.width/2-w/2))+'px';
+    tip.style.top=Math.max(8,br.top-hr.top-h-10)+'px';
+  }
+  bubbles.addEventListener('click',e=>{const b=e.target.closest('.qbtn');if(b){e.stopPropagation();pop(b);}});
+  bubbles.addEventListener('keydown',e=>{const b=e.target.closest('.qbtn');if(b&&(e.key==='Enter'||e.key===' ')){e.preventDefault();pop(b);}});
+  tip.addEventListener('click',e=>e.stopPropagation());
+  document.addEventListener('click',close);
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')close();});
 })();
 
 // ridgelines over every closing band, so each page ends on the same horizon
