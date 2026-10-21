@@ -249,7 +249,7 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--line);padding-top:20px
 @keyframes pin{0%{transform:scale(.4);opacity:.9}100%{transform:scale(2.6);opacity:0}}
 .svc{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:40px}
 .svc>div{background:var(--surface);padding:28px 26px;min-width:0}
-.xcon{display:grid;grid-template-columns:1.5fr 1fr;background:#1c140c;color:#E8DCC8;border:1px solid #3a2c20;margin-top:36px}
+.xcon{display:grid;grid-template-columns:1.5fr 1fr 148px;background:#1c140c;color:#E8DCC8;border:1px solid #3a2c20;margin-top:36px}
 .xcon svg{display:block;width:100%;height:auto;background:#140f0b}
 .xcon .hud{border-left:1px solid #3a2c20;padding:22px;font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;color:#BFAF97;display:flex;flex-direction:column;gap:14px;min-width:0}
 .hud .tag{color:#E9A275;font-size:10.5px}
@@ -262,6 +262,22 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--line);padding-top:20px
 .hud button:hover,.hud button[aria-pressed="true"]{background:#E9A275;color:#1c140c}
 .hud button:disabled{opacity:.35;cursor:default;background:none;color:inherit}
 .hud button:focus-visible{outline:2px solid #FBF6EC;outline-offset:2px}
+.xnav{display:flex;flex-direction:column;border-left:1px solid #3a2c20;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em}
+.xnav span{padding:22px 16px 10px;color:#7d6b57}
+.xnav button{all:unset;cursor:pointer;padding:13px 16px;color:#BFAF97;border-top:1px solid #2a1f17;border-left:3px solid transparent}
+.xnav button:last-child{border-bottom:1px solid #2a1f17}
+.xnav button:hover{color:#FBF6EC;background:#241a12}
+.xnav button[aria-pressed="true"]{color:#E9A275;border-left-color:#E9A275;background:#241a12}
+.xnav button:focus-visible{outline:2px solid #FBF6EC;outline-offset:-2px}
+.hud [data-m]{display:flex;flex-direction:column;gap:14px}
+.hud [data-m][hidden]{display:none}
+.hud .why{font-size:11.5px;line-height:1.65;letter-spacing:.02em;color:#BFAF97;margin:0}
+.hud .why b{font-family:inherit;font-size:inherit;font-weight:600;color:#E8DCC8}
+.hud .pick{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.hud .pick span{width:44px}
+.hud .pick button{padding:6px 9px}
+.hud .sw{display:inline-block;width:18px;height:3px;margin-right:8px;vertical-align:middle}
+@media (max-width:1100px){.xcon{grid-template-columns:1.5fr 1fr}.xnav{grid-column:1/-1;grid-row:2;flex-direction:row;flex-wrap:wrap;border-left:0;border-top:1px solid #3a2c20}.xnav span{display:none}.xnav button{border:0;border-bottom:3px solid transparent;border-left:0}.xnav button:last-child{border:0}.xnav button[aria-pressed="true"]{border-bottom:3px solid #E9A275}}
 @media (max-width:900px){.xcon{grid-template-columns:1fr}.xcon .hud{border-left:0;border-top:1px solid #3a2c20}}
 .motion .scan{animation:scan 8s linear infinite}
 @keyframes scan{from{transform:translateX(-300px)}to{transform:translateX(1700px)}}
@@ -1083,23 +1099,74 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--line);padding-top:20px
 <section><div class="wrap">
   <span class="eyebrow">The fabric, in motion</span>
   <h2 style="margin-top:12px;max-width:26ch">Cut a span. Take a site down. Watch it route around.</h2>
-  <p class="lede" style="margin-top:18px">Six sites on a ring of dedicated fiber with one cross-link. Click a span to cut it or a site to take it offline, and the fabric finds the next shortest path.</p>
+  <p class="lede" style="margin-top:18px">Six sites on a ring of dedicated fiber with one cross-link. Click a span to cut it or a site to take it offline, and the fabric finds the next shortest path. The view menu switches the picture: the topology, the optics each span needs, any path between two sites, the latency a training step pays, and the capacity on the glass.</p>
   <div class="xcon">
     <svg id="xnet" viewBox="0 0 560 400" role="img" aria-label="Interactive simulation: six sites joined by fiber; cutting spans or removing sites reroutes traffic"></svg>
     <div class="hud">
       <span class="tag">SIMULATION · NOT LIVE DATA</span>
-      <div class="row"><span>SITES ONLINE</span><b id="xn-up">6 / 6</b></div>
-      <div><div class="row" style="border:0;padding:0"><span>FABRIC CAPACITY</span><b id="xn-cap">100%</b></div><div class="bar"><i id="xn-capbar" style="width:100%"></i></div></div>
-      <div class="row"><span>REACHABILITY</span><b id="xn-reach">Every site</b></div>
-      <div class="row"><span>WORST PAIR, ONE WAY</span><b id="xn-worst">–</b></div>
-      <div class="row" style="flex-direction:column"><span>PATH A → D</span><b id="xn-route" style="font-size:17px">–</b></div>
-      <div class="ctl">
-        <button type="button" id="xn-cut" aria-pressed="false">✂ CUT C–D</button>
-        <button type="button" id="xn-down" aria-pressed="false">⏻ SITE B OFFLINE</button>
-        <button type="button" id="xn-reset">↺ RESTORE</button>
+      <div data-m="fail">
+        <div class="row"><span>SITES ONLINE</span><b id="xn-up">6 / 6</b></div>
+        <div><div class="row" style="border:0;padding:0"><span>FABRIC CAPACITY</span><b id="xn-cap">100%</b></div><div class="bar"><i id="xn-capbar" style="width:100%"></i></div></div>
+        <div class="row"><span>REACHABILITY</span><b id="xn-reach">Every site</b></div>
+        <div class="row"><span>WORST PAIR, ONE WAY</span><b id="xn-worst">–</b></div>
+        <div class="row" style="flex-direction:column"><span class="xn-pl">PATH A → D</span><b id="xn-route" style="font-size:17px">–</b></div>
+        <div class="row"><span>PROTECTION</span><b id="xn-prot" style="font-size:15px">Standing by</b></div>
+        <div class="ctl">
+          <button type="button" id="xn-cut" aria-pressed="false">✂ CUT C–D</button>
+          <button type="button" id="xn-down" aria-pressed="false">⏻ SITE B OFFLINE</button>
+          <button type="button" id="xn-reset">↺ RESTORE</button>
+        </div>
+      </div>
+      <div data-m="topo" hidden>
+        <div class="ctl">
+          <button type="button" data-topo="line" aria-pressed="false">LINE</button>
+          <button type="button" data-topo="ring" aria-pressed="false">RING</button>
+          <button type="button" data-topo="mesh" aria-pressed="true">RING + CROSS-LINK</button>
+        </div>
+        <div class="row"><span>SPANS BUILT</span><b id="xn-spans">7</b></div>
+        <div class="row"><span>SINGLE POINTS OF FAILURE</span><b id="xn-spof">0</b></div>
+        <div class="row"><span>ROUTE KM BUILT</span><b id="xn-km">–</b></div>
+        <p class="why" id="xn-topo-why"></p>
+      </div>
+      <div data-m="optics" hidden>
+        <div class="row"><span><i class="sw" style="background:#7FB8CC"></i>ZR · TO 80 KM</span><b id="xn-zr">–</b></div>
+        <div class="row"><span><i class="sw" style="background:#E9B95A"></i>ZR+ · 80 TO 120 KM</span><b id="xn-zrp">–</b></div>
+        <div class="row"><span><i class="sw" style="background:#C77DDB"></i>AMPLIFIED · PAST 120 KM</span><b id="xn-amp">–</b></div>
+        <p class="why">Spans to <b>80 km</b> run 800G ZR pluggables straight in the switch, transceiver to transceiver, with no transponder shelf. <b>80 to 120 km</b> needs ZR+ optics and a tighter loss budget. Past <b>120 km</b> the span needs an amplified line system with a powered hut mid-span, or a site placed closer. Placing sites inside the ZR reach keeps the network commodity.</p>
+      </div>
+      <div data-m="path" hidden>
+        <div class="pick" id="xn-from"><span>FROM</span></div>
+        <div class="pick" id="xn-to"><span>TO</span></div>
+        <div class="row" style="flex-direction:column"><span>ROUTE</span><b id="xn-p-route" style="font-size:17px">–</b></div>
+        <div class="row"><span>HOPS · FIBER KM</span><b id="xn-p-km">–</b></div>
+        <div class="row"><span>ONE WAY</span><b id="xn-p-ow">–</b></div>
+        <div class="row"><span>ROUND TRIP</span><b id="xn-p-rt">–</b></div>
+      </div>
+      <div data-m="reduce" hidden>
+        <div class="row"><span>RANKS ON THE RING</span><b id="xn-r-n">–</b></div>
+        <div class="row"><span>AVERAGE HOP</span><b id="xn-r-hop">–</b></div>
+        <div class="row"><span>LATENCY TERM · 2(N−1) HOPS</span><b id="xn-r-term">–</b></div>
+        <div class="row"><span>SYNCS A SECOND, CEILING</span><b id="xn-r-max">–</b></div>
+        <p class="why">Every data-parallel training step ends in a ring all-reduce: each shard passes to the next rank and around. We number the ranks in ring order, so <b>every logical hop is a physical nearest-neighbour hop</b> and no span carries two flows. Cut a span and the ring closes the other way, at a longer term. Fine for training with large steps; not for work that syncs many times a second.</p>
+      </div>
+      <div data-m="cap" hidden>
+        <div class="row"><span>SPANS LIT</span><b id="xn-c-lit">–</b></div>
+        <div class="row"><span>PER SPAN, EACH WAY</span><b>~200 Tb/s</b></div>
+        <div class="row"><span>ON THE GLASS, EACH WAY</span><b id="xn-c-tot">–</b></div>
+        <div class="row"><span>FIBER PAIRS</span><b style="font-size:15px">3 lit · 4 to 6 built</b></div>
+        <p class="why">Each span is one cable of <b>96 to 144 fibers</b>. Coherent 800G waves across the C and L bands, about <b>250 a span</b>, carry roughly 200 Tb/s each way. The east and west pairs ride separate ducts where the right of way allows, and the spare pairs take maintenance without taking a direction down.</p>
       </div>
       <span class="tag">Latency at 5 µs per fiber km. Spans not to scale.</span>
     </div>
+    <nav class="xnav" aria-label="Simulation views">
+      <span>VIEW</span>
+      <button type="button" data-view="fail" aria-pressed="true">FAILURES</button>
+      <button type="button" data-view="topo" aria-pressed="false">TOPOLOGY</button>
+      <button type="button" data-view="optics" aria-pressed="false">OPTICS</button>
+      <button type="button" data-view="path" aria-pressed="false">PATH</button>
+      <button type="button" data-view="reduce" aria-pressed="false">ALL-REDUCE</button>
+      <button type="button" data-view="cap" aria-pressed="false">CAPACITY</button>
+    </nav>
   </div>
 </div></section>
 
@@ -1471,57 +1538,107 @@ function packets(g,d,dur,lag,colors){
   for(let x=0;x<=560;x+=40)el('line',{x1:x,y1:0,x2:x,y2:400},grid);
   for(let y=0;y<=400;y+=40)el('line',{x1:0,y1:y,x2:560,y2:y},grid);
   const P='ABCDEF'.split('').map((n,i)=>{const a=-Math.PI/2+i*TAU/6;return{n,x:280+190*Math.cos(a),y:200+150*Math.sin(a),up:true};});
-  const L=[[0,1,80],[1,2,120],[2,3,95],[3,4,140],[4,5,70],[5,0,110],[2,5,190]].map(([a,b,km])=>({a,b,km,up:true}));
+  // the ring is spans 0-5 in geographic order (5 is the closure F-A); 6 is the cross-link
+  const L=[[0,1,80],[1,2,120],[2,3,95],[3,4,140],[4,5,70],[5,0,110],[2,5,190]].map(([a,b,km])=>({a,b,km,up:true,on:true}));
+  const OPT=km=>km<=80?['ZR','#7FB8CC']:km<=120?['ZR+','#E9B95A']:['AMP','#C77DDB'];
   const gL=el('g',{fill:'none'},svg), gR=el('g',{fill:'none'},svg), gP=el('g',{},svg), gN=el('g',{},svg);
   L.forEach((l,i)=>{
     const A=P[l.a],B=P[l.b]; l.d=`M${A.x.toFixed(1)} ${A.y.toFixed(1)}L${B.x.toFixed(1)} ${B.y.toFixed(1)}`;
     l.p=el('path',{d:l.d,stroke:'#7FB8CC','stroke-width':1.6},gL);
-    el('path',{d:l.d,stroke:'transparent','stroke-width':20,style:'cursor:pointer'},gL).addEventListener('click',()=>{l.up=!l.up;upd();});
+    l.h=el('path',{d:l.d,stroke:'transparent','stroke-width':20,style:'cursor:pointer'},gL); l.h.addEventListener('click',()=>{l.up=!l.up;upd();});
     const mx=(A.x+B.x)/2, my=(A.y+B.y)/2, ox=(mx-280)*.12, oy=(my-200)*.12;
     l.t=el('text',{x:(mx+ox).toFixed(1),y:(my+oy+4).toFixed(1),'text-anchor':'middle','font-family':MONO,'font-size':10.5,fill:'#9C8B74','pointer-events':'none'},gL);
     l.pk=el('g',{},gP); packets(l.pk,l.d,1.4+i*.21,i*.3,['#CFEAF3','#E9A275']);
   });
   const route=el('path',{class:'flow',stroke:'#E9A275','stroke-width':4,'stroke-opacity':.8,'stroke-linejoin':'round'},gR);
-  P.forEach(p=>{
+  P.forEach((p,i)=>{
     p.g=el('g',{transform:`translate(${p.x.toFixed(1)} ${p.y.toFixed(1)})`,style:'cursor:pointer'},gN);
     el('circle',{r:34,fill:'url(#xnglow2)'},p.g);
     p.ring=el('circle',{r:13,fill:'none',stroke:'#E9A275','stroke-width':1.2,class:'pin'},p.g);
-    el('rect',{x:-12,y:-12,width:24,height:24,fill:'#1c140c',stroke:'#E9A275','stroke-width':1.6},p.g);
+    p.box=el('rect',{x:-12,y:-12,width:24,height:24,fill:'#1c140c',stroke:'#E9A275','stroke-width':1.6},p.g);
     el('text',{y:4.5,'text-anchor':'middle','font-family':'Archivo, sans-serif','font-weight':700,'font-size':13,fill:'#FBF6EC'},p.g).textContent=p.n;
     p.g.addEventListener('click',()=>{p.up=!p.up;upd();});
   });
-  function sp(s){
+  const live=l=>l.on&&l.up&&P[l.a].up&&P[l.b].up;
+  function sp(s,skip){
     const n=6, dist=Array(n).fill(Infinity), prev=Array(n).fill(-1), done=Array(n).fill(false); dist[s]=0;
     for(let k=0;k<n;k++){let u=-1;for(let v=0;v<n;v++)if(!done[v]&&P[v].up&&(u<0||dist[v]<dist[u]))u=v;
       if(u<0||dist[u]===Infinity)break; done[u]=true;
-      L.forEach(l=>{if(!l.up||!P[l.a].up||!P[l.b].up)return;const v=l.a===u?l.b:l.b===u?l.a:-1;
+      L.forEach(l=>{if(l===skip||!live(l))return;const v=l.a===u?l.b:l.b===u?l.a:-1;
         if(v>=0&&dist[u]+l.km<dist[v]){dist[v]=dist[u]+l.km;prev[v]=u;}});}
     return{dist,prev};
   }
-  const $=id=>document.getElementById(id), ms=km=>(km*.005).toFixed(2)+' ms';
+  const walk=(r,t)=>{const pts=[];for(let v=t;v>=0;v=r.prev[v])pts.unshift(v);return pts;};
+  const line=pts=>pts.map((v,k)=>(k?'L':'M')+P[v].x.toFixed(1)+' '+P[v].y.toFixed(1)).join('');
+  const whole=skip=>{const ups=P.map((p,i)=>i).filter(i=>P[i].up); if(!ups.length)return true; const r=sp(ups[0],skip); return ups.every(i=>r.dist[i]<Infinity);};
+  const $=id=>document.getElementById(id), ms=km=>(km*.005).toFixed(2)+' ms', us=km=>Math.round(km*5)+' µs';
+  let view='fail', topo='mesh', src=0, dst=3;
+  const WHY={line:'A line of six sites has <b>five single points of failure</b>. Any cut strands every site beyond it, and one collective becomes two broken ones.',
+    ring:'Closing the line back on itself gives every site <b>two separate paths</b> to every other. A cut sends traffic the other way round, and the fabric runs on at longer latency instead of splitting. The closure span is the one bought for resilience rather than throughput.',
+    mesh:'The cross-link adds a third path and shortens the long way round. A cut costs less latency, and two cuts at once still leave the fabric whole in most cases.'};
+  // endpoint pickers for the path view
+  ['xn-from','xn-to'].forEach((id,k)=>P.forEach((p,i)=>{const b=document.createElement('button'); b.type='button'; b.textContent=p.n;
+    b.addEventListener('click',()=>{if(k)dst=i;else src=i;upd();}); $(id).appendChild(b); p[k?'tb':'fb']=b;}));
   function upd(){
-    L.forEach(l=>{const live=l.up&&P[l.a].up&&P[l.b].up;
-      l.p.setAttribute('stroke',l.up?'#7FB8CC':'#E05A3A');
+    // spans
+    L.forEach(l=>{const on=l.on, lv=live(l), [cls,oc]=OPT(l.km);
+      [l.p,l.t,l.h].forEach(e=>e.style.display=on?'':'none');
+      const col=!l.up?'#E05A3A':view==='optics'?oc:'#7FB8CC';
+      l.p.setAttribute('stroke',col); l.p.setAttribute('stroke-width',view==='optics'&&l.up?2.6:1.6);
       l.p.setAttribute('stroke-dasharray',l.up?'none':'3 6');
-      l.p.setAttribute('stroke-opacity',live?.7:l.up?.15:.95);
-      l.pk.style.display=live?'':'none'; l.t.textContent=l.up?l.km+' km':'CUT';});
-    P.forEach(p=>{p.g.style.opacity=p.up?1:.28;p.ring.style.display=p.up?'':'none';});
-    let txt='No path', d='M0 0';
-    if(P[0].up&&P[3].up){const r=sp(0);if(r.dist[3]<Infinity){const pts=[];for(let v=3;v>=0;v=r.prev[v])pts.unshift(v);
-      d=pts.map((v,k)=>(k?'L':'M')+P[v].x.toFixed(1)+' '+P[v].y.toFixed(1)).join('');
-      txt=pts.map(v=>P[v].n).join(' → ')+'  ·  '+ms(r.dist[3]);}}
+      l.p.setAttribute('stroke-opacity',lv?(view==='optics'?.95:.7):l.up?.15:.95);
+      l.pk.style.display=lv&&view!=='optics'?'':'none';
+      l.t.textContent=!l.up?'CUT':view==='optics'?l.km+' km · '+cls:view==='topo'&&lv&&!whole(l)?l.km+' km · SPOF':l.km+' km';
+      l.t.setAttribute('fill',view==='topo'&&lv&&!whole(l)?'#E05A3A':'#9C8B74');});
+    P.forEach((p,i)=>{p.g.style.opacity=p.up?1:.28;p.ring.style.display=p.up?'':'none';
+      p.box.setAttribute('stroke',view==='path'&&(i===src||i===dst)?'#FBF6EC':'#E9A275');
+      p.fb.setAttribute('aria-pressed',i===src); p.tb.setAttribute('aria-pressed',i===dst);});
+    // the highlighted route: A to D, the chosen pair, or the all-reduce ring
+    let d='M0 0', txt='No path', pts=[], km=0;
+    if(P[src].up&&P[dst].up){const r=sp(src); if(r.dist[dst]<Infinity){pts=walk(r,dst); km=r.dist[dst]; d=line(pts); txt=pts.map(v=>P[v].n).join(' → ')+'  ·  '+ms(km);}}
     else txt='Endpoint offline';
-    route.setAttribute('d',d);
-    let worst=0, whole=true; const up=P.filter(p=>p.up).length;
-    P.forEach((p,i)=>{if(!p.up)return;const r=sp(i);P.forEach((q,j)=>{if(q.up&&j!==i){if(r.dist[j]===Infinity)whole=false;else worst=Math.max(worst,r.dist[j]);}});});
+    const ranks=P.map((p,i)=>i).filter(i=>P[i].up); let ring=0, rd='', broken=false;
+    ranks.forEach((u,k)=>{if(ranks.length<2)return; const v=ranks[(k+1)%ranks.length], r=sp(u); if(r.dist[v]===Infinity){broken=true;return;} ring+=r.dist[v]; rd+=line(walk(r,v));});
+    route.setAttribute('d',view==='reduce'?(rd||'M0 0'):view==='optics'||view==='cap'?'M0 0':d);
+    // failures view
+    let worst=0, all=true; const up=ranks.length;
+    ranks.forEach(i=>{const r=sp(i);ranks.forEach(j=>{if(j!==i){if(r.dist[j]===Infinity)all=false;else worst=Math.max(worst,r.dist[j]);}});});
     $('xn-up').textContent=up+' / 6'; $('xn-cap').textContent=Math.round(up/6*100)+'%'; $('xn-capbar').style.width=up/6*100+'%';
-    $('xn-reach').textContent=whole?'Every site':'Split'; $('xn-worst').textContent=ms(worst); $('xn-route').textContent=txt;
+    $('xn-reach').textContent=all?'Every site':'Split'; $('xn-worst').textContent=ms(worst); $('xn-route').textContent=txt;
+    document.querySelector('.xn-pl').textContent='PATH '+P[src].n+' → '+P[dst].n;
+    const cuts=L.filter(l=>l.on&&!l.up).length;
+    $('xn-prot').textContent=!cuts?'Standing by':all?'Switched in ~50 ms':'Fabric split';
     $('xn-cut').setAttribute('aria-pressed',!L[2].up); $('xn-down').setAttribute('aria-pressed',!P[1].up);
     $('xn-reset').disabled=L.every(l=>l.up)&&P.every(p=>p.up);  // nothing to restore while the network is whole
+    // topology view
+    const built=L.filter(l=>l.on);
+    $('xn-spans').textContent=built.length; $('xn-km').textContent=built.reduce((a,l)=>a+l.km,0)+' km';
+    $('xn-spof').textContent=built.filter(l=>live(l)&&!whole(l)).length;
+    $('xn-topo-why').innerHTML=WHY[topo];
+    document.querySelectorAll('[data-topo]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.topo===topo));
+    // optics view
+    const n=c=>built.filter(l=>OPT(l.km)[0]===c).length;
+    $('xn-zr').textContent=n('ZR'); $('xn-zrp').textContent=n('ZR+'); $('xn-amp').textContent=n('AMP');
+    // path view
+    $('xn-p-route').textContent=pts.length?pts.map(v=>P[v].n).join(' → '):txt;
+    $('xn-p-km').textContent=pts.length?(pts.length-1)+' · '+km+' km':'–';
+    $('xn-p-ow').textContent=pts.length?ms(km):'–'; $('xn-p-rt').textContent=pts.length?ms(2*km):'–';
+    // all-reduce view: 2(N-1) hops at the average hop on the ring as it stands
+    const N=ranks.length, hop=N>1&&!broken?ring/N:0;
+    $('xn-r-n').textContent=N; $('xn-r-hop').textContent=broken?'Split':N>1?us(hop):'–';
+    $('xn-r-term').textContent=broken?'No ring':N>1?ms(2*(N-1)*hop):'–';
+    $('xn-r-max').textContent=broken||N<2?'–':Math.floor(1000/(2*(N-1)*hop*.005))+' /s';
+    // capacity view
+    const lit=built.filter(live).length;
+    $('xn-c-lit').textContent=lit+' / '+built.length; $('xn-c-tot').textContent=(lit*0.2).toFixed(1)+' Pb/s';
   }
   $('xn-cut').addEventListener('click',()=>{L[2].up=!L[2].up;upd();});
   $('xn-down').addEventListener('click',()=>{P[1].up=!P[1].up;upd();});
   $('xn-reset').addEventListener('click',()=>{L.forEach(l=>l.up=true);P.forEach(p=>p.up=true);upd();});
+  document.querySelectorAll('[data-topo]').forEach(b=>b.addEventListener('click',()=>{topo=b.dataset.topo; L[5].on=topo!=='line'; L[6].on=topo==='mesh'; upd();}));
+  document.querySelectorAll('.xnav [data-view]').forEach(b=>b.addEventListener('click',()=>{view=b.dataset.view;
+    document.querySelectorAll('.xnav [data-view]').forEach(x=>x.setAttribute('aria-pressed',x===b));
+    document.querySelectorAll('.hud [data-m]').forEach(x=>x.hidden=x.dataset.m!==view); upd();}));
   upd();
 })();
 
