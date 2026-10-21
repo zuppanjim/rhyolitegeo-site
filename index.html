@@ -135,7 +135,15 @@ nav.main a:hover,nav.main a[aria-current]{color:var(--oxide)}
 @media (max-width:760px){.people{grid-template-columns:1fr}}
 
 /* ask band */
-.ask{background:var(--oxide);color:#FBF6EC}
+.ask{background:var(--askc,var(--oxide));color:#FBF6EC}
+.ask.slim{padding-block:26px}
+.ask.slim h2{font-size:clamp(20px,2.4vw,26px);max-width:none}
+.ask.slim h2 a{color:inherit;text-underline-offset:4px}
+.ask .askr{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.qs{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:36px}
+.qs>div{background:var(--surface);padding:26px;display:flex;flex-direction:column;gap:10px;border-top:5px solid var(--askc)}
+.qs>div .eyebrow{text-decoration:none}
+.qs>div p{margin:0;color:var(--muted);font-size:16.5px}
 .ask .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:28px}
 .ask h2{max-width:20ch}
 .ask p{color:#F6E1D0;margin-top:12px;max-width:52ch}
@@ -252,6 +260,8 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--line);padding-top:20px
 @keyframes shade{0%,50%,96%,100%{transform:rotate(0)}58%,86%{transform:rotate(-135deg)}}
 .motion .pin{animation:pin 2.4s ease-out infinite;transform-box:fill-box;transform-origin:center}
 .motion .tw{animation:tw 3s ease-in-out infinite alternate}
+.motion .qpop{animation:qpop 5s ease-in-out infinite;transform-box:fill-box;transform-origin:0 100%}
+@keyframes qpop{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px) rotate(-3deg)}}
 @keyframes tw{to{opacity:.25}}
 .motion .heat{animation:heat 4.4s ease-out infinite;transform-box:fill-box}
 .heat{opacity:.35}
@@ -395,7 +405,7 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--line);padding-top:20px
     <a href="#site-services" data-v="site-services">Site services</a>
     <a href="#geothermal" class="hide-sm" data-v="geothermal">Geothermal</a>
     <a href="#extended-networks" class="hide-sm" data-v="extended-networks">Extended Networks</a>
-    <a href="#home" class="hide-xs" onclick="go('home','contact');return false">Contact</a>
+    <a href="#contact" class="hide-xs" data-v="contact">Contact</a>
   </nav>
 </div></header>
 
@@ -411,7 +421,6 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--line);padding-top:20px
         <span class="eyebrow">Power for AI factories</span>
         <h1>The AI revolution runs on power. We bring our own.</h1>
         <p>Rhyolite Geo develops generation behind the meter and the modular AI factories that sit beside it, so the racks never wait on a utility queue.</p>
-        <div class="row"><a class="btn arrow" href="#home" onclick="go('home','what');return false">What we build</a><a class="btn ghost" href="#home" onclick="go('home','contact');return false">Send us your load</a></div>
       </div>
       <div class="slide" aria-hidden="true">
         <span class="eyebrow">Speed to market</span>
@@ -422,13 +431,11 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--line);padding-top:20px
         <span class="eyebrow">Flagship project · Okmulgee County, OK</span>
         <h1>Glass Ball: 384 racks on their own fuel cells.</h1>
         <p>57.6 MW of computing on 36 islanded Bloom fuel cell stamps, an 800 volt DC bus from gas pipe to rack, first power 24 months from the order.</p>
-        <div class="row"><a class="btn arrow" href="#glass-ball">Read the project</a></div>
       </div>
       <div class="slide" aria-hidden="true">
         <span class="eyebrow">Designed once, built many times</span>
         <h1>Simple buildings that outlast the chips inside them.</h1>
         <p>Modules arrive finished. The site work is a pad, a spine and a fence, and capacity is added a row at a time against demand that is already signed.</p>
-        <div class="row"><a class="btn arrow" href="#home" onclick="go('home','doors');return false">Work with us</a></div>
       </div>
     </div>
     <div class="dots" role="tablist" aria-label="Choose a slide">
@@ -547,8 +554,36 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--line);padding-top:20px
   </div></div>
 </section>
 
-<section class="ask" id="contact"><div class="wrap">
-  <div><h2>If your project is waiting on power, send us the load and the date.</h2><p>Roughly where, roughly how much power, and when you need it. Email is the whole process: no form, no sequence of follow-ups, no newsletter.</p></div>
+<section class="ask slim" style="--askc:#A84E22"><div class="wrap">
+  <h2>Have a question? <a href="#contact">See what people ask us</a></h2>
+  <div class="askr"><span class="mail">info@rhydev.com</span><a class="btn arrow" href="mailto:info@rhydev.com">Email us</a></div>
+</div></section>
+</main>
+
+<!-- =================== CONTACT =================== -->
+<main id="v-contact" hidden>
+<section class="phero scape" style="padding:0">
+  <svg class="view" id="ctview" viewBox="0 0 1600 700" preserveAspectRatio="xMaxYMax slice" role="img" aria-label="Illustrated: a brick town hall on Halloween night under an orange harvest moon, jack-o-lanterns on the steps, and a crowd in costume, witches, pumpkin heads, ghosts, devils and a vampire, with their hands up and questions over their heads"></svg>
+  <span style="position:absolute;right:16px;bottom:12px;z-index:1;font-family:var(--mono);font-size:11px;color:#BFAF97">Illustration · a town hall on Halloween night</span>
+  <div class="wrap">
+    <span class="eyebrow">Contact</span>
+    <h1>Ask us anything</h1>
+    <p>A site near you, a project waiting on power, a resource with output to spare. Bring the question; a person answers it.</p>
+  </div>
+</section>
+<section><div class="wrap">
+  <span class="eyebrow">What people ask us</span>
+  <h2>One inbox for every question</h2>
+  <div class="qs">
+    <div style="--askc:#A84E22"><a class="eyebrow" href="#home">What we build</a><h3>If your project is waiting on power, send us the load and the date.</h3><p>Roughly where, roughly how much power, and when you need it. Email is the whole process: no form, no sequence of follow-ups, no newsletter.</p></div>
+    <div style="--askc:#4F6B3A"><a class="eyebrow" href="#glass-ball">Glass Ball</a><h3>Interested in capacity at Glass Ball?</h3><p>The hall is offered to one anchor tenant who brings the GPUs. Send us your load and your date.</p></div>
+    <div style="--askc:#8A4626"><a class="eyebrow" href="#site-services">Site services</a><h3>Looking at a county, a parcel or a resource?</h3><p>Send us the area and what has to reach it. We will tell you what the ground says.</p></div>
+    <div style="--askc:#3A3256"><a class="eyebrow" href="#geothermal">Geothermal</a><h3>Holding a geothermal resource, or a plant with output to spare?</h3><p>We pair it with a battery system and build the hall beside it. Send us the site, the temperature and the date.</p></div>
+    <div style="--askc:#2E2620"><a class="eyebrow" href="#extended-networks">Extended Networks</a><h3>Sites that should work as one?</h3><p>Send us the locations and the power at each. We will draw the network that joins them.</p></div>
+  </div>
+</div></section>
+<section class="ask" style="--askc:#B4521E"><div class="wrap">
+  <div><h2>Send us the load and the date.</h2><p>Roughly where, roughly how much power, and when you need it. Email is the whole process: no form, no sequence of follow-ups, no newsletter.</p></div>
   <div style="display:flex;flex-direction:column;gap:12px;align-items:flex-start"><span class="mail">info@rhydev.com</span><a class="btn arrow" href="mailto:info@rhydev.com">Email us</a></div>
 </div></section>
 </main>
@@ -745,9 +780,9 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--line);padding-top:20px
   </ol>
 </div></section>
 
-<section class="ask"><div class="wrap">
-  <div><h2>Interested in capacity at Glass Ball?</h2><p>The hall is offered to one anchor tenant who brings the GPUs. Send us your load and your date.</p></div>
-  <div style="display:flex;flex-direction:column;gap:12px;align-items:flex-start"><span class="mail">info@rhydev.com</span><a class="btn arrow" href="mailto:info@rhydev.com">Email us</a></div>
+<section class="ask slim" style="--askc:#4F6B3A"><div class="wrap">
+  <h2>Have a question? <a href="#contact">See what people ask us</a></h2>
+  <div class="askr"><span class="mail">info@rhydev.com</span><a class="btn arrow" href="mailto:info@rhydev.com">Email us</a></div>
 </div></section>
 </main>
 
@@ -805,9 +840,9 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--line);padding-top:20px
   </ol>
 </div></section>
 
-<section class="ask"><div class="wrap">
-  <div><h2>Looking at a county, a parcel or a resource?</h2><p>Send us the area and what has to reach it. We will tell you what the ground says.</p></div>
-  <div style="display:flex;flex-direction:column;gap:12px;align-items:flex-start"><span class="mail">info@rhydev.com</span><a class="btn arrow" href="mailto:info@rhydev.com">Email us</a></div>
+<section class="ask slim" style="--askc:#8A4626"><div class="wrap">
+  <h2>Have a question? <a href="#contact">See what people ask us</a></h2>
+  <div class="askr"><span class="mail">info@rhydev.com</span><a class="btn arrow" href="mailto:info@rhydev.com">Email us</a></div>
 </div></section>
 </main>
 
@@ -1019,9 +1054,9 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--line);padding-top:20px
   </div>
 </div></section>
 
-<section class="ask"><div class="wrap">
-  <div><h2>Holding a geothermal resource, or a plant with output to spare?</h2><p>We pair it with a battery system and build the hall beside it. Send us the site, the temperature and the date.</p></div>
-  <div style="display:flex;flex-direction:column;gap:12px;align-items:flex-start"><span class="mail">info@rhydev.com</span><a class="btn arrow" href="mailto:info@rhydev.com">Email us</a></div>
+<section class="ask slim" style="--askc:#3A3256"><div class="wrap">
+  <h2>Have a question? <a href="#contact">See what people ask us</a></h2>
+  <div class="askr"><span class="mail">info@rhydev.com</span><a class="btn arrow" href="mailto:info@rhydev.com">Email us</a></div>
 </div></section>
 </main>
 
@@ -1198,9 +1233,9 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--line);padding-top:20px
   </ol>
 </div></section>
 
-<section class="ask"><div class="wrap">
-  <div><h2>Sites that should work as one?</h2><p>Send us the locations and the power at each. We will draw the network that joins them.</p></div>
-  <div style="display:flex;flex-direction:column;gap:12px;align-items:flex-start"><span class="mail">info@rhydev.com</span><a class="btn arrow" href="mailto:info@rhydev.com">Email us</a></div>
+<section class="ask slim" style="--askc:#2E2620"><div class="wrap">
+  <h2>Have a question? <a href="#contact">See what people ask us</a></h2>
+  <div class="askr"><span class="mail">info@rhydev.com</span><a class="btn arrow" href="mailto:info@rhydev.com">Email us</a></div>
 </div></section>
 </main>
 
@@ -1212,7 +1247,7 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--line);padding-top:20px
 </div></footer>
 
 <script>
-const views=['home','glass-ball','site-services','geothermal','extended-networks'];
+const views=['home','glass-ball','site-services','geothermal','extended-networks','contact'];
 function show(v,anchor){
   if(!views.includes(v))v='home';
   views.forEach(x=>document.getElementById('v-'+x).hidden=(x!==v));
@@ -1496,13 +1531,147 @@ function route(g,y0,terms,cls,stroke,w){let d='';for(let x=0;x<=2*SW;x+=10)d+=(x
   el('path',{class:'flow',d:'M1486 570H1500',stroke:'#F2C48D','stroke-width':2,fill:'none'},g);
 })();
 
+// contact: the town hall on Halloween night, the square full of costumes and hands up with questions
+(()=>{
+  const v=document.getElementById('ctview'); if(!v)return;
+  const P={red:'#A8321F',green:'#4F6B2E',orange:'#E07A1F',brown:'#6B4425',dark:'#2A180E',sheet:'#EFDFC2',trim:'#D9B98C',lit:'#FFC870',skin:['#C98B5E','#8D5A3B','#E2AE84','#6E4630']};
+  const defs=el('defs',{},v);
+  grad(defs,'ctsky',[['0','#24150D'],['.45','#5A2A14'],['.78','#B4521E'],['1','#E39343']]);
+  grad(defs,'ctmoon',[['0','#FFD08A',.85],['.4','#F29A3A',.4],['1','#F29A3A',0]],true);
+  grad(defs,'ctlamp',[['0','#FFD48A',.75],['1','#FFB347',0]],true);
+  el('rect',{width:SW,height:700,fill:'url(#ctsky)'},v);
+  for(let i=0;i<46;i++)el('circle',{cx:(i*397)%SW,cy:18+(i*131)%230,r:i%5?1:1.7,fill:'#FBE7C6',class:i%3?'':'tw',style:`animation-delay:-${i%7}s`},v);
+  // the harvest moon
+  const moon=el('g',{class:'sun'},v);
+  el('circle',{cx:1240,cy:170,r:270,fill:'url(#ctmoon)'},moon);
+  el('circle',{cx:1240,cy:170,r:96,fill:'#F2994A'},moon);
+  [[1208,150,22,.2],[1272,198,16,.16],[1262,126,10,.15],[1204,206,9,.13]].forEach(([cx,cy,r,o])=>el('circle',{cx,cy,r,fill:'#B85A1C','fill-opacity':o},moon));
+  // bats crossing the moon
+  const bats=layer(v,70);
+  [[200,120,1],[330,90,.7],[900,150,.9],[1180,110,1.2],[1500,80,.8],[1760,140,1],[2400,100,.9],[2900,60,.7]].forEach(([x,y,k])=>{
+    const s=n=>(n*k).toFixed(1);
+    el('path',{d:`M${x} ${y}q${s(-8)} ${s(-8)} ${s(-18)} ${s(-4)}q${s(6)} ${s(2)} ${s(8)} ${s(7)}q${s(5)} ${s(-4)} ${s(10)} ${s(-1)}q${s(5)} ${s(-3)} ${s(10)} ${s(1)}q${s(2)} ${s(-5)} ${s(8)} ${s(-7)}q${s(-10)} ${s(-4)} ${s(-18)} ${s(4)}Z`,fill:P.dark},bats);
+  });
+  // the hills behind the town
+  strip(v,x=>455+wave(x,[[2,16,.4],[5,6,1.7],[9,3,.2]]),'#4A2B18',.95);
+  strip(v,x=>494+wave(x,[[3,8,1.1],[7,3,.3]]),'#3A2214');
+  // bare trees
+  const trees=el('g',{stroke:P.dark,'stroke-linecap':'round',fill:'none'},v);
+  [[880,560,150],[1500,560,170],[640,575,120]].forEach(([x,y,h])=>{
+    el('path',{d:`M${x} ${y}V${y-h}`,'stroke-width':7},trees);
+    el('path',{d:`M${x} ${y-h*.45}L${x-h*.3} ${y-h*.8}M${x} ${y-h*.6}L${x+h*.28} ${y-h*.95}M${x-h*.15} ${y-h*.62}L${x-h*.22} ${y-h}M${x+h*.14} ${y-h*.78}L${x+h*.36} ${y-h*.82}M${x} ${y-h}L${x+h*.05} ${y-h*1.15}`,'stroke-width':3.2},trees);
+  });
+  // the town hall: clock tower, brick block and wings, a portico
+  const H=el('g',{},v);
+  el('rect',{x:1150,y:236,width:60,height:110,fill:'#9B3520'},H);
+  el('rect',{x:1146,y:232,width:68,height:8,fill:P.trim},H);
+  el('path',{d:'M1142 234L1180 168L1218 234Z',fill:P.dark},H);
+  el('path',{d:'M1180 168V150M1172 156H1188',stroke:P.dark,'stroke-width':2,fill:'none'},H);
+  el('circle',{cx:1180,cy:280,r:26,fill:'url(#ctlamp)'},H);
+  el('circle',{cx:1180,cy:280,r:17,fill:'#F6E2B8',stroke:P.dark,'stroke-width':2},H);
+  el('path',{d:'M1180 280V268M1180 280L1189 284',stroke:P.dark,'stroke-width':2,'stroke-linecap':'round',fill:'none'},H);
+  el('rect',{x:1010,y:410,width:340,height:110,fill:'#8A2E1C'},H);
+  el('rect',{x:1080,y:378,width:200,height:142,fill:'#9B3520'},H);
+  el('rect',{x:1004,y:404,width:352,height:8,fill:P.trim},H);
+  el('path',{d:'M1070 380L1180 330L1290 380Z',fill:P.trim},H);
+  el('path',{d:'M1094 374L1180 342L1266 374Z',fill:'#8A2E1C'},H);
+  el('rect',{x:1074,y:378,width:212,height:8,fill:P.trim},H);
+  [1022,1046,1294,1318].forEach((x,i)=>[426,466].forEach((y,j)=>el('rect',{x,y,width:16,height:24,fill:P.lit,'fill-opacity':.9,class:(i+j)%3?'':'breathe'},H)));
+  el('rect',{x:1098,y:386,width:164,height:16,fill:P.trim},H);
+  el('text',{x:1180,y:398,'text-anchor':'middle','font-family':'Archivo, sans-serif','font-weight':800,'font-size':10,'letter-spacing':2,fill:P.dark},H).textContent='TOWN HALL';
+  el('rect',{x:1100,y:402,width:160,height:98,fill:'#4A1A10'},H);
+  el('ellipse',{cx:1180,cy:470,rx:60,ry:40,fill:'url(#ctlamp)'},H);
+  el('path',{d:'M1162 500V452Q1180 432 1198 452V500Z',fill:'#F2A23A'},H);
+  [1104,1140,1212,1248].forEach(x=>el('rect',{x,y:402,width:12,height:98,fill:'#E8D3AE'},H));
+  // bunting along the cornice
+  const cols=[P.orange,P.green,P.red,P.brown];
+  for(let x=1012,i=0;x<1346;x+=16,i++)el('path',{d:`M${x} 412H${x+14}L${x+7} 425Z`,fill:cols[i%4]},H);
+  // the square
+  strip(v,x=>521+wave(x,[[2,2,0]]),'#33472A');
+  el('path',{d:'M1066 521H1294L1480 700H880Z',fill:'#5B4030'},v);
+  strip(v,x=>660+wave(x,[[3,5,.7]]),'#26381F');
+  const st=el('g',{},v);
+  [[1090,500,180,'#7A6A58'],[1080,507,200,'#857462'],[1070,514,220,'#8F7E6B']].forEach(([x,y,w,f])=>el('rect',{x,y,width:w,height:7,fill:f},st));
+  // the speaker at the podium, in a top hat
+  el('path',{d:'M1169 500V480Q1180 472 1191 480V500Z',fill:P.dark},st);
+  el('circle',{cx:1180,cy:470,r:7,fill:P.skin[0]},st);
+  el('path',{d:'M1172 465H1188M1175 465V452H1185V465',stroke:P.dark,'stroke-width':2.5,fill:P.dark},st);
+  el('path',{d:'M1166 500L1170 478H1190L1194 500Z',fill:'#5A3A22'},st);
+  // jack-o-lanterns on the steps
+  function jack(x,y,r){
+    el('ellipse',{cx:x,cy:y-r,rx:r*1.2,ry:r,fill:P.orange},st);
+    el('path',{d:`M${x-r*.4} ${y-r*1.9}Q${x-r*.6} ${y-r} ${x-r*.4} ${y-r*.1}M${x+r*.4} ${y-r*1.9}Q${x+r*.6} ${y-r} ${x+r*.4} ${y-r*.1}`,stroke:'#B4521E','stroke-width':1.2,fill:'none'},st);
+    el('rect',{x:x-1.5,y:y-r*2-4,width:3,height:5,fill:P.green},st);
+    el('path',{d:`M${x-r*.6} ${y-r*1.2}l${r*.25} ${-r*.35}l${r*.25} ${r*.35}ZM${x+r*.1} ${y-r*1.2}l${r*.25} ${-r*.35}l${r*.25} ${r*.35}ZM${x-r*.6} ${y-r*.6}Q${x} ${y-r*.1} ${x+r*.6} ${y-r*.6}Z`,fill:'#FFD95A',class:'breathe'},st);
+  }
+  [[1078,507,8],[1282,507,8],[1050,528,10],[1312,528,11],[1036,540,7]].forEach(([x,y,r])=>jack(x,y,r));
+  // lamp posts
+  [[990,612],[1372,612]].forEach(([x,y])=>{
+    el('circle',{cx:x,cy:y-88,r:46,fill:'url(#ctlamp)',class:'breathe'},v);
+    el('path',{d:`M${x} ${y}V${y-82}M${x-6} ${y}H${x+6}`,stroke:P.dark,'stroke-width':4,fill:'none'},v);
+    el('path',{d:`M${x-8} ${y-82}H${x+8}L${x+5} ${y-96}H${x-5}Z`,fill:P.lit},v);
+  });
+  // the crowd, seen from behind, in costume
+  function fig(g,x,y,s,kind,col,up,i){
+    const S=n=>+(n*s).toFixed(1), sk=P.skin[i%4], f=el('g',{},g);
+    if(up){
+      el('path',{d:`M${x+S(9)} ${y-S(46)}Q${x+S(18)} ${y-S(66)} ${x+S(16)} ${y-S(88)}`,stroke:kind==='ghost'?P.sheet:col,'stroke-width':S(7),'stroke-linecap':'round',fill:'none'},f);
+      el('circle',{cx:x+S(16),cy:y-S(90),r:S(4.2),fill:kind==='ghost'?P.sheet:sk},f);
+    }
+    if(kind==='ghost'){
+      el('path',{d:`M${x-S(17)} ${y}C${x-S(16)} ${y-S(40)} ${x-S(16)} ${y-S(76)} ${x} ${y-S(76)}C${x+S(16)} ${y-S(76)} ${x+S(16)} ${y-S(40)} ${x+S(17)} ${y}Q${x+S(11)} ${y-S(7)} ${x+S(6)} ${y}Q${x} ${y-S(7)} ${x-S(6)} ${y}Q${x-S(11)} ${y-S(7)} ${x-S(17)} ${y}Z`,fill:P.sheet},f);
+      return;
+    }
+    const w=kind==='vampire'?24:19;
+    el('path',{d:`M${x-S(12)} ${y-S(52)}Q${x} ${y-S(57)} ${x+S(12)} ${y-S(52)}L${x+S(w)} ${y}H${x-S(w)}Z`,fill:col},f);
+    if(kind==='vampire')el('path',{d:`M${x-S(14)} ${y-S(50)}L${x-S(13)} ${y-S(70)}L${x-S(3)} ${y-S(56)}ZM${x+S(14)} ${y-S(50)}L${x+S(13)} ${y-S(70)}L${x+S(3)} ${y-S(56)}Z`,fill:P.red},f);
+    if(kind==='pumpkin'){
+      el('ellipse',{cx:x,cy:y-S(66),rx:S(14),ry:S(12),fill:P.orange},f);
+      el('path',{d:`M${x-S(5)} ${y-S(77)}Q${x-S(8)} ${y-S(66)} ${x-S(5)} ${y-S(55)}M${x+S(5)} ${y-S(77)}Q${x+S(8)} ${y-S(66)} ${x+S(5)} ${y-S(55)}`,stroke:'#B4521E','stroke-width':S(1.4),fill:'none'},f);
+      el('path',{d:`M${x} ${y-S(77)}q${S(1)} ${S(-5)} ${S(4)} ${S(-6)}`,stroke:P.green,'stroke-width':S(2.6),'stroke-linecap':'round',fill:'none'},f);
+      return;
+    }
+    const head=kind==='devil'?P.red:kind==='cat'?P.brown:sk;
+    el('circle',{cx:x,cy:y-S(64),r:S(10),fill:head},f);
+    if(kind==='witch'){
+      el('ellipse',{cx:x,cy:y-S(70),rx:S(19),ry:S(3.5),fill:P.dark},f);
+      el('path',{d:`M${x-S(9)} ${y-S(71)}Q${x-S(2)} ${y-S(90)} ${x+S(8)} ${y-S(104)}Q${x+S(4)} ${y-S(90)} ${x+S(9)} ${y-S(71)}Z`,fill:P.dark},f);
+      el('rect',{x:x-S(8.5),y:y-S(77),width:S(17),height:S(4),fill:P.orange},f);
+    }
+    if(kind==='devil')el('path',{d:`M${x-S(7)} ${y-S(71)}Q${x-S(11)} ${y-S(78)} ${x-S(9)} ${y-S(84)}Q${x-S(5)} ${y-S(78)} ${x-S(3)} ${y-S(73)}ZM${x+S(7)} ${y-S(71)}Q${x+S(11)} ${y-S(78)} ${x+S(9)} ${y-S(84)}Q${x+S(5)} ${y-S(78)} ${x+S(3)} ${y-S(73)}Z`,fill:P.red},f);
+    if(kind==='cat')el('path',{d:`M${x-S(9)} ${y-S(68)}L${x-S(8)} ${y-S(80)}L${x-S(2)} ${y-S(73)}ZM${x+S(9)} ${y-S(68)}L${x+S(8)} ${y-S(80)}L${x+S(2)} ${y-S(73)}Z`,fill:P.brown},f);
+    if(kind==='scarecrow'){
+      el('ellipse',{cx:x,cy:y-S(70),rx:S(17),ry:S(3.5),fill:'#B08A4A'},f);
+      el('path',{d:`M${x-S(9)} ${y-S(71)}Q${x} ${y-S(85)} ${x+S(9)} ${y-S(71)}Z`,fill:'#B08A4A'},f);
+    }
+  }
+  // a question over a raised hand
+  function ask(g,x,y,s,i){
+    const S=n=>+(n*s).toFixed(1), q=el('g',{class:'qpop',style:`animation-delay:-${((i*1.7)%5).toFixed(1)}s`},g);
+    el('path',{d:`M${x+S(4)} ${y-S(6)}L${x} ${y+S(8)}L${x+S(12)} ${y-S(4)}Z`,fill:'#F6E2B8'},q);
+    el('ellipse',{cx:x+S(14),cy:y-S(18),rx:S(17),ry:S(14),fill:'#F6E2B8',stroke:P.dark,'stroke-width':1.2},q);
+    el('text',{x:x+S(14),y:y-S(11),'text-anchor':'middle','font-family':'Archivo, sans-serif','font-weight':800,'font-size':S(20),fill:P.red},q).textContent='?';
+  }
+  const kinds=['witch','pumpkin','ghost','devil','cat','scarecrow','vampire'], body=[P.red,P.green,P.orange,P.brown];
+  const crowd=el('g',{},v), bubbles=el('g',{},v);
+  [[600,.62,40],[645,.8,50],[694,1,62]].forEach(([y,s,step],row)=>{
+    let n=0;
+    for(let x=660+row*13;x<1590;x+=step+((x*7+row*3)%17)){
+      const i=n++ +row*5, kind=kinds[(i*3+row)%7], up=(i*5+row)%3===0;
+      if(Math.abs(x-1180)<40&&row===0)continue;
+      fig(el('g',{class:'look',style:`animation-delay:-${((i*2.3)%14).toFixed(1)}s`},crowd),x,y+(i*13)%7,s,kind,body[(i+row*2)%4],up,i);
+      if(up&&(i+row)%2===0)ask(bubbles,x+16*s,y-98*s,s,i);
+    }
+  });
+})();
+
 // ridgelines over every closing band, so each page ends on the same horizon
 document.querySelectorAll('section.ask').forEach((sec,n)=>{
   const v=el('svg',{class:'ridge',viewBox:'0 0 1600 90',preserveAspectRatio:'xMidYMax slice','aria-hidden':'true'});
   const far=layer(v,280+n*20), mid=layer(v,170+n*10), ry=x=>58+wave(x,[[3,9,n],[8,4,.5+n]]);
-  strip(far,x=>40+wave(x,[[2,14,n*.7],[5,7,1.2],[11,3,0]]),'var(--oxide)',.35,90);
-  strip(mid,ry,'var(--oxide)',.6,90); towers(mid,ry,'var(--oxide)',30);
-  strip(layer(v,110),x=>76+wave(x,[[4,5,n*1.3],[9,2,0]]),'var(--oxide)',1,90);
+  strip(far,x=>40+wave(x,[[2,14,n*.7],[5,7,1.2],[11,3,0]]),'var(--askc,var(--oxide))',.35,90);
+  strip(mid,ry,'var(--askc,var(--oxide))',.6,90); towers(mid,ry,'var(--askc,var(--oxide))',30);
+  strip(layer(v,110),x=>76+wave(x,[[4,5,n*1.3],[9,2,0]]),'var(--askc,var(--oxide))',1,90);
   sec.prepend(v);
 });
 function fan(parent,cx,cy,r){el('circle',{cx,cy,r},parent);el('path',{class:'fan',d:`M${cx} ${cy-r+3}V${cy+r-3}M${cx-r+3} ${cy}H${cx+r-3}`},parent);}
