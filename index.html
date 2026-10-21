@@ -241,6 +241,8 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--line);padding-top:20px
 .motion .nod{animation:nod 2.6s ease-in-out infinite alternate}
 @keyframes nod{from{transform:rotate(-9deg)}to{transform:rotate(9deg)}}
 .motion .breathe{animation:breathe 7s ease-in-out infinite alternate}
+.motion .blink{animation:blink 3s steps(1) infinite}
+@keyframes blink{0%{opacity:1}55%{opacity:0}}
 @keyframes breathe{from{opacity:.55}to{opacity:1}}
 .motion .sway{animation:sway 9s ease-in-out infinite;transform-origin:1428px 500px}
 @keyframes sway{0%,100%{transform:rotate(0)}50%{transform:rotate(1.2deg)}}
@@ -1323,7 +1325,10 @@ function route(g,y0,terms,cls,stroke,w){let d='';for(let x=0;x<=2*SW;x+=10)d+=(x
   [[1185,1192],[1225,1218]].forEach(([a,b])=>el('path',{d:`M${a} ${wy}L${b} ${wy-88}`,'stroke-width':3,fill:'none'},tw));
   el('path',{d:`M1188 ${wy-30}L1222 ${wy-60}M1222 ${wy-30}L1188 ${wy-60}`,'stroke-width':1.2,fill:'none'},tw);
   el('path',{d:`M1176 ${wy-88}V${wy-116}Q1176 ${wy-136} 1205 ${wy-138}Q1234 ${wy-136} 1234 ${wy-116}V${wy-88}Z`,stroke:'none'},tw);
-  el('text',{x:1205,y:wy-104,'text-anchor':'middle','font-family':'Archivo, sans-serif','font-weight':700,'font-size':9,'letter-spacing':.5,fill:'#C9A57E',stroke:'none'},tw).textContent='HENRYETTA';
+  // the town's name on a lit band round the tank, the bulbs blinking on at dusk
+  el('rect',{x:1179,y:wy-114,width:52,height:14,rx:1.5,fill:'#E8D3AE',stroke:'#2A1F1A','stroke-width':1},tw);
+  el('text',{x:1205,y:wy-103.5,'text-anchor':'middle','font-family':'Archivo, sans-serif','font-weight':800,'font-size':8.5,textLength:46,lengthAdjust:'spacingAndGlyphs',fill:'#2A1F1A',stroke:'none'},tw).textContent='HENRYETTA';
+  el('rect',{x:1179,y:wy-114,width:52,height:14,rx:1.5,fill:'#FFC870','fill-opacity':.45,stroke:'none',class:'blink'},tw);
   // I-40, headlights one way and tail lights the other
   const hy=x=>548+wave(x,[[1,5,.8],[2,3,0]]);
   strip(v,hy,'#3A2C24');
