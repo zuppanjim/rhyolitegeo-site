@@ -413,6 +413,9 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--line);padding-top:20px
 @keyframes pulse{50%{opacity:.45}}
 .motion .dots button[aria-current="true"]::before{background:linear-gradient(#E9A275,#E9A275) 0 0/0% 100% no-repeat,rgba(233,162,117,.35);animation:dotfill 7s linear forwards}
 @keyframes dotfill{to{background-size:100% 100%,auto}}
+.hero .kb{transform-origin:62% 55%;animation:kb 28s ease-in-out infinite alternate}
+@keyframes kb{0%{transform:scale(1.04) translate(1.5%,0) rotate(-.6deg)}50%{transform:scale(1.14) translate(-1%,-1%) rotate(.4deg)}100%{transform:scale(1.08) translate(-2.5%,.5%) rotate(.9deg)}}
+@media (prefers-reduced-motion:reduce){.hero .kb{animation:none}}
 </style>
 <script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('motion');</script>
 
@@ -434,8 +437,7 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--line);padding-top:20px
 <main id="v-home">
 
 <section class="hero" aria-roledescription="carousel" aria-label="What Rhyolite Geo does" style="padding:0">
-  <img class="poster" src="assets/hero-plant.jpg" alt="">
-  <video id="vid" autoplay muted loop playsinline poster="assets/hero-plant.jpg"><source src="assets/hero-plant-smooth.mp4" type="video/mp4"></video>
+  <img class="poster kb" src="assets/hero-geo.jpg" alt="">
   <div class="wrap">
     <div class="slides">
       <div class="slide" aria-hidden="false">
@@ -1288,9 +1290,6 @@ function set(i){cur=(i+slides.length)%slides.length;slides.forEach((s,k)=>s.setA
 function auto(){clearInterval(timer);if(!matchMedia('(prefers-reduced-motion: reduce)').matches)timer=setInterval(()=>set(cur+1),7000);}
 dots.forEach((d,k)=>d.addEventListener('click',()=>{set(k);auto();}));
 auto();
-const vid=document.getElementById('vid');
-// the clip is already slowed with in-between frames and a crossfaded loop, so it plays at normal speed
-if(matchMedia('(prefers-reduced-motion: reduce)').matches){vid.removeAttribute('autoplay');vid.pause();}
 
 // ===== motion =====
 const motion=document.documentElement.classList.contains('motion');
@@ -2253,4 +2252,72 @@ if(motion&&'IntersectionObserver' in window){
 }else{
   document.querySelectorAll(REVEAL).forEach(el=>el.classList.add('in'));
 }
+</script>
+<script>
+// steam in motion: the still is drawn through a shader that flows the plume pixels upward
+// along each plume's axis (two crossfaded flow phases) and churns them with rising fbm noise
+(function(){
+  const img=document.querySelector('.hero .kb'); if(!img)return;
+  const cv=document.createElement('canvas'); cv.className='poster kb'; cv.setAttribute('aria-hidden','true');
+  const gl=cv.getContext('webgl',{premultipliedAlpha:false}); if(!gl)return;
+  const vs=`attribute vec2 p;varying vec2 v;void main(){v=p*.5+.5;v.y=1.-v.y;gl_Position=vec4(p,0,1);}`;
+  const fs=`precision highp float;varying vec2 v;uniform sampler2D T;uniform float t;uniform vec2 R;uniform float IA;
+  float h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+  float n(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(h(i),h(i+vec2(1,0)),f.x),mix(h(i+vec2(0,1)),h(i+1.),f.x),f.y);}
+  float fbm(vec2 p){float s=0.,a=.5;for(int i=0;i<5;i++){s+=a*n(p);p=p*2.03+vec2(1.7,9.2);a*=.5;}return s;}
+  // plume: source a, top b, half-width at source w0 and at top w1
+  float plume(vec2 u,vec2 a,vec2 b,float w0,float w1,out vec2 dir,out float k){
+    vec2 ab=b-a;k=clamp(dot(u-a,ab)/dot(ab,ab),0.,1.);float d=length(u-(a+ab*k));dir=normalize(ab);
+    return smoothstep(mix(w0,w1,k),mix(w0,w1,k)*.35,d)*smoothstep(0.,.06,k);}
+  void main(){
+    float ca=R.x/R.y; vec2 u=v; if(ca>IA){u.y=(u.y-.5)*IA/ca+.5;}else{u.x=(u.x-.5)*ca/IA+.5;}
+    vec2 d1,d2,d3,d4;float k1,k2,k3,k4;
+    float m1=plume(u,vec2(.57,.58),vec2(.76,.0),.05,.14,d1,k1);
+    float m2=plume(u,vec2(.815,.63),vec2(.9,.12),.045,.11,d2,k2);
+    float m3=plume(u,vec2(.125,.24),vec2(.215,-.02),.025,.07,d3,k3);
+    float m4=plume(u,vec2(.86,.27),vec2(.9,.1),.02,.05,d4,k4);
+    float m=max(max(m1,m2),max(m3,m4));
+    vec2 dir=m1>=max(m2,max(m3,m4))?d1:m2>=max(m3,m4)?d2:m3>=m4?d3:d4;
+    float kk=max(max(k1*step(.001,m1),k2*step(.001,m2)),max(k3*step(.001,m3),k4*step(.001,m4)));
+    vec4 base=texture2D(T,u);
+    if(m<.002){gl_FragColor=base;return;}
+    // churn: rising noise, stronger higher up the plume where steam has spread
+    vec2 q=u*vec2(9.,6.)-dir*t*.22;
+    vec2 w=vec2(fbm(q),fbm(q+5.3))-.5;
+    vec2 cu=u+w*(.006+.018*kk);
+    // flow: two phases sliding toward the source, crossfaded so the motion never resets
+    float sp=.08, L=.035;
+    float p0=fract(t*sp), p1=fract(t*sp+.5);
+    vec4 c0=texture2D(T,cu-dir*p0*L+dir*L*.5), c1=texture2D(T,cu-dir*p1*L+dir*L*.5);
+    vec4 fl=mix(c0,c1,abs(1.-2.*p0));
+    // only steam-coloured pixels move: bright, low saturation
+    float lum=dot(base.rgb,vec3(.3,.59,.11)), sat=max(base.r,max(base.g,base.b))-min(base.r,min(base.g,base.b));
+    float steam=smoothstep(.45,.7,lum)*(1.-smoothstep(.12,.3,sat));
+    float fl2=dot(fl.rgb,vec3(.3,.59,.11)); float steam2=smoothstep(.45,.7,fl2);
+    float a=m*max(steam,steam2*.85);
+    // a soft wisp that breathes at the plume's edge
+    float wisp=smoothstep(.55,.85,fbm(u*vec2(14.,9.)-dir*t*.35))*m*.12*kk;
+    vec3 col=mix(base.rgb,fl.rgb,a)+wisp*vec3(1.,.95,.88);
+    gl_FragColor=vec4(col,1.);
+  }`;
+  function sh(type,src){const s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw gl.getShaderInfoLog(s);return s;}
+  const pr=gl.createProgram();gl.attachShader(pr,sh(gl.VERTEX_SHADER,vs));gl.attachShader(pr,sh(gl.FRAGMENT_SHADER,fs));gl.linkProgram(pr);gl.useProgram(pr);
+  const b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
+  const lp=gl.getAttribLocation(pr,'p');gl.enableVertexAttribArray(lp);gl.vertexAttribPointer(lp,2,gl.FLOAT,false,0,0);
+  const U=k=>gl.getUniformLocation(pr,k);
+  function start(){
+    const tx=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,tx);
+    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
+    gl.texImage2D(gl.TEXTURE_2D,0,gl.RGB,gl.RGB,gl.UNSIGNED_BYTE,img);
+    gl.uniform1f(U('IA'),img.naturalWidth/img.naturalHeight);
+    img.after(cv); img.style.visibility='hidden';
+    const still=matchMedia('(prefers-reduced-motion:reduce)').matches, t0=performance.now();
+    (function f(){const r=cv.getBoundingClientRect(),dp=Math.min(devicePixelRatio,2),W=Math.round(r.width*dp),H=Math.round(r.height*dp);
+      if(cv.width!==W||cv.height!==H){cv.width=W;cv.height=H;gl.viewport(0,0,W,H);}
+      gl.uniform2f(U('R'),W,H);gl.uniform1f(U('t'),still?0:(performance.now()-t0)/500);gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
+      if(!still)requestAnimationFrame(f);})();
+  }
+  img.complete&&img.naturalWidth?start():img.addEventListener('load',start);
+})();
 </script>
