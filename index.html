@@ -1187,16 +1187,6 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--line);padding-top:20px
   </div>
 </div></section>
 
-<section><div class="wrap">
-  <span class="eyebrow">What is in the glass</span>
-  <h2 style="margin-top:12px;max-width:26ch">Our own fiber, lit with our own waves</h2>
-  <p class="lede" style="margin-top:18px">A dedicated network from the duct up. Dozens of wavelengths share each fiber pair, each one carrying hundreds of gigabits, and two diverse routes protect every span.</p>
-  <div class="diagram" style="margin-top:34px">
-    <svg id="xnstack" viewBox="0 0 900 330" role="img" aria-label="Four layers: dedicated fiber on diverse routes, a DWDM line system with amplifiers, coherent wavelengths, and each site's switch fabric"></svg>
-    <div class="cap">Schematic · layer roles, not a bill of materials</div>
-  </div>
-</div></section>
-
 <section style="background:var(--surface);border-block:1px solid var(--line)"><div class="wrap">
   <span class="eyebrow">How we build it</span>
   <h2 style="margin-top:12px">Route it, light it, join the next site</h2>
@@ -1836,33 +1826,6 @@ function packets(g,d,dur,lag,colors){
   });
   el('rect',{x:cx-7,y:cy-7,width:14,height:14,fill:'var(--sunk)',stroke:'var(--oxide)','stroke-width':1.6},g);
   el('text',{x:cx,y:cy+28,'text-anchor':'middle',fill:'var(--ink)'},g).textContent='SITE';
-})();
-
-(function(){
-  const s=document.getElementById('xnstack');
-  const g=el('g',{'font-family':MONO,'font-size':11,fill:'var(--muted)'},s);
-  const rows=[['SITE FABRIC','each site’s own switches'],['WAVES','hundreds of Gb/s each'],['LINE SYSTEM','DWDM · amplifiers'],['DEDICATED FIBER','two diverse routes']];
-  rows.forEach(([a,b],k)=>{const y=14+k*78;
-    el('rect',{x:0,y,width:900,height:66,fill:'var(--sunk)',stroke:'var(--line)'},g);
-    el('text',{x:14,y:y+29,fill:'var(--ink)'},g).textContent=a;
-    el('text',{x:14,y:y+46},g).textContent=b;});
-  const X0=200, X1=880;
-  // site fabric: switch boxes at each end
-  [X0,X1-130].forEach(x=>{for(let i=0;i<4;i++)el('rect',{x:x+i*34,y:30,width:26,height:34,fill:'var(--surface)',stroke:'var(--oxide)','stroke-width':1.2},g);
-    for(let i=0;i<4;i++)el('rect',{x:x+i*34+9,y:38,width:8,height:4,fill:'var(--oxide)',class:'led',style:`animation-delay:${-i*.35}s`},g);});
-  el('path',{class:'flow slow',d:`M${X0+136} 47H${X1-130}`,stroke:'var(--oxide)','stroke-width':2,fill:'none'},g);
-  // waves: coloured lanes flowing
-  const C=['var(--oxide)','var(--sky)','var(--sage)','var(--oxide-lit)'];
-  for(let i=0;i<8;i++)el('path',{class:'flow'+(i%2?' rev':''),d:`M${X0} ${100+i*6}H${X1}`,stroke:C[i%4],'stroke-width':2.2,fill:'none',style:`animation-duration:${(0.8+i*.13).toFixed(2)}s`},g);
-  // line system: terminals and amplifiers
-  el('line',{x1:X0,y1:203,x2:X1,y2:203,stroke:'var(--ink)','stroke-width':1.5},g);
-  [X0,X1-40].forEach(x=>el('rect',{x,y:186,width:40,height:34,fill:'var(--surface)',stroke:'var(--ink)'},g));
-  for(let i=1;i<5;i++){const x=X0+i*(X1-X0)/5;el('path',{d:`M${x-12} 191L${x+14} 203L${x-12} 215Z`,fill:'var(--surface)',stroke:'var(--ink)'},g);}
-  // fiber: two diverse routes
-  el('path',{class:'flow',d:`M${X0} 266C${X0+200} 248 ${X1-200} 248 ${X1} 266`,stroke:'var(--sky)','stroke-width':3,fill:'none'},g);
-  el('path',{class:'flow rev',d:`M${X0} 266C${X0+200} 300 ${X1-200} 300 ${X1} 266`,stroke:'var(--sky)','stroke-width':3,fill:'none','stroke-opacity':.55},g);
-  el('text',{x:(X0+X1)/2,y:250,'text-anchor':'middle'},g).textContent='route A';
-  el('text',{x:(X0+X1)/2,y:306,'text-anchor':'middle'},g).textContent='route B';
 })();
 
 // Glass Ball build band: one pod goes up in the order it is built (pad, gas, stamps, DC bus, cooling, racks, containment), is commissioned, turns a full circle, and starts again
