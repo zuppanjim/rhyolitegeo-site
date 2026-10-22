@@ -288,6 +288,11 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--line);padding-top:20px
 .heat{opacity:.35}
 @keyframes heat{0%{transform:translateY(8px);opacity:0}35%{opacity:.55}100%{transform:translateY(-40px);opacity:0}}
 .ask{position:relative}
+/* Contact's band carries the town hall's night: dusk ridges, dark sky, moon glow */
+.ctask{--askf:#E39343;--askm:#B4521E;background:radial-gradient(ellipse 34% 70% at 84% 100%,rgba(242,154,58,.42),transparent 70%),linear-gradient(180deg,#24150D 0%,#5A2A14 62%,#8A3A17 100%)}
+.ctask .mail{background:rgba(242,153,74,.16);border:1px solid rgba(242,153,74,.5)}
+.ctask .btn{background:#F2994A;color:#24150D}
+.ctask .btn:hover{background:#FFC870}
 .ask svg.ridge{position:absolute;left:0;bottom:calc(100% - 1px);width:100%;height:72px;display:block;pointer-events:none}
 @keyframes pin{0%{transform:scale(.4);opacity:.9}100%{transform:scale(2.6);opacity:0}}
 .svc{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:40px}
@@ -616,7 +621,7 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--line);padding-top:20px
     <div style="--askc:#2E2620"><a class="eyebrow" href="#extended-networks">Extended Networks</a><h3>Sites that should work as one?</h3><p>Send us the locations and the power at each. We will draw the network that joins them.</p></div>
   </div>
 </div></section>
-<section class="ask" style="--askc:#B4521E"><div class="wrap">
+<section class="ask ctask" style="--askc:#24150D"><div class="wrap">
   <div><h2>Send us the load and the date.</h2><p>Roughly where, roughly how much power, and when you need it. One short message is the whole process: no sequence of follow-ups, no newsletter.</p></div>
   <div style="display:flex;flex-direction:column;gap:12px;align-items:flex-start"><span class="mail">info@rhydev.com</span><a class="btn arrow" href="mailto:info@rhydev.com">Email us</a></div>
 </div></section>
@@ -1755,8 +1760,8 @@ function route(g,y0,terms,cls,stroke,w){let d='';for(let x=0;x<=2*SW;x+=10)d+=(x
 document.querySelectorAll('section.ask').forEach((sec,n)=>{
   const v=el('svg',{class:'ridge',viewBox:'0 0 1600 90',preserveAspectRatio:'xMidYMax slice','aria-hidden':'true'});
   const far=layer(v,280+n*20), mid=layer(v,170+n*10), ry=x=>58+wave(x,[[3,9,n],[8,4,.5+n]]);
-  strip(far,x=>40+wave(x,[[2,14,n*.7],[5,7,1.2],[11,3,0]]),'var(--askc,var(--oxide))',.35,90);
-  strip(mid,ry,'var(--askc,var(--oxide))',.6,90); towers(mid,ry,'var(--askc,var(--oxide))',30);
+  strip(far,x=>40+wave(x,[[2,14,n*.7],[5,7,1.2],[11,3,0]]),'var(--askf,var(--askc,var(--oxide)))',.35,90);
+  strip(mid,ry,'var(--askm,var(--askc,var(--oxide)))',.6,90); towers(mid,ry,'var(--askm,var(--askc,var(--oxide)))',30);
   strip(layer(v,110),x=>76+wave(x,[[4,5,n*1.3],[9,2,0]]),'var(--askc,var(--oxide))',1,90);
   sec.prepend(v);
 });
