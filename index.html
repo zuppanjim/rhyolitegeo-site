@@ -88,13 +88,14 @@ nav.main a:hover,nav.main a[aria-current]{color:var(--oxide)}
 .hero .credit{position:absolute;right:max(16px,env(safe-area-inset-right,0px));bottom:12px;z-index:1;font-family:var(--mono);font-size:11px;color:#BFAF97}
 
 /* pillars */
-.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:48px}
+.pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:48px}
 .pillar{background:var(--surface);padding:34px 30px;display:flex;flex-direction:column;gap:14px;min-width:0}
 .pillar .k{font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.1em}
 .pillar p{color:var(--muted);font-size:17px}
 .pillar a{margin-top:auto;font-family:var(--display);font-weight:600;font-size:15px;text-decoration:none}
 .pillar a:hover{text-decoration:underline}
 .glyph{width:44px;height:44px;color:var(--oxide)}
+@media (max-width:1100px){.pillars{grid-template-columns:1fr 1fr}}
 @media (max-width:860px){.pillars{grid-template-columns:1fr}}
 
 /* proof band */
@@ -500,7 +501,7 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--line);padding-top:20px
 
 <section id="what"><div class="wrap">
   <span class="eyebrow">What we build</span>
-  <h2 style="margin-top:12px;max-width:22ch">Three things, developed together on one property line</h2>
+  <h2 style="margin-top:12px;max-width:22ch">Four things, developed together on one property line</h2>
   <p class="lede" style="margin-top:18px">Each power system is coupled to the AI factory it feeds, and the factories are joined into one larger system. The load is built to the power that stands beside it.</p>
   <div class="pillars">
     <article class="pillar">
@@ -523,6 +524,13 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--line);padding-top:20px
       <h3>Small sites, joined into one</h3>
       <p>High-speed Ethernet over fiber joins the smaller data centers as nodes into one larger system, so ten island sites can work as a campus without its grid tie.</p>
       <a href="#home" class="arrow" onclick="go('home','doors');return false">Bring us a site </a>
+    </article>
+    <article class="pillar">
+      <svg class="glyph" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="5"/><path d="M11 2v2M11 18v2M2 11h2M18 11h2"/><path d="M31 40V18M31 18l-9-6M31 18l9-6M31 18v11"/><path d="M4 38l4-10h12l-4 10Z"/></svg>
+      <span class="k">FOUR · WIND AND SOLAR</span>
+      <h3>The farm's bus, with gas behind it</h3>
+      <p>A wind and solar farm already has its interconnection. We tap its bus to feed a 30 to 60 MW AI factory, and fuel cells on a gas line carry the hours the sun is down and the air is still.</p>
+      <a href="#wind-solar" class="arrow">See Wind and Solar </a>
     </article>
   </div>
 </div></section>
