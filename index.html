@@ -293,6 +293,16 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--line);padding-top:20px
 .ctask .mail{background:rgba(242,153,74,.16);border:1px solid rgba(242,153,74,.5)}
 .ctask .btn{background:#F2994A;color:#24150D}
 .ctask .btn:hover{background:#FFC870}
+/* Wind and Solar: the live readout over the hero, and a closing band that follows the sun */
+.wshud{position:absolute;top:22px;right:max(16px,env(safe-area-inset-right,0px));z-index:1;font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:#F3EDE4;background:rgba(20,16,12,.46);padding:10px 12px;display:grid;gap:6px;min-width:240px}
+.wshud div{display:grid;grid-template-columns:84px 1fr 48px;align-items:center;gap:8px}
+.wshud i{display:block;height:4px;background:rgba(255,255,255,.18)}
+.wshud b{display:block;height:100%;width:0;background:#F3EDE4}
+.wshud div:nth-child(1) b{background:#FFD27A}.wshud div:nth-child(2) b{background:#9FD8EE}.wshud div:nth-child(3) b{background:#8FD4A8}
+.wshud em{font-style:normal;text-align:right;font-variant-numeric:tabular-nums}
+.wshud .clk{display:block;color:#BFAF97}
+@media (max-width:700px){.wshud{top:12px;min-width:0;font-size:10px;padding:8px 10px}.wshud div{grid-template-columns:72px 56px 42px}}
+.wsask{--askc:#3A6E8C;background:radial-gradient(ellipse 26% 140% at var(--sx,50%) 0%,rgba(255,214,140,var(--sg,0)),transparent 70%),var(--askc)}
 .ask svg.ridge{position:absolute;left:0;bottom:calc(100% - 1px);width:100%;height:72px;display:block;pointer-events:none}
 @keyframes pin{0%{transform:scale(.4);opacity:.9}100%{transform:scale(2.6);opacity:0}}
 .svc{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:40px}
@@ -443,6 +453,7 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--line);padding-top:20px
     <a href="#glass-ball" data-v="glass-ball">Projects</a>
     <a href="#site-services" data-v="site-services">Site services</a>
     <a href="#geothermal" class="hide-sm" data-v="geothermal">Geothermal</a>
+    <a href="#wind-solar" class="hide-sm" data-v="wind-solar">Wind &amp; Solar</a>
     <a href="#extended-networks" class="hide-sm" data-v="extended-networks">Extended Networks</a>
     <a href="#contact" class="hide-xs" data-v="contact">Contact</a>
   </nav>
@@ -1099,6 +1110,87 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--line);padding-top:20px
 </div></section>
 </main>
 
+<!-- =================== WIND AND SOLAR =================== -->
+<main id="v-wind-solar" hidden>
+<section class="phero scape" style="padding:0">
+  <svg class="view" id="wsview" viewBox="0 0 1600 700" preserveAspectRatio="xMaxYMax slice" role="img" aria-label="Illustration: one day on a wind and solar farm. The sun rises and crosses the sky, clouds pass, the wind comes and goes and the turbine blades turn with it, while fuel cells beside an AI factory carry whatever the sun and the wind do not"></svg>
+  <div class="wshud" id="wshud" aria-hidden="true"></div>
+  <div class="wrap">
+    <span class="eyebrow">Wind and solar · the farm's bus, with gas behind it</span>
+    <h1>Sun when it shines, wind when it blows, gas for the rest</h1>
+    <p>A wind and solar farm already holds the hardest thing to get: a bus with an interconnection behind it. We tap that bus to feed a 30 to 60 MW AI factory beside the farm, and put fuel cells on a gas line at the same fence for the hours when the sun is down and the air is still.</p>
+  </div>
+  <span class="credit" style="position:absolute;right:max(16px,env(safe-area-inset-right,0px));bottom:12px;z-index:1;font-family:var(--mono);font-size:11px;color:#BFAF97">Illustration · one day on the farm's bus, run in a minute</span>
+</section>
+<dl class="facts">
+  <div><dt>AI factory</dt><dd>30–60 MW</dd></div>
+  <div><dt>Solar, capacity factor</dt><dd>15–25%</dd></div>
+  <div><dt>Wind, capacity factor</dt><dd>25–45%</dd></div>
+  <div><dt>Firm power</dt><dd>Fuel cells</dd></div>
+  <div><dt>Hall bus</dt><dd>800 VDC</dd></div>
+</dl>
+
+<section><div class="wrap two">
+  <div>
+    <span class="eyebrow">Why the farm's bus</span>
+    <h2 style="margin-top:12px">The connection is already built</h2>
+    <p style="margin-top:20px">A renewable farm is built around its interconnection: a substation, a collector bus and a queue position that took years to win. On a bright, windy afternoon it can make more than the line will take. A hall on the same bus uses those megawatts at the fence.</p>
+    <p>The racks do not care about the weather. They draw the same load at noon and at three in the morning, so the farm is never asked to be firm. Fuel cells on a gas lateral sit beside the hall and follow the gap: they carry whatever the sun and the wind do not, and all of it on a still night.</p>
+    <p>Every megawatt-hour the farm delivers is a megawatt-hour of gas the fuel cells do not burn.</p>
+  </div>
+  <div class="diagram">
+    <svg viewBox="0 0 520 280" role="img" aria-label="Solar and wind feed the farm bus, which also connects to the grid; the farm bus and gas-fed fuel cells both feed one 800 volt DC ring that serves the AI racks">
+      <g font-family="IBM Plex Mono, monospace" font-size="11" fill="var(--muted)">
+        <rect x="10" y="14" width="140" height="56" fill="var(--sunk)" stroke="var(--line)"/>
+        <text x="80" y="38" text-anchor="middle" fill="var(--ink)">Solar array</text>
+        <text x="80" y="54" text-anchor="middle">while the sun is up</text>
+        <rect x="10" y="84" width="140" height="56" fill="var(--sunk)" stroke="var(--line)"/>
+        <text x="80" y="108" text-anchor="middle" fill="var(--ink)">Wind turbines</text>
+        <text x="80" y="124" text-anchor="middle">while it blows</text>
+        <rect x="190" y="50" width="110" height="56" fill="var(--sunk)" stroke="var(--line)"/>
+        <text x="245" y="74" text-anchor="middle" fill="var(--ink)">Farm bus</text>
+        <text x="245" y="90" text-anchor="middle">substation</text>
+        <path class="flow" d="M150 42h20v30h20" stroke="var(--oxide)" stroke-width="3" fill="none"/>
+        <path class="flow" d="M150 112h20v-30h20" stroke="var(--sky)" stroke-width="3" fill="none"/>
+        <path class="flow slow" d="M245 50V22" stroke="var(--line)" stroke-width="2"/>
+        <text x="256" y="22" fill="var(--muted)">grid</text>
+        <rect x="10" y="190" width="140" height="56" fill="var(--sunk)" stroke="var(--line)"/>
+        <text x="80" y="214" text-anchor="middle" fill="var(--ink)">Fuel cells</text>
+        <text x="80" y="230" text-anchor="middle">the rest of the hours</text>
+        <path class="flow" d="M80 274v-28" stroke="var(--sage)" stroke-width="3"/>
+        <text x="92" y="272">gas lateral</text>
+        <path class="flow" d="M300 78h20" stroke="var(--ink)" stroke-width="3"/>
+        <path class="flow" d="M150 218h170" stroke="var(--ink)" stroke-width="3"/>
+        <path d="M320 78v140" stroke="var(--ink)" stroke-width="3"/>
+        <text x="235" y="160" text-anchor="middle" fill="var(--ink)">800 VDC ring</text>
+        <path class="flow" d="M320 107h22M320 177h22" stroke="var(--ink)" stroke-width="2"/>
+        <g fill="var(--surface)" stroke="var(--ink)">
+          <rect x="342" y="90" width="36" height="34"/><rect x="386" y="90" width="36" height="34"/><rect x="430" y="90" width="36" height="34"/><rect x="474" y="90" width="36" height="34"/>
+          <rect x="342" y="160" width="36" height="34"/><rect x="386" y="160" width="36" height="34"/><rect x="430" y="160" width="36" height="34"/><rect x="474" y="160" width="36" height="34"/>
+        </g>
+        <text x="426" y="222" text-anchor="middle">AI racks · 30–60 MW</text>
+      </g>
+    </svg>
+    <p class="cap">Concept. The farm keeps its grid connection; the hall takes what it needs from the same bus.</p>
+  </div>
+</div></section>
+
+<section style="background:var(--band)"><div class="wrap">
+  <span class="eyebrow">A day on the bus</span>
+  <h2 style="margin-top:12px;max-width:24ch">The weather changes all day. The load does not.</h2>
+  <div class="cards">
+    <div><span class="k">MIDDAY</span><h3>The sun carries the hall</h3><p>Solar output peaks while the racks draw flat. The fuel cells turn down to their floor, and what the hall does not use goes out through the farm's interconnection as it always has.</p></div>
+    <div><span class="k">EVENING</span><h3>The wind takes the handoff</h3><p>On many sites the wind rises as the sun sets. Whatever the two give, the fuel cells make up the difference, so the racks never see the change.</p></div>
+    <div><span class="k">STILL NIGHT</span><h3>The gas carries everything</h3><p>No sun and no wind. The fuel cells carry the full load on their own, which is why they are sized for the whole hall and not for the gap.</p></div>
+  </div>
+</div></section>
+
+<section class="ask slim wsask" id="wsask"><div class="wrap">
+  <h2>Have a question? <a href="#contact">See what people ask us</a></h2>
+  <div class="askr"><span class="mail">info@rhydev.com</span><a class="btn arrow" href="mailto:info@rhydev.com">Email us</a></div>
+</div></section>
+</main>
+
 <!-- =================== EXTENDED NETWORKS =================== -->
 <main id="v-extended-networks" hidden>
 <section class="phero scape" style="padding:0">
@@ -1280,13 +1372,13 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--line);padding-top:20px
 
 <footer><div class="wrap">
   <div><img class="logo lt" src="assets/logo-dark.png" alt="Rhyolite Geo"><img class="logo dk" src="assets/logo-light.png" alt="Rhyolite Geo"><p style="margin-top:14px">Power systems and modular AI factories, developed together.</p></div>
-  <div><h4>Company</h4><a href="#home">What we build</a><br><a href="#glass-ball">Projects</a><br><a href="#site-services">Site services</a><br><a href="#geothermal">Geothermal</a><br><a href="#extended-networks">Extended Networks</a></div>
+  <div><h4>Company</h4><a href="#home">What we build</a><br><a href="#glass-ball">Projects</a><br><a href="#site-services">Site services</a><br><a href="#geothermal">Geothermal</a><br><a href="#wind-solar">Wind and Solar</a><br><a href="#extended-networks">Extended Networks</a></div>
   <div><h4>Contact</h4><span style="user-select:all">info@rhydev.com</span></div>
   <p class="legal">Rhyolite Geo Inc. Renderings are design studies, not photographs of built assets. Figures are design cases from the project plan and pro forma and are not results. The 17 CFR 227.206 legend from rhydev.com carries over here unchanged.</p>
 </div></footer>
 
 <script>
-const views=['home','glass-ball','site-services','geothermal','extended-networks','contact'];
+const views=['home','glass-ball','site-services','geothermal','wind-solar','extended-networks','contact'];
 function show(v,anchor){
   if(!views.includes(v))v='home';
   views.forEach(x=>document.getElementById('v-'+x).hidden=(x!==v));
@@ -1565,6 +1657,198 @@ function route(g,y0,terms,cls,stroke,w){let d='';for(let x=0;x<=2*SW;x+=10)d+=(x
   el('path',{class:'flow slow',d:'M860 612H960M960 612H1050V600',stroke:'#E07A3E','stroke-width':3,fill:'none'},g);
   el('path',{class:'flow',d:'M1050 624H740V600',stroke:'#7FB6D4','stroke-width':2.5,fill:'none'},g);
   el('path',{class:'flow',d:'M1486 570H1500',stroke:'#F2C48D','stroke-width':2,fill:'none'},g);
+})();
+
+// wind and solar: one day on the farm's bus, the turbines turning with the wind and the fuel cells carrying the rest
+(function(){
+  const v=document.getElementById('wsview'), hud=document.getElementById('wshud'), band=document.getElementById('wsask');
+  const defs=el('defs',{},v);
+  grad(defs,'wssky',[['0','#4F8DB8'],['.62','#9CC6DD'],['1','#E6E2CF']]);
+  grad(defs,'wsdusk',[['0','#E07A3E',0],['.5','#E8843F',.3],['1','#F4A35A',.95]]);
+  grad(defs,'wsglow',[['0','#FFF6D2',1],['.18','#FFE08A',.55],['1','#FFC060',0]],true);
+  grad(defs,'wspv',[['0','#36577F'],['1','#1B2D4A']]);
+  const clip=el('clipPath',{id:'wshz'},defs); el('rect',{width:SW,height:478},clip);
+  const mix=(a,b,k)=>a.map((x,i)=>Math.round(x+(b[i]-x)*k));
+  const rgb=c=>`rgb(${c[0]},${c[1]},${c[2]})`;
+  const cl=(x,a,b)=>Math.max(a,Math.min(b,x)), ss=(a,b,x)=>{const t=cl((x-a)/(b-a),0,1);return t*t*(3-2*t);};
+
+  // sky, the warm band at dawn and dusk, the sun behind the hills
+  el('rect',{width:SW,height:700,fill:'url(#wssky)'},v);
+  const dusk=el('rect',{y:120,width:SW,height:500,fill:'url(#wsdusk)',opacity:0},v);
+  const sunG=el('g',{},v);
+  el('circle',{r:120,fill:'url(#wsglow)'},sunG); const sunC=el('circle',{r:26,fill:'#FFF1C2'},sunG);
+
+  // clouds, drifting faster as the wind rises
+  const clouds=[[120,110,1],[520,190,.8],[900,90,1.2],[1250,160,.9],[1580,230,.7],[1900,120,1.05]].map(([x,y,k])=>{
+    const g=el('g',{},v), p=el('g',{transform:`scale(${k})`},g);
+    [[0,0,62,22],[-36,8,38,17],[34,6,44,19],[8,-14,36,20]].forEach(([cx,cy,rx,ry])=>el('ellipse',{cx,cy,rx,ry},p));
+    return {g,x,y,k,w:96*k};
+  });
+
+  // the ridge the turbines stand on, then the near ground
+  const ridge=x=>482+wave(x,[[2,16,.4],[5,8,1.7],[9,4,.3]]);
+  strip(v,x=>458+wave(x,[[1,22,2.1],[4,10,.6]]),'#9DB2AE',1,700);
+  strip(v,ridge,'#8EA08A',1,700);
+  strip(v,x=>588+wave(x,[[3,6,1],[7,3,2]]),'#C2AE78',1,700);
+  el('path',{d:'M0 700V636Q400 628 800 632T1600 630V700Z',fill:'#AD9762'},v);
+
+  // wind turbines: tower, nacelle, three blades on a hub that turns
+  const rotors=[];
+  [[90,.5],[230,.62],[380,.74],[540,.86],[720,1],[900,.9],[1070,.72],[1250,.6]].forEach(([x,s],i)=>{
+    const by=ridge(x)+6, h=250*s, hy=by-h, g=el('g',{},v);
+    el('path',{d:`M${x-3.4*s} ${by}L${x+3.4*s} ${by}L${x+1.5*s} ${hy}L${x-1.5*s} ${hy}Z`,fill:'#EEF0EE'},g);
+    el('rect',{x:x-4*s,y:hy-5*s,width:13*s,height:8*s,rx:2*s,fill:'#E4E7E6'},g);
+    const r=el('g',{},g);
+    [0,120,240].forEach(a=>el('path',{d:`M${-2.2*s} 0L${-.5*s} ${-112*s}L${.9*s} ${-112*s}L${2.6*s} ${-6*s}Z`,fill:'#F4F5F3',transform:`rotate(${a})`},r));
+    el('circle',{r:4*s,fill:'#D8DCDA'},r);
+    rotors.push({r,x,y:hy,a:i*41,k:.9+((i*7)%5)*.05,top:hy-6*s});
+  });
+
+  // the solar field, rows of tilted panels that catch the light
+  const glint=el('g',{opacity:0},v), pv=el('g',{},v);
+  [[602,.55,520],[624,.7,500],[650,.88,480],[680,1.08,460]].forEach(([y,k,x0])=>{
+    const pw=40*k, ph=15*k, sk=7*k;
+    for(let x=x0;x<1120;x+=pw+6*k){
+      el('rect',{x:x+pw*.45,y:y-ph*.4,width:2*k,height:ph*.9,fill:'#5D5446'},pv);
+      el('path',{d:`M${x} ${y}h${pw}l${sk} ${-ph}h${-pw}Z`,fill:'url(#wspv)'},pv);
+      el('path',{d:`M${x+sk} ${y-ph}h${pw}`,stroke:'#8FB0D0','stroke-width':1},pv);
+      el('path',{d:`M${x+pw*.3} ${y-1}l${sk*.6} ${-ph*.6}h${pw*.25}l${-sk*.6} ${ph*.6}Z`,fill:'#FFFFFF'},glint);
+    }
+  });
+  v.appendChild(glint);
+
+  // the farm substation, the bus line on its poles, the gas post
+  const sub=el('g',{fill:'none',stroke:'#5F584C','stroke-width':2},v);
+  el('path',{d:'M1124 610V572M1150 610V572M1176 610V572M1118 576H1182M1118 590H1182'},sub);
+  el('rect',{x:1130,y:596,width:16,height:14,fill:'#7B7468',stroke:'none'},v);
+  el('rect',{x:1154,y:596,width:16,height:14,fill:'#7B7468',stroke:'none'},v);
+  [1240,1318].forEach(x=>el('path',{d:`M${x} 618V566M${x-9} 570h18`,stroke:'#5F584C','stroke-width':2.4,fill:'none'},v));
+  el('path',{d:'M1182 576Q1211 584 1240 570Q1279 582 1318 570Q1334 576 1352 572',stroke:'#4A443A','stroke-width':1.2,fill:'none'},v);
+  el('rect',{x:1196,y:640,width:4,height:16,fill:'#6E6050'},v); el('rect',{x:1194,y:636,width:8,height:6,fill:'#E8B53A'},v);
+
+  // fuel cells: five skids on the gas line, heat rising when they run
+  const fcHeat=el('g',{opacity:0},v), fcx=[1206,1234,1262,1290,1318];
+  fcx.forEach((x,k)=>{
+    el('rect',{x,y:616,width:24,height:30,fill:'#D6D2C6'},v);
+    el('rect',{x,y:612,width:24,height:5,fill:'#B9B3A4'},v);
+    el('path',{d:`M${x+4} 624h16M${x+4} 630h16M${x+4} 636h16`,stroke:'#A9A293','stroke-width':1},v);
+    el('path',{class:'heat',d:`M${x+12} 606q-5 -12 0 -24t0 -24`,stroke:'#F0E2CC','stroke-width':1.6,fill:'none',style:`animation-delay:-${(k*.7).toFixed(2)}s`},fcHeat);
+  });
+  v.appendChild(fcHeat);
+
+  // the AI factory: one long hall, dry coolers on the roof
+  el('rect',{x:1356,y:540,width:250,height:108,fill:'#CBBEA6'},v);
+  el('rect',{x:1356,y:540,width:250,height:10,fill:'#B3A68D'},v);
+  el('rect',{x:1356,y:612,width:250,height:4,fill:'#B3A68D'},v);
+  for(let k=0;k<6;k++){const x=1372+k*38;el('rect',{x,y:522,width:30,height:18,fill:'#9E9480'},v);
+    el('circle',{cx:x+15,cy:522,r:7,fill:'#857B68'},v);}
+  el('rect',{x:1376,y:618,width:22,height:30,fill:'#8C8270'},v);
+
+  // wind you can see: streaks crossing the scene and the grass bending
+  const streaks=[...Array(16)].map((_,i)=>{
+    const p=el('path',{d:'M0 0q30 -5 60 0t60 0',stroke:'#FFFFFF','stroke-width':1.4,fill:'none','stroke-linecap':'round',opacity:0},v);
+    return {p,x:(i*173)%1800-100,y:150+((i*97)%420),s:.7+((i*13)%7)*.08};
+  });
+  const grass=el('g',{},v); let gd='';
+  for(let x=4;x<SW;x+=9){const h=10+((x*7)%13);gd+=`M${x} 700q2 ${-h/2} ${((x%3)-1)*2} ${-h}`;}
+  el('path',{d:gd,stroke:'#8A7646','stroke-width':1.6,fill:'none'},grass);
+
+  // night falls over all of it; what stays lit draws on top
+  const shade=el('rect',{width:SW,height:700,fill:'#0A1026',opacity:0},v);
+  const stars=el('g',{opacity:0},v); let r=11;
+  const rnd=()=>(r=(r*9301+49297)%233280)/233280;
+  for(let i=0;i<80;i++)el('circle',{class:'tw',cx:rnd()*SW,cy:rnd()*380,r:rnd()*1.2+.4,fill:'#F4EBDD',style:`animation-delay:-${(rnd()*3).toFixed(2)}s`},stars);
+  const moon=el('circle',{r:16,fill:'#F1E9D6',opacity:0,'clip-path':'url(#wshz)'},v);
+  const win=el('g',{},v);
+  for(let x=1366;x<1598;x+=12)el('rect',{x,y:576,width:6,height:22,fill:'#9FD8EE',opacity:.8},win);
+  const leds=fcx.map(x=>el('rect',{x:x+9,y:620,width:6,height:3,fill:'#8FD4A8'},v));
+  const beacons=rotors.map(t=>el('circle',{cx:t.x+2,cy:t.top,r:2,fill:'#FF4A3A',opacity:0},v));
+  const wire=el('path',{d:'M1182 576Q1211 584 1240 570Q1279 582 1318 570Q1334 576 1352 572',stroke:'#FFD27A','stroke-width':2.2,fill:'none','stroke-dasharray':'6 10',opacity:0},v);
+  const fcw=el('path',{d:'M1342 630H1356',stroke:'#8FD4A8','stroke-width':2.2,fill:'none','stroke-dasharray':'4 6',opacity:0},v);
+  el('path',{d:'M1330 630h12',stroke:'#6E6050','stroke-width':2},v);
+
+  // the readout: what each source gives, what the hall draws
+  hud.innerHTML=['SUN','WIND','FUEL CELLS','AI FACTORY'].map(k=>`<div><span>${k}</span><i><b></b></i><em></em></div>`).join('')+'<div class="clk"></div>';
+  const rows=[...hud.querySelectorAll('div:not(.clk)')], clk=hud.querySelector('.clk');
+
+  // one day runs in a minute; the wind keeps its own time, so still nights come and go
+  const DAY=60, LIGHT=.55, LOAD=48, PV=60, WIND=60, NIGHT=[10,16,38], NOON=[58,108,140], DUSK=[168,78,34];
+  let t=DAY*.18, w=.5, raf=0, last=0, tick=0, dash=0, dash2=0;
+  function frame(dt){
+    t+=dt;
+    const p=(t/DAY)%1, a=p/LIGHT, b=(p-LIGHT)/(1-LIGHT);
+    const day=p<LIGHT, e=day?Math.sin(Math.PI*a):-Math.sin(Math.PI*b);
+    const sx=day?60+a*1480:-200, sy=day?478-Math.sin(Math.PI*a)*400:900;
+    const L=ss(-.12,.32,e), dw=cl(1-Math.abs(e-.06)/.3,0,1);
+    sunG.setAttribute('transform',`translate(${sx.toFixed(1)} ${sy.toFixed(1)})`);
+    sunC.setAttribute('fill',rgb(mix([255,241,194],[255,170,96],dw)));
+    dusk.setAttribute('opacity',(dw*.9).toFixed(3));
+    shade.setAttribute('opacity',((1-L)*.8).toFixed(3));
+    stars.setAttribute('opacity',((1-L)*.95).toFixed(3));
+    if(!day){moon.setAttribute('cx',(60+b*1480).toFixed(1));moon.setAttribute('cy',(478-Math.sin(Math.PI*b)*320).toFixed(1));}
+    moon.setAttribute('opacity',day?0:ss(.02,.12,Math.sin(Math.PI*b)).toFixed(3));
+
+    // wind: three gusts of different periods, clipped at calm
+    const tw=cl(.48+.32*Math.sin(TAU*t/37)+.2*Math.sin(TAU*t/13+1.3)+.08*Math.sin(TAU*t/4.7),0,1);
+    w+=(tw-w)*Math.min(1,dt*1.5);
+    const fill=rgb(mix([255,255,255],[255,196,150],dw*.85));
+    let cover=0;
+    clouds.forEach(c=>{
+      c.x+=(5+w*34)*c.k*dt; if(c.x>SW+160)c.x=-160;
+      c.g.setAttribute('transform',`translate(${c.x.toFixed(1)} ${c.y})`); c.g.setAttribute('fill',fill);
+      const d=Math.hypot((c.x-sx)/(c.w*.75),(c.y-sy)/(28*c.k));
+      cover=Math.max(cover,cl(1.2-d,0,1));
+    });
+    streaks.forEach(s=>{
+      s.x+=(60+w*520)*s.s*dt; if(s.x>SW+40)s.x=-160;
+      s.p.setAttribute('transform',`translate(${s.x.toFixed(1)} ${s.y})`);
+      s.p.setAttribute('opacity',(cl(w-.22,0,1)*.6*(.4+.6*L)).toFixed(3));
+    });
+    const lean=(-w*18-Math.sin(t*3.1)*w*5).toFixed(2);
+    grass.setAttribute('transform',`translate(0 700) skewX(${lean}) translate(0 -700)`);
+
+    // turbines: cut in at a breeze, rated in a strong wind, coast down in the calm
+    const om=w<.16?0:.7+2.6*cl((w-.16)/.56,0,1);
+    rotors.forEach(t2=>{t2.w=(t2.w||0)+((om*t2.k)-(t2.w||0))*Math.min(1,dt*.8);t2.a=(t2.a+t2.w*dt*57.3)%360;
+      t2.r.setAttribute('transform',`translate(${t2.x} ${t2.y}) rotate(${t2.a.toFixed(1)})`);});
+    const blink=(t%2)<.18?1:0;
+    beacons.forEach(c=>c.setAttribute('opacity',((1-L)*blink).toFixed(2)));
+
+    // the bus: sun and wind first, fuel cells for the rest
+    const sun=PV*Math.pow(Math.max(0,e),1.2)*(1-.6*cover);
+    const wind=WIND*Math.pow(cl((w-.16)/.56,0,1),2);
+    const fc=Math.max(0,LOAD-sun-wind), ren=LOAD-fc;
+    glint.setAttribute('opacity',(Math.pow(Math.max(0,e),2)*.22*(1-cover)).toFixed(3));
+    fcHeat.setAttribute('opacity',(fc/LOAD).toFixed(3));
+    const on=Math.ceil(fc/LOAD*5-.01);
+    leds.forEach((l,k)=>l.setAttribute('fill',k<on?'#8FD4A8':'#C9A24A'));
+    dash-=dt*(ren/LOAD)*60; dash2-=dt*(fc/LOAD)*60;
+    wire.setAttribute('stroke-dashoffset',dash.toFixed(1)); wire.setAttribute('opacity',(ren/LOAD*.9).toFixed(3));
+    fcw.setAttribute('stroke-dashoffset',dash2.toFixed(1)); fcw.setAttribute('opacity',(fc/LOAD*.9).toFixed(3));
+
+    // the closing band follows the same sun
+    const c=mix(mix(NIGHT,NOON,L),DUSK,dw*.8);
+    band.style.setProperty('--askc',rgb(c));
+    band.style.setProperty('--askf',rgb(mix(c,[255,255,255],.4)));
+    band.style.setProperty('--askm',rgb(mix(c,[0,0,0],.22)));
+    band.style.setProperty('--sx',(day?a*100:50).toFixed(1)+'%');
+    band.style.setProperty('--sg',(day?(.18+.3*dw)*Math.min(1,e*4):0).toFixed(3));
+
+    if((tick++)%6)return;
+    const mw=[sun,wind,fc,LOAD];
+    rows.forEach((row,k)=>{row.querySelector('b').style.width=(Math.min(mw[k],PV)/PV*100).toFixed(1)+'%';
+      row.querySelector('em').textContent=Math.round(mw[k])+' MW';});
+    const hr=(6+p*24)%24;
+    clk.textContent=`${String(Math.floor(hr)).padStart(2,'0')}:${String(Math.floor(hr%1*60)).padStart(2,'0')} · WIND ${(w*14).toFixed(0)} m/s`;
+  }
+  if(!motion){frame(0);return;}
+  const main=v.closest('main');
+  const loop=now=>{
+    if(main.hidden||document.hidden){raf=0;return;}
+    frame(last?Math.min(.1,(now-last)/1000):0); last=now; raf=requestAnimationFrame(loop);
+  };
+  const start=()=>{if(!raf&&!main.hidden){last=0;raf=requestAnimationFrame(loop);}};
+  addEventListener('hashchange',start); document.addEventListener('visibilitychange',start); start();
 })();
 
 // contact: the town hall on Halloween night, the square full of costumes and hands up with questions
