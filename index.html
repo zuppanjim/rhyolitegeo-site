@@ -1798,7 +1798,10 @@ function route(g,y0,terms,cls,stroke,w){let d='';for(let x=0;x<=2*SW;x+=10)d+=(x
   const leds=fcx.map(x=>el('rect',{x:x+9,y:620,width:6,height:3,fill:'#8FD4A8'},v));
   const beacons=rotors.map(t=>el('circle',{cx:t.x+2,cy:t.top,r:2,fill:'#FF4A3A',opacity:0},v));
   const wire=el('path',{d:'M1182 576Q1211 584 1240 570Q1279 582 1318 570Q1334 576 1352 572',stroke:'#FFD27A','stroke-width':2.2,fill:'none','stroke-dasharray':'6 10',opacity:0},v);
-  const fcw=el('path',{d:'M1342 630H1356',stroke:'#8FD4A8','stroke-width':2.2,fill:'none','stroke-dasharray':'4 6',opacity:0},v);
+  // the fuel cell feeder: a drop from each skid onto one line into the hall
+  const fd='M1218 646V654M1246 646V654M1274 646V654M1302 646V654M1330 646V654M1212 654H1384V648';
+  el('path',{d:fd,stroke:'#4A443A','stroke-width':1.4,fill:'none'},v);
+  const fcw=el('path',{d:'M1212 654H1384V648',stroke:'#8FD4A8','stroke-width':3,fill:'none','stroke-dasharray':'6 10',opacity:0},v);
   el('path',{d:'M1330 630h12',stroke:'#6E6050','stroke-width':2},v);
 
   // the readout: what each source gives, what the hall draws
