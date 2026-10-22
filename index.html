@@ -414,6 +414,19 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--line);padding-top:20px
 .hero .kb{transform-origin:62% 55%;animation:kb 28s ease-in-out infinite alternate}
 @keyframes kb{0%{transform:scale(1.04) translate(1.5%,0) rotate(-.6deg)}50%{transform:scale(1.14) translate(-1%,-1%) rotate(.4deg)}100%{transform:scale(1.08) translate(-2.5%,.5%) rotate(.9deg)}}
 @media (prefers-reduced-motion:reduce){.hero .kb{animation:none}}
+#askdlg{border:0;padding:0;width:min(520px,calc(100vw - 32px));background:var(--surface);color:var(--ink);border-top:4px solid var(--oxide);box-shadow:0 20px 60px rgba(0,0,0,.45)}
+#askdlg::backdrop{background:rgba(20,14,10,.6)}
+#askdlg form{display:flex;flex-direction:column;gap:12px;padding:22px 22px 20px}
+#askdlg h3{margin:0;font-family:var(--display);font-size:22px;line-height:1.25}
+#askdlg label{display:flex;flex-direction:column;gap:5px;font-family:var(--mono);font-size:12px;color:var(--muted)}
+#askdlg input,#askdlg textarea{font:inherit;font-family:var(--sans,inherit);font-size:16px;color:var(--ink);background:var(--ground);border:1px solid var(--line);padding:10px 12px;border-radius:0}
+#askdlg textarea{min-height:120px;resize:vertical}
+#askdlg input:focus,#askdlg textarea:focus{outline:2px solid var(--oxide);outline-offset:1px}
+#askdlg .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+#askdlg .row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+#askdlg .x{position:absolute;top:8px;right:10px;background:none;border:0;font-size:24px;color:var(--muted);cursor:pointer;line-height:1}
+#askdlg .st{font-family:var(--mono);font-size:13px;color:var(--muted);min-height:1em}
+#askdlg .st.err{color:#B3261E}
 </style>
 <script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('motion');</script>
 
@@ -596,7 +609,7 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--line);padding-top:20px
   <span class="eyebrow">What people ask us</span>
   <h2>One inbox for every question</h2>
   <div class="qs">
-    <div style="--askc:#A84E22"><a class="eyebrow" href="#home">What we build</a><h3>If your project is waiting on power, send us the load and the date.</h3><p>Roughly where, roughly how much power, and when you need it. Email is the whole process: no form, no sequence of follow-ups, no newsletter.</p></div>
+    <div style="--askc:#A84E22"><a class="eyebrow" href="#home">What we build</a><h3>If your project is waiting on power, send us the load and the date.</h3><p>Roughly where, roughly how much power, and when you need it. One short message is the whole process: no sequence of follow-ups, no newsletter.</p></div>
     <div style="--askc:#4F6B3A"><a class="eyebrow" href="#glass-ball">Glass Ball</a><h3>Interested in capacity at Glass Ball?</h3><p>The hall is offered to one anchor tenant who brings the GPUs. Send us your load and your date.</p></div>
     <div style="--askc:#8A4626"><a class="eyebrow" href="#site-services">Site services</a><h3>Looking at a county, a parcel or a resource?</h3><p>Send us the area and what has to reach it. We will tell you what the ground says.</p></div>
     <div style="--askc:#3A3256"><a class="eyebrow" href="#geothermal">Geothermal</a><h3>Holding a geothermal resource, or a plant with output to spare?</h3><p>We pair it with a battery system and build the hall beside it. Send us the site, the temperature and the date.</p></div>
@@ -604,7 +617,7 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--line);padding-top:20px
   </div>
 </div></section>
 <section class="ask" style="--askc:#B4521E"><div class="wrap">
-  <div><h2>Send us the load and the date.</h2><p>Roughly where, roughly how much power, and when you need it. Email is the whole process: no form, no sequence of follow-ups, no newsletter.</p></div>
+  <div><h2>Send us the load and the date.</h2><p>Roughly where, roughly how much power, and when you need it. One short message is the whole process: no sequence of follow-ups, no newsletter.</p></div>
   <div style="display:flex;flex-direction:column;gap:12px;align-items:flex-start"><span class="mail">info@rhydev.com</span><a class="btn arrow" href="mailto:info@rhydev.com">Email us</a></div>
 </div></section>
 </main>
@@ -2316,5 +2329,52 @@ if(motion&&'IntersectionObserver' in window){
       if(!still)requestAnimationFrame(f);})();
   }
   img.complete&&img.naturalWidth?start():img.addEventListener('load',start);
+})();
+</script>
+
+<dialog id="askdlg" aria-labelledby="askh">
+  <form method="dialog" novalidate>
+    <button class="x" type="button" aria-label="Close">×</button>
+    <h3 id="askh">Ask us</h3>
+    <label>Your question<input name="q" maxlength="300" placeholder="What would you like to know?"></label>
+    <label>Anything we should know<textarea name="msg" maxlength="5000" placeholder="Where, how much power, when you need it"></textarea></label>
+    <label>Your name<input name="name" maxlength="120" autocomplete="name"></label>
+    <label>Your email, so we can answer<input name="email" type="email" maxlength="200" autocomplete="email" required></label>
+    <label class="hp" aria-hidden="true">Leave empty<input name="hp" tabindex="-1" autocomplete="off"></label>
+    <div class="row"><button class="btn arrow" type="submit">Send</button><span class="st" role="status"></span></div>
+  </form>
+</dialog>
+<script>
+// one form for every "Email us" and "Ask us this": the question goes to
+// rhydev-ask.pages.dev, and a person at info@rhydev.com answers it
+(function(){
+  const dlg=document.getElementById('askdlg'); if(!dlg||!dlg.showModal)return;
+  const f=dlg.querySelector('form'), st=dlg.querySelector('.st'), go=f.querySelector('[type=submit]');
+  function open(q){
+    f.reset(); st.textContent=''; st.className='st'; go.disabled=false;
+    f.q.value=q||''; dlg.showModal(); (q?f.msg:f.q).focus();
+  }
+  document.addEventListener('click',e=>{
+    const a=e.target.closest('a[href^="mailto:info@rhydev.com"]'); if(!a)return;
+    e.preventDefault(); e.stopPropagation();
+    const m=/[?&]subject=([^&]*)/.exec(a.getAttribute('href'));
+    open(m?decodeURIComponent(m[1]):'');
+  },true);
+  dlg.querySelector('.x').addEventListener('click',()=>dlg.close());
+  dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close();});
+  f.addEventListener('submit',async e=>{
+    e.preventDefault();
+    const d=Object.fromEntries(new FormData(f));
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email.trim())){st.textContent='Please give an email address we can answer.';st.className='st err';f.email.focus();return;}
+    if(!d.q.trim()&&!d.msg.trim()){st.textContent='Please write your question.';st.className='st err';f.q.focus();return;}
+    go.disabled=true; st.className='st'; st.textContent='Sending…';
+    try{
+      const r=await fetch('https://rhydev-ask.pages.dev/api/ask',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)});
+      const j=await r.json().catch(()=>({}));
+      if(!r.ok||!j.ok)throw new Error(j.error||'Something went wrong.');
+      st.textContent='Sent. A person at info@rhydev.com will answer you.';
+      setTimeout(()=>dlg.close(),2600);
+    }catch(err){go.disabled=false;st.className='st err';st.textContent=err.message+' You can also write to info@rhydev.com.';}
+  });
 })();
 </script>
