@@ -1723,8 +1723,15 @@ function route(g,y0,terms,cls,stroke,w){let d='';for(let x=0;x<=2*SW;x+=10)d+=(x
     const r=el('g',{},g);
     [0,120,240].forEach(a=>el('path',{d:`M${-2.2*s} 0L${-.5*s} ${-112*s}L${.9*s} ${-112*s}L${2.6*s} ${-6*s}Z`,fill:'#F4F5F3',transform:`rotate(${a})`},r));
     el('circle',{r:4*s,fill:'#D8DCDA'},r);
-    rotors.push({r,x,y:hy,a:i*41,k:.9+((i*7)%5)*.05,top:hy-6*s});
+    rotors.push({r,x,y:hy,a:i*41,k:.9+((i*7)%5)*.05,top:hy-6*s,by,s});
   });
+
+  // the wind collector: a pole line from turbine to turbine down to the substation
+  const wp=rotors.slice(0,7).map(t=>[t.x+10*t.s,t.by-16*t.s]), wl=rotors[7];
+  const wd='M'+wp.map(([x,y])=>x.toFixed(0)+' '+y.toFixed(0)).join('L')+'L1124 576M'+(wl.x+10*wl.s).toFixed(0)+' '+(wl.by-16*wl.s).toFixed(0)+'L1182 578';
+  [...wp,[wl.x+10*wl.s,wl.by-16*wl.s]].forEach(([x,y])=>el('path',{d:`M${x.toFixed(0)} ${(y+16).toFixed(0)}V${y.toFixed(0)}`,stroke:'#6E675A','stroke-width':1.6},v));
+  el('path',{d:wd,stroke:'#4A443A','stroke-width':1.1,fill:'none'},v);
+  const wwire=el('path',{d:wd,stroke:'#D2F1FF','stroke-width':3,fill:'none','stroke-dasharray':'6 10',opacity:0},v);
 
   // the solar field, rows of tilted panels that catch the light
   const glint=el('g',{opacity:0},v), pv=el('g',{},v);
@@ -1738,6 +1745,10 @@ function route(g,y0,terms,cls,stroke,w){let d='';for(let x=0;x<=2*SW;x+=10)d+=(x
     }
   });
   v.appendChild(glint);
+  // the solar feeder: along the front of the field to the substation
+  const sd='M520 686H1108L1136 610';
+  const scab=el('path',{d:sd,stroke:'#4A443A','stroke-width':1.4,fill:'none'},v);
+  const swire=el('path',{d:sd,stroke:'#FFD27A','stroke-width':3,fill:'none','stroke-dasharray':'6 10',opacity:0},v);
 
   // the farm substation, the bus line on its poles, the gas post
   const sub=el('g',{fill:'none',stroke:'#5F584C','stroke-width':2},v);
@@ -1774,6 +1785,7 @@ function route(g,y0,terms,cls,stroke,w){let d='';for(let x=0;x<=2*SW;x+=10)d+=(x
   const grass=el('g',{},v); let gd='';
   for(let x=4;x<SW;x+=9){const h=10+((x*7)%13);gd+=`M${x} 700q2 ${-h/2} ${((x%3)-1)*2} ${-h}`;}
   el('path',{d:gd,stroke:'#8A7646','stroke-width':1.6,fill:'none'},grass);
+  v.appendChild(scab); v.appendChild(swire);
 
   // night falls over all of it; what stays lit draws on top
   const shade=el('rect',{width:SW,height:700,fill:'#0A1026',opacity:0},v);
@@ -1795,7 +1807,7 @@ function route(g,y0,terms,cls,stroke,w){let d='';for(let x=0;x<=2*SW;x+=10)d+=(x
 
   // one day runs in a minute; the wind keeps its own time, so still nights come and go
   const DAY=60, LIGHT=.55, LOAD=48, PV=60, WIND=60, NIGHT=[10,16,38], NOON=[58,108,140], DUSK=[168,78,34];
-  let t=DAY*.18, w=.5, raf=0, last=0, tick=0, dash=0, dash2=0;
+  let t=DAY*.18, w=.5, raf=0, last=0, tick=0, dash=0, dash2=0, dsol=0, dwin=0;
   function frame(dt){
     t+=dt;
     const p=(t/DAY)%1, a=p/LIGHT, b=(p-LIGHT)/(1-LIGHT);
@@ -1846,6 +1858,9 @@ function route(g,y0,terms,cls,stroke,w){let d='';for(let x=0;x<=2*SW;x+=10)d+=(x
     leds.forEach((l,k)=>l.setAttribute('fill',k<on?'#8FD4A8':'#C9A24A'));
     dash-=dt*(ren/LOAD)*60; dash2-=dt*(fc/LOAD)*60;
     wire.setAttribute('stroke-dashoffset',dash.toFixed(1)); wire.setAttribute('opacity',(ren/LOAD*.9).toFixed(3));
+    dsol-=dt*(sun/PV)*70; dwin-=dt*(wind/WIND)*70;
+    swire.setAttribute('stroke-dashoffset',dsol.toFixed(1)); swire.setAttribute('opacity',(sun>.5?.3+.65*sun/PV:0).toFixed(3));
+    wwire.setAttribute('stroke-dashoffset',dwin.toFixed(1)); wwire.setAttribute('opacity',(wind>.5?.3+.65*wind/WIND:0).toFixed(3));
     fcw.setAttribute('stroke-dashoffset',dash2.toFixed(1)); fcw.setAttribute('opacity',(fc/LOAD*.9).toFixed(3));
 
     // the closing band follows the same sun
