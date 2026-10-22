@@ -1144,7 +1144,7 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--line);padding-top:20px
     <p>Every megawatt-hour the farm delivers is a megawatt-hour of gas the fuel cells do not burn.</p>
   </div>
   <div class="diagram">
-    <svg viewBox="0 0 520 280" role="img" aria-label="Solar and wind feed the farm bus, which also connects to the grid; the farm bus and gas-fed fuel cells both feed one 800 volt DC ring that serves the AI racks">
+    <svg viewBox="0 0 520 280" role="img" aria-label="Solar and wind feed the farm bus, which keeps its grid connection and feeds a 480 volt AC bus serving the cooling and the 480 volt loads; gas-fed fuel cells feed the 800 volt DC ring, which serves only the AI racks">
       <g font-family="IBM Plex Mono, monospace" font-size="11" fill="var(--muted)">
         <rect x="10" y="14" width="140" height="56" fill="var(--sunk)" stroke="var(--line)"/>
         <text x="80" y="38" text-anchor="middle" fill="var(--ink)">Solar array</text>
@@ -1152,31 +1152,40 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--line);padding-top:20px
         <rect x="10" y="84" width="140" height="56" fill="var(--sunk)" stroke="var(--line)"/>
         <text x="80" y="108" text-anchor="middle" fill="var(--ink)">Wind turbines</text>
         <text x="80" y="124" text-anchor="middle">while it blows</text>
-        <rect x="190" y="50" width="110" height="56" fill="var(--sunk)" stroke="var(--line)"/>
-        <text x="245" y="74" text-anchor="middle" fill="var(--ink)">Farm bus</text>
-        <text x="245" y="90" text-anchor="middle">substation</text>
-        <path class="flow" d="M150 42h20v30h20" stroke="var(--oxide)" stroke-width="3" fill="none"/>
-        <path class="flow" d="M150 112h20v-30h20" stroke="var(--sky)" stroke-width="3" fill="none"/>
-        <path class="flow slow" d="M245 50V22" stroke="var(--line)" stroke-width="2"/>
-        <text x="256" y="22" fill="var(--muted)">grid</text>
-        <rect x="10" y="190" width="140" height="56" fill="var(--sunk)" stroke="var(--line)"/>
-        <text x="80" y="214" text-anchor="middle" fill="var(--ink)">Fuel cells</text>
-        <text x="80" y="230" text-anchor="middle">the rest of the hours</text>
-        <path class="flow" d="M80 274v-28" stroke="var(--sage)" stroke-width="3"/>
+        <rect x="175" y="48" width="100" height="56" fill="var(--sunk)" stroke="var(--line)"/>
+        <text x="225" y="72" text-anchor="middle" fill="var(--ink)">Farm bus</text>
+        <text x="225" y="88" text-anchor="middle">substation</text>
+        <path class="flow" d="M150 42h12v34h13" stroke="var(--oxide)" stroke-width="3" fill="none"/>
+        <path class="flow" d="M150 112h12v-36h13" stroke="var(--sky)" stroke-width="3" fill="none"/>
+        <path class="flow slow" d="M225 48V24" stroke="var(--line)" stroke-width="2"/>
+        <text x="235" y="22">grid</text>
+        <path class="flow" d="M275 76h25" stroke="var(--oxide)" stroke-width="3"/>
+        <path d="M300 26v100" stroke="var(--oxide)" stroke-width="3"/>
+        <text x="300" y="142" text-anchor="middle" fill="var(--oxide)">480 VAC</text>
+        <path class="flow" d="M300 40h30M300 104h30" stroke="var(--oxide)" stroke-width="2"/>
+        <rect x="330" y="18" width="180" height="44" fill="var(--sunk)" stroke="var(--line)"/>
+        <text x="420" y="36" text-anchor="middle" fill="var(--ink)">Cooling</text>
+        <text x="420" y="52" text-anchor="middle">dry coolers, pumps, fans</text>
+        <rect x="330" y="82" width="180" height="44" fill="var(--sunk)" stroke="var(--line)"/>
+        <text x="420" y="100" text-anchor="middle" fill="var(--ink)">480 VAC loads</text>
+        <text x="420" y="116" text-anchor="middle">lighting, controls, house</text>
+        <rect x="10" y="182" width="140" height="56" fill="var(--sunk)" stroke="var(--line)"/>
+        <text x="80" y="206" text-anchor="middle" fill="var(--ink)">Fuel cells</text>
+        <text x="80" y="222" text-anchor="middle">on the gas line</text>
+        <path class="flow" d="M80 274v-36" stroke="var(--sage)" stroke-width="3"/>
         <text x="92" y="272">gas lateral</text>
-        <path class="flow" d="M300 78h20" stroke="var(--ink)" stroke-width="3"/>
-        <path class="flow" d="M150 218h170" stroke="var(--ink)" stroke-width="3"/>
-        <path d="M320 78v140" stroke="var(--ink)" stroke-width="3"/>
-        <text x="235" y="160" text-anchor="middle" fill="var(--ink)">800 VDC ring</text>
-        <path class="flow" d="M320 107h22M320 177h22" stroke="var(--ink)" stroke-width="2"/>
+        <path class="flow" d="M150 210h150" stroke="var(--ink)" stroke-width="3"/>
+        <path d="M300 164v86" stroke="var(--ink)" stroke-width="3"/>
+        <text x="225" y="200" text-anchor="middle" fill="var(--ink)">800 VDC ring</text>
+        <path class="flow" d="M300 183h30M300 231h30" stroke="var(--ink)" stroke-width="2"/>
         <g fill="var(--surface)" stroke="var(--ink)">
-          <rect x="342" y="90" width="36" height="34"/><rect x="386" y="90" width="36" height="34"/><rect x="430" y="90" width="36" height="34"/><rect x="474" y="90" width="36" height="34"/>
-          <rect x="342" y="160" width="36" height="34"/><rect x="386" y="160" width="36" height="34"/><rect x="430" y="160" width="36" height="34"/><rect x="474" y="160" width="36" height="34"/>
+          <rect x="330" y="166" width="36" height="34"/><rect x="378" y="166" width="36" height="34"/><rect x="426" y="166" width="36" height="34"/><rect x="474" y="166" width="36" height="34"/>
+          <rect x="330" y="214" width="36" height="34"/><rect x="378" y="214" width="36" height="34"/><rect x="426" y="214" width="36" height="34"/><rect x="474" y="214" width="36" height="34"/>
         </g>
-        <text x="426" y="222" text-anchor="middle">AI racks · 30–60 MW</text>
+        <text x="420" y="268" text-anchor="middle">AI racks · 800 VDC only</text>
       </g>
     </svg>
-    <p class="cap">Concept. The farm keeps its grid connection; the hall takes what it needs from the same bus.</p>
+    <p class="cap">Concept. Sun and wind run the cooling and the 480 VAC loads through the farm bus; the fuel cells feed the 800 VDC ring, and the ring feeds only the 800 VDC equipment.</p>
   </div>
 </div></section>
 
