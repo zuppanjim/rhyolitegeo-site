@@ -2336,8 +2336,8 @@ if(motion&&'IntersectionObserver' in window){
   <form method="dialog" novalidate>
     <button class="x" type="button" aria-label="Close">×</button>
     <h3 id="askh">Ask us</h3>
-    <label>Your question<input name="q" maxlength="300" placeholder="What would you like to know?"></label>
-    <label>Anything we should know<textarea name="msg" maxlength="5000" placeholder="Where, how much power, when you need it"></textarea></label>
+    <label>Your question, add to it as you like<textarea name="q" maxlength="5000" rows="4" placeholder="What would you like to know? Where, how much power, when you need it"></textarea></label>
+    <input type="hidden" name="msg" value="">
     <label>Your name<input name="name" maxlength="120" autocomplete="name"></label>
     <label>Your email, so we can answer<input name="email" type="email" maxlength="200" autocomplete="email" required></label>
     <label class="hp" aria-hidden="true">Leave empty<input name="hp" tabindex="-1" autocomplete="off"></label>
@@ -2352,7 +2352,7 @@ if(motion&&'IntersectionObserver' in window){
   const f=dlg.querySelector('form'), st=dlg.querySelector('.st'), go=f.querySelector('[type=submit]');
   function open(q){
     f.reset(); st.textContent=''; st.className='st'; go.disabled=false;
-    f.q.value=q||''; dlg.showModal(); (q?f.msg:f.q).focus();
+    f.q.value=q?q+' ':''; dlg.showModal(); f.q.focus(); f.q.setSelectionRange(f.q.value.length,f.q.value.length);
   }
   document.addEventListener('click',e=>{
     const a=e.target.closest('a[href^="mailto:info@rhydev.com"]'); if(!a)return;
@@ -2366,7 +2366,7 @@ if(motion&&'IntersectionObserver' in window){
     e.preventDefault();
     const d=Object.fromEntries(new FormData(f));
     if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email.trim())){st.textContent='Please give an email address we can answer.';st.className='st err';f.email.focus();return;}
-    if(!d.q.trim()&&!d.msg.trim()){st.textContent='Please write your question.';st.className='st err';f.q.focus();return;}
+    if(!d.q.trim()){st.textContent='Please write your question.';st.className='st err';f.q.focus();return;}
     go.disabled=true; st.className='st'; st.textContent='Sending…';
     try{
       const r=await fetch('https://rhydev-ask.pages.dev/api/ask',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)});
