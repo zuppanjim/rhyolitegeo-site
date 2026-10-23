@@ -2218,11 +2218,11 @@ function packets(g,d,dur,lag,colors){
   glow(defs,'xnglow','#E9A275');
   const sc=el('linearGradient',{id:'xnscan',x1:0,x2:1},defs);
   [[0,0],[.5,.16],[1,0]].forEach(([o,a])=>el('stop',{offset:o,'stop-color':'#7FB8CC','stop-opacity':a},sc));
-  el('rect',{width:1600,height:700,fill:'#140f0b'},s);
-  const grid=el('g',{stroke:'#2a1f17','stroke-width':1},s);
+  el('rect',{width:1600,height:700,fill:'#2b2119'},s);
+  const grid=el('g',{stroke:'#3d2f24','stroke-width':1},s);
   for(let x=0;x<=1600;x+=80)el('line',{x1:x,y1:0,x2:x,y2:700},grid);
   for(let y=20;y<=700;y+=80)el('line',{x1:0,y1:y,x2:1600,y2:y},grid);
-  const topo=el('g',{fill:'none',stroke:'#3a2b1f','stroke-width':1},s);
+  const topo=el('g',{fill:'none',stroke:'#544232','stroke-width':1},s);
   [[1120,330],[800,560],[1450,150]].forEach(([cx,cy],k)=>{
     for(let r=40;r<250;r+=32){let d='';
       for(let a=0;a<=72;a++){const t=a/72*TAU,rr=r*(1+.17*Math.sin(3*t+k*2)+.07*Math.cos(5*t+r/40));
