@@ -1646,32 +1646,32 @@ function route(g,y0,terms,cls,stroke,w){let d='';for(let x=0;x<=2*SW;x+=10)d+=(x
 // geothermal: four in the morning, the plant and the engines still running
 (function(){
   const v=document.getElementById('geoview'), defs=el('defs',{},v);
-  grad(defs,'night',[['0','#0D1222'],['.55','#262540'],['.85','#6A4256'],['1','#C9805A']]);
+  grad(defs,'night',[['0','#565964'],['.55','#676679'],['.85','#977B89'],['1','#D9A68C']]);
   el('rect',{width:SW,height:700,fill:'url(#night)'},v);
   const st=layer(v,600); let r=7;
   const rnd=()=>(r=(r*9301+49297)%233280)/233280;
   for(let i=0;i<90;i++){const x=rnd()*SW,y=rnd()*400,s=rnd()*1.3+.4,d=(rnd()*3).toFixed(2);
     [0,SW].forEach(o=>el('circle',{class:'tw',cx:x+o,cy:y,r:s,fill:'#F4EBDD',style:`animation-delay:-${d}s`},st));}
-  strip(layer(v,260),x=>478-Math.abs(wave(x,[[3,40,0],[7,22,1.1],[11,10,2.3]])),'#3B3654',.9);
+  strip(layer(v,260),x=>478-Math.abs(wave(x,[[3,40,0],[7,22,1.1],[11,10,2.3]])),'#767287',.9);
   const mid=layer(v,160), ry=x=>548+wave(x,[[2,12,.7],[6,6,1.9]]);
-  strip(mid,ry,'#28223A'); towers(mid,ry,'#14101E',52);
+  strip(mid,ry,'#686475'); towers(mid,ry,'#5A5862',52);
   // the compound, foreground and still
-  el('path',{d:'M0 700V604Q400 596 800 600T1600 598V700Z',fill:'#15111D'},v);
+  el('path',{d:'M0 700V604Q400 596 800 600T1600 598V700Z',fill:'#5B5861'},v);
   const g=el('g',{},v);
   // air-cooled condenser on its legs, heat rising off the fans
-  for(let x=1060;x<=1360;x+=60)el('rect',{x,y:556,width:4,height:44,fill:'#221B2C'},g);
-  el('rect',{x:1050,y:516,width:320,height:42,fill:'#221B2C'},g);
-  for(let k=0;k<8;k++){const cx=1070+k*40;el('rect',{x:cx-14,y:508,width:28,height:8,fill:'#2C2438'},g);
+  for(let x=1060;x<=1360;x+=60)el('rect',{x,y:556,width:4,height:44,fill:'#645F6B'},g);
+  el('rect',{x:1050,y:516,width:320,height:42,fill:'#645F6B'},g);
+  for(let k=0;k<8;k++){const cx=1070+k*40;el('rect',{x:cx-14,y:508,width:28,height:8,fill:'#6B6674'},g);
     el('path',{class:'heat',d:`M${cx} 500q-6 -14 0 -28t0 -28`,stroke:'#E7A57A','stroke-width':1.5,fill:'none',style:`animation-delay:-${(k*0.55).toFixed(2)}s`},g);}
   // turbine-generator house with lit windows
-  el('rect',{x:1390,y:540,width:96,height:60,fill:'#221B2C'},g);
+  el('rect',{x:1390,y:540,width:96,height:60,fill:'#645F6B'},g);
   [[1402,556],[1424,556],[1446,556],[1468,556]].forEach(([x,y])=>el('rect',{x,y,width:10,height:7,fill:'#F2C48D'},g));
   // battery yard: four containers, a status light on each
-  [1496,1520,1544,1568].forEach((x,k)=>{el('rect',{x,y:572,width:20,height:28,fill:'#221B2C'},g);
+  [1496,1520,1544,1568].forEach((x,k)=>{el('rect',{x,y:572,width:20,height:28,fill:'#645F6B'},g);
     el('rect',{x:x+7,y:578,width:6,height:3,fill:'#8FD4A8',style:`opacity:.85`},g);});
   // wells: production in hot, reinjection out cool
   [[860,'#E07A3E'],[960,'#E07A3E'],[740,'#7FB6D4']].forEach(([x,c])=>{
-    el('path',{d:`M${x-8} 600V588H${x-4}V574H${x+4}V588H${x+8}V600Z`,fill:'#2C2438'},g);
+    el('path',{d:`M${x-8} 600V588H${x-4}V574H${x+4}V588H${x+8}V600Z`,fill:'#6B6674'},g);
     el('circle',{class:'pin',cx:x,cy:570,r:5,fill:'none',stroke:c,'stroke-width':1.5},g);});
   el('path',{class:'flow slow',d:'M860 612H960M960 612H1050V600',stroke:'#E07A3E','stroke-width':3,fill:'none'},g);
   el('path',{class:'flow',d:'M1050 624H740V600',stroke:'#7FB6D4','stroke-width':2.5,fill:'none'},g);
