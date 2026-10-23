@@ -1482,6 +1482,19 @@ function route(g,y0,terms,cls,stroke,w){let d='';for(let x=0;x<=2*SW;x+=10)d+=(x
   strip(layer(v,320),x=>300+wave(x,[[2,22,.4],[5,12,1.7],[9,6,.2]]),'#B48A6C',.85);
   const ry=x=>352+wave(x,[[3,8,1.1],[7,4,.3]]);
   const mid=layer(v,200); strip(mid,ry,'#94705A'); towers(mid,ry,'#4A3628',64);
+  // heat off the roof fans: the ridge and the line behind the halls shimmer through a rising haze
+  mid.id='mdmid';
+  const hf=el('filter',{id:'mdheat',x:'-5%',y:'-20%',width:'110%',height:'140%'},defs);
+  const tb=el('feTurbulence',{type:'fractalNoise',baseFrequency:'0.02 0.12',numOctaves:2,seed:4,result:'n'},hf);
+  if(motion)el('animate',{attributeName:'baseFrequency',dur:'2.6s',values:'0.02 0.12;0.026 0.15;0.017 0.1;0.02 0.12',repeatCount:'indefinite'},tb);
+  el('feDisplacementMap',{in:'SourceGraphic',in2:'n',scale:12,xChannelSelector:'R',yChannelSelector:'G'},hf);
+  const hg=el('linearGradient',{id:'mdheatg',x1:0,y1:1,x2:0,y2:0},defs);
+  el('stop',{offset:0,'stop-color':'#fff'},hg); el('stop',{offset:1,'stop-color':'#fff','stop-opacity':0},hg);
+  const hm=el('mask',{id:'mdheatm',maskUnits:'userSpaceOnUse',x:0,y:0,width:SW,height:700},defs);
+  [[860,360,330],[1210,330,390]].forEach(([x,y,w])=>el('rect',{x:x+10,y:y-100,width:w-20,height:92,fill:'url(#mdheatg)'},hm));
+  const heat=el('g',{mask:'url(#mdheatm)'},v);
+  el('use',{href:'#mdmid',filter:'url(#mdheat)'},heat);
+  el('rect',{x:0,y:0,width:SW,height:700,fill:'#FFDDB0','fill-opacity':.08,filter:'url(#mdheat)'},heat);
   // the desert floor, scrub picked out in the last light
   el('path',{d:'M0 700V372Q800 362 1600 370V700Z',fill:'#74583F'},v);
   const scrub=el('g',{fill:'#957459'},v); let r=11;
