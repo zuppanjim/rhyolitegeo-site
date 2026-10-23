@@ -261,8 +261,6 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--line);padding-top:20px
 @keyframes sway{0%,100%{transform:rotate(0)}50%{transform:rotate(1.2deg)}}
 .motion .look{animation:look 14s ease-in-out infinite}
 @keyframes look{0%,30%,100%{transform:translateX(0)}38%,60%{transform:translateX(-2px)}68%,90%{transform:translateX(1.5px)}}
-.motion .shade{animation:shade 14s ease-in-out infinite;transform-origin:1422px 416px}
-@keyframes shade{0%,50%,96%,100%{transform:rotate(0)}58%,86%{transform:rotate(-135deg)}}
 .motion .pin{animation:pin 2.4s ease-out infinite;transform-box:fill-box;transform-origin:center}
 .motion .tw{animation:tw 3s ease-in-out infinite alternate}
 .ctscape::after,.ctscape .wrap{pointer-events:none}
@@ -1460,11 +1458,10 @@ function route(g,y0,terms,cls,stroke,w){let d='';for(let x=0;x<=2*SW;x+=10)d+=(x
   route(near,664,[[3,8,1.5],[2,5,0]],'flow','#7FB6D4',2);
   for(let x=240;x<2*SW;x+=400){const y=fy(x)+14;el('circle',{class:'pin',cx:x,cy:y,r:6,fill:'none',stroke:'#F0C08A','stroke-width':2},near);el('circle',{cx:x,cy:y,r:3,fill:'#F0C08A'},near);}
   el('path',{d:'M1600 700V500L1560 492L1500 506L1440 498L1385 512L1330 522L1290 548L1250 580L1205 620L1150 700Z',fill:'#160F09'},v);
-  // he shifts his weight, looks along the line, lowers his hand and raises it again to shade his eyes
+  // he shifts his weight and looks along the line
   const m=el('g',{fill:'#160F09',class:'sway'},v);
   el('circle',{cx:1428,cy:400,r:10,class:'look'},m);
   el('path',{d:'M1418 412Q1428 408 1438 412L1442 446L1437 452L1438 500L1431 500L1428 458L1425 500L1418 500L1419 452L1414 446Z'},m);
-  el('path',{d:'M1419 418L1408 404L1413 398L1424 414Z',class:'shade'},m);
 })();
 
 // glass ball: Okmulgee County at dusk, Henryetta on the ridge, I-40 below it, cattle in the pasture and the domes low in the hollow
