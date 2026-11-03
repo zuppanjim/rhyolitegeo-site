@@ -293,6 +293,23 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--line);padding-top:20px
 .heat{opacity:.35}
 @keyframes heat{0%{transform:translateY(8px);opacity:0}35%{opacity:.55}100%{transform:translateY(-40px);opacity:0}}
 .ask{position:relative}
+.motion .gob{animation:gob 1.7s ease-in-out infinite;transform-box:fill-box;transform-origin:30% 100%}
+@keyframes gob{0%,100%{transform:rotate(0)}40%{transform:rotate(9deg)}70%{transform:rotate(-5deg)}}
+.motion .peck{animation:peck 4.4s ease-in-out infinite;transform-box:fill-box;transform-origin:20% 100%}
+@keyframes peck{0%,62%,100%{transform:rotate(0)}70%,76%{transform:rotate(66deg)}73%,79%{transform:rotate(52deg)}}
+.motion .run{animation:run 25s linear infinite}
+.motion .run2{animation-delay:-12.5s}
+.motion .dleg{animation:dleg .6s ease-in-out infinite}
+@keyframes dleg{0%,100%{transform:rotate(42deg)}50%{transform:rotate(-42deg)}}
+.motion .dbob{animation:dbob .6s ease-in-out infinite}
+@keyframes dbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes run{0%{transform:translateX(-720px)}100%{transform:translateX(1320px)}}
+.phero.scape.ctscape::after{background:radial-gradient(ellipse 58% 70% at 0% 0%,rgba(18,44,62,.72) 0%,rgba(18,44,62,.4) 55%,rgba(18,44,62,0) 100%),linear-gradient(0deg,rgba(28,20,12,.28) 0%,rgba(28,20,12,0) 16%)}
+.phero.scape.ctscape .wrap{justify-content:flex-start;align-items:flex-start;margin:0;max-width:none;width:100%;padding:32px 32px 54px}
+.phero.scape.ctscape .wrap p{max-width:460px}
+@media (max-width:700px){.phero.scape.ctscape .wrap{padding:20px 16px 54px}.phero.scape.ctscape::after{background:linear-gradient(180deg,rgba(18,44,62,.78) 0%,rgba(18,44,62,.6) 42%,rgba(18,44,62,0) 62%),linear-gradient(0deg,rgba(28,20,12,.8) 0%,rgba(28,20,12,.6) 8%,rgba(28,20,12,0) 16%)}}
+.ctscape .wrap .scrolldn{background:rgba(18,44,62,.45)}
+.ask.ctask{background:radial-gradient(ellipse 34% 70% at 84% 0%,rgba(255,238,156,.3),transparent 70%),linear-gradient(180deg,#1F5577 0%,#2C6A85 62%,#4F6B2E 100%)}
 /* Contact's band carries the town hall's night: green and brown hills, dark sky, moon glow */
 .ctask{--askf:#4F6B2E;--askm:#6B4425;background:radial-gradient(ellipse 34% 70% at 84% 100%,rgba(242,154,58,.42),transparent 70%),linear-gradient(180deg,#24150D 0%,#5A2A14 62%,#8A3A17 100%)}
 .ctask .mail{background:rgba(242,153,74,.16);border:1px solid rgba(242,153,74,.5)}
@@ -628,8 +645,8 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--line);padding-top:20px
 <!-- =================== CONTACT =================== -->
 <main id="v-contact" hidden>
 <section class="phero scape ctscape" style="padding:0">
-  <svg class="view" id="ctview" viewBox="0 0 1600 700" preserveAspectRatio="xMaxYMax slice" role="img" aria-label="Illustrated: a brick town hall on Halloween night under an orange harvest moon, jack-o-lanterns on the steps, and a crowd in costume, witches, pumpkin heads, ghosts, devils and a vampire, with their hands up and questions over their heads"></svg>
-  <span style="position:absolute;right:16px;bottom:12px;z-index:1;font-family:var(--mono);font-size:11px;color:#BFAF97">Illustration · a town hall on Halloween night · tap a question</span>
+  <svg class="view" id="ctview" viewBox="0 0 1600 700" preserveAspectRatio="xMidYMax slice" role="img" aria-label="Illustrated: the brick town hall on Thanksgiving on a bright afternoon, a long table in the square with a roast turkey and pies, celebrators all round it with hands up asking questions, turkeys strutting and chickens wandering among heaps of pumpkins, deer running along the far hill, and an owl with glowing eyes in the tree"></svg>
+  <span style="position:absolute;right:16px;bottom:12px;z-index:1;font-family:var(--mono);font-size:11px;color:#BFAF97">Illustration · a town hall on Thanksgiving · tap a question</span>
   <div class="qtip" role="dialog" aria-live="polite" hidden><b></b><a href="mailto:info@rhydev.com">Ask us this</a></div>
   <div class="wrap">
     <button class="eyebrow scrolldn" type="button" onclick="document.getElementById('ctqs').scrollIntoView({behavior:'smooth'})">Contact <span aria-hidden="true">↓</span></button>
@@ -2011,54 +2028,89 @@ function route(g,y0,terms,cls,stroke,w){let d='';for(let x=0;x<=2*SW;x+=10)d+=(x
   addEventListener('hashchange',start); document.addEventListener('visibilitychange',start); start();
 })();
 
-// contact: the town hall on Halloween night, the square full of costumes and hands up with questions
+// contact: the same town hall on Thanksgiving, a long table in the square, celebrators all round it, turkeys loose
 (()=>{
   const v=document.getElementById('ctview'); if(!v)return;
-  const P={red:'#A8321F',green:'#4F6B2E',orange:'#E07A1F',brown:'#6B4425',dark:'#2A180E',sheet:'#EFDFC2',trim:'#D9B98C',lit:'#FFC870',skin:['#C98B5E','#8D5A3B','#E2AE84','#6E4630']};
+  const P={red:'#A8321F',green:'#4F6B2E',orange:'#E07A1F',brown:'#6B4425',dark:'#2A180E',sheet:'#EFDFC2',trim:'#D9B98C',lit:'#FFC870',gold:'#E8A93A',skin:['#C98B5E','#8D5A3B','#E2AE84','#6E4630']};
   const defs=el('defs',{},v);
-  grad(defs,'ctsky',[['0','#24150D'],['.45','#5A2A14'],['.78','#B4521E'],['1','#E39343']]);
-  grad(defs,'ctmoon',[['0','#FFD08A',.85],['.4','#F29A3A',.4],['1','#F29A3A',0]],true);
+  grad(defs,'ctsky',[['0','#2F7DB5'],['.5','#79B8DC'],['.8','#CDE4E2'],['1','#F4EAC8']]);
+  grad(defs,'ctmoon',[['0','#FFF8D0',.95],['.35','#FFEE9C',.45],['1','#FFEE9C',0]],true);
   grad(defs,'ctlamp',[['0','#FFD48A',.75],['1','#FFB347',0]],true);
   el('rect',{width:SW,height:700,fill:'url(#ctsky)'},v);
-  for(let i=0;i<46;i++)el('circle',{cx:(i*397)%SW,cy:18+(i*131)%230,r:i%5?1:1.7,fill:'#FBE7C6',class:i%3?'':'tw',style:`animation-delay:-${i%7}s`},v);
-  // the harvest moon
+  // fair-weather clouds
+  const clouds=layer(v,40);
+  [[120,90,1.1],[520,150,.8],[900,70,1],[1400,190,.7],[1720,100,1.1],[2150,160,.9]].forEach(([x,y,k])=>[[0,0,62,17],[-42,7,36,12],[42,6,40,13],[10,-12,34,15]].forEach(([dx,dy,rx,ry])=>el('ellipse',{cx:x+dx*k,cy:y+dy*k,rx:rx*k,ry:ry*k,fill:'#FFFDF6','fill-opacity':.92},clouds)));
+  // the sun, high over the square
   const moon=el('g',{class:'sun'},v);
-  el('circle',{cx:1240,cy:170,r:270,fill:'url(#ctmoon)'},moon);
-  el('circle',{cx:1240,cy:170,r:96,fill:'#F2994A'},moon);
-  [[1208,150,22,.2],[1272,198,16,.16],[1262,126,10,.15],[1204,206,9,.13]].forEach(([cx,cy,r,o])=>el('circle',{cx,cy,r,fill:'#B85A1C','fill-opacity':o},moon));
-  // bats crossing the moon
-  const bats=layer(v,70);
-  const flock=[[200,120,1],[330,90,.7],[900,150,.9],[1180,110,1.2],[1500,80,.8],[1760,140,1],[2400,100,.9],[2900,60,.7]];
-  for(let i=0;i<34;i++)flock.push([(i*283+90)%(2*SW),40+(i*97)%300,.55+(i*37%60)/100]);
-  // a knot of them circling the moon
-  [[1150,110,1.1],[1196,88,.8],[1300,96,.9],[1338,150,.7],[1128,214,.75],[1352,236,.95],[1270,262,.6]].forEach(b=>flock.push(b));
-  flock.forEach(([x,y,k],i)=>{
+  el('circle',{cx:1400,cy:96,r:210,fill:'url(#ctmoon)'},moon);
+  el('circle',{cx:1400,cy:96,r:50,fill:'#FFE873'},moon);
+  // geese heading south in two skeins
+  const geese=layer(v,80);
+  function goose(g,x,y,k,i){
     const s=n=>(n*k).toFixed(1);
-    el('path',{d:`M${x} ${y}q${s(-8)} ${s(-8)} ${s(-18)} ${s(-4)}q${s(6)} ${s(2)} ${s(8)} ${s(7)}q${s(5)} ${s(-4)} ${s(10)} ${s(-1)}q${s(5)} ${s(-3)} ${s(10)} ${s(1)}q${s(2)} ${s(-5)} ${s(8)} ${s(-7)}q${s(-10)} ${s(-4)} ${s(-18)} ${s(4)}Z`,fill:P.dark,class:'flap',style:`animation-delay:-${(i*.13%.4).toFixed(2)}s`},bats);
-  });
-  // a witch on her broom, flying across the moon
-  const fly=layer(v,48);
-  [1290,1290+SW].forEach(ox=>{
-    const w=el('g',{transform:`translate(${ox} 112) scale(1.35)`,fill:P.dark},el('g',{class:'qpop'},fly));
-    el('path',{d:'M-30 3L30 9',stroke:P.dark,'stroke-width':2.6,'stroke-linecap':'round'},w);
-    el('path',{d:'M28 7L50 -3Q57 9 51 23Z'},w);
-    el('path',{d:'M-8 4L16 6L6 -26Z M6 -24Q26 -18 36 -2Q26 0 16 6Z'},w);
-    el('path',{d:'M2 -18L-22 2',stroke:P.dark,'stroke-width':3.4,'stroke-linecap':'round'},w);
-    el('circle',{cx:2,cy:-31,r:6.5},w);
-    el('path',{d:'M-4 -31L-11 -28L-4 -27Z'},w);
-    el('path',{d:'M-12 -35L14 -38L13 -35Z M-5 -36Q4 -46 18 -60Q10 -46 9 -37Z'},w);
-    el('path',{d:'M6 -28Q20 -26 24 -16',stroke:P.dark,'stroke-width':2,fill:'none'},w);
-  });
+    el('path',{d:`M${x-+s(14)} ${y}Q${x} ${y-+s(3)} ${x+ +s(16)} ${y-+s(2)}`,stroke:P.dark,'stroke-width':+s(2.8),'stroke-linecap':'round',fill:'none'},g);
+    el('path',{d:`M${x-+s(5)} ${y}Q${x-+s(1)} ${y-+s(15)} ${x+ +s(5)} ${y-+s(20)}Q${x+ +s(5)} ${y-+s(9)} ${x+ +s(5)} ${y}Z`,fill:P.dark,class:'flap',style:`animation-delay:-${(i*.13%.4).toFixed(2)}s`},g);
+  }
+  [[260,110,1],[1010,70,.8]].forEach(([ox,oy,k])=>[0,SW].forEach(d=>{
+    for(let i=0;i<9;i++){const r=Math.ceil(i/2), up=i%2?-1:1; goose(geese,ox+d-r*40*k,oy+up*r*20*k,k,i);}
+  }));
   // the hills behind the town
-  strip(v,x=>455+wave(x,[[2,16,.4],[5,6,1.7],[9,3,.2]]),'#4A2B18',.95);
-  strip(v,x=>494+wave(x,[[3,8,1.1],[7,3,.3]]),'#3A2214');
-  // bare trees
+  strip(v,x=>455+wave(x,[[2,16,.4],[5,6,1.7],[9,3,.2]]),'#B58E4C',.95);
+  strip(v,x=>494+wave(x,[[3,8,1.1],[7,3,.3]]),'#8C9148');
+  // everything from here down shifts left so the hall stands at the middle of the picture; hills, grass and deer span the width
+  const from=v.children.length, keep=new Set();
+  // trees in their last colour
   const trees=el('g',{stroke:P.dark,'stroke-linecap':'round',fill:'none'},v);
-  [[880,560,150],[1500,560,170],[640,575,120]].forEach(([x,y,h])=>{
+  const leafc=['#D9641E','#B83F1E','#E8A93A','#C8501C'];
+  [[880,560,150],[1500,560,170],[640,575,120],[1722,575,120],[1880,560,150]].forEach(([x,y,h],t)=>{
     el('path',{d:`M${x} ${y}V${y-h}`,'stroke-width':7},trees);
     el('path',{d:`M${x} ${y-h*.45}L${x-h*.3} ${y-h*.8}M${x} ${y-h*.6}L${x+h*.28} ${y-h*.95}M${x-h*.15} ${y-h*.62}L${x-h*.22} ${y-h}M${x+h*.14} ${y-h*.78}L${x+h*.36} ${y-h*.82}M${x} ${y-h}L${x+h*.05} ${y-h*1.15}`,'stroke-width':3.2},trees);
+    el('ellipse',{cx:x,cy:y-h*.92,rx:h*.5,ry:h*.36,fill:'#B83F1E'},v);
+    for(let i=0;i<30;i++){
+      const a=i*2.4+t, d=(.25+.75*((i*37%30)/30))*h*.48;
+      el('circle',{cx:x+Math.cos(a)*d*1.1,cy:y-h*.92+Math.sin(a)*d*.72,r:h*(.055+(i%4)*.012),fill:leafc[(i+t)%4],'fill-opacity':.94,stroke:'none'},v);
+    }
   });
-  // the town hall: clock tower, brick block and wings, a portico
+  // an owl on the big tree's branch, eyes glowing
+  {
+    const ox=1527, oy=416, g=el('g',{},v);
+    el('path',{d:`M${ox-34} ${oy+4}Q${ox} ${oy-2} ${ox+36} ${oy+6}`,stroke:P.dark,'stroke-width':6,'stroke-linecap':'round',fill:'none'},g);
+    el('ellipse',{cx:ox,cy:oy-22,rx:18,ry:25,fill:'#4A2E1A'},g);
+    el('ellipse',{cx:ox,cy:oy-14,rx:11,ry:16,fill:'#B9976A'},g);
+    for(let i=0;i<3;i++)el('path',{d:`M${ox-7} ${oy-20+i*7}q3.5 4 7 0q3.5 4 7 0`,stroke:'#4A2E1A','stroke-width':1.2,fill:'none'},g);
+    el('path',{d:`M${ox-17} ${oy-48}L${ox-12} ${oy-34}H${ox+12}L${ox+17} ${oy-48}L${ox+6} ${oy-41}H${ox-6}Z`,fill:'#4A2E1A'},g);
+    [-1,1].forEach(d=>{
+      const ex=ox+d*7.6, ey=oy-34;
+      el('circle',{cx:ex,cy:ey,r:6.6,fill:'#2A180E'},g);
+      el('circle',{cx:ex,cy:ey,r:5.2,fill:'#FFF06A'},g);
+      el('circle',{cx:ex,cy:ey,r:1.5,fill:'#2A180E'},g);
+      el('circle',{class:'breathe',cx:ex,cy:ey,r:15,fill:'#FFF3A0','fill-opacity':.55,style:'filter:blur(3px)'},g);
+    });
+    el('path',{d:`M${ox-3} ${oy-29}L${ox} ${oy-23}L${ox+3} ${oy-29}Z`,fill:P.gold},g);
+    el('path',{d:`M${ox-8} ${oy+1}v4M${ox-4} ${oy+1}v4M${ox+4} ${oy+1}v4M${ox+8} ${oy+1}v4`,stroke:P.gold,'stroke-width':1.8,'stroke-linecap':'round'},g);
+  }
+  // deer running along the far hill
+  function deer(g,x,y,s,dir,antlers){
+    const o=el('g',{transform:`translate(${x} ${y}) scale(${dir*s} ${s})`},g), ph=((x*.0137)%.6), d=el('g',{class:'dbob',style:`animation-delay:-${ph.toFixed(2)}s`},o), c='#7A4A22';
+    // four legs, each swinging from its own hip: hind pair then fore pair, a gallop
+    [[-26,-16,0,'#5E3618'],[20,-17,.3,'#5E3618'],[-21,-14,.07,c],[25,-17,.37,c]].forEach(([hx,hy,lag,lc])=>{
+      const hip=el('g',{transform:`translate(${hx} ${hy})`},d);
+      el('path',{class:'dleg',d:'M0 0L2.5 9L.5 21',stroke:lc,'stroke-width':3.2,'stroke-linecap':'round','stroke-linejoin':'round',fill:'none',style:`animation-delay:-${(ph+lag).toFixed(2)}s`},hip);
+    });
+    el('path',{d:'M-30 -24Q-8 -35 25 -28L41 -48L51 -41L36 -14Q10 -8 -26 -11Z',fill:c},d);
+    el('path',{d:'M42 -50L62 -42L60 -36L45 -38Z',fill:c},d);
+    el('path',{d:'M43 -50L37 -58L48 -52Z',fill:c},d);
+    el('path',{d:'M-30 -24L-40 -33L-33 -18Z',fill:'#F6E2B8'},d);
+    if(antlers)el('path',{d:'M46 -50L44 -68M45 -60L36 -67M45 -64L52 -74M50 -49L56 -64M54 -58L61 -62',stroke:c,'stroke-width':1.9,'stroke-linecap':'round',fill:'none'},d);
+  }
+  [[0,0],[1100,0]].forEach(([d],k)=>{
+    const herd=el('g',{class:k?'run run2':'run'},v);
+    deer(herd,620,510,1.05,1,true);
+    deer(herd,520,500,.9,1,false);
+    deer(herd,430,514,.95,1,false);
+    deer(herd,340,502,.82,1,false);
+  });
+  // the town hall, unchanged: clock tower, brick block and wings, a portico
   const H=el('g',{},v);
   el('rect',{x:1150,y:236,width:60,height:110,fill:'#9B3520'},H);
   el('rect',{x:1146,y:232,width:68,height:8,fill:P.trim},H);
@@ -2084,65 +2136,35 @@ function route(g,y0,terms,cls,stroke,w){let d='';for(let x=0;x<=2*SW;x+=10)d+=(x
   const cols=[P.orange,P.green,P.red,P.brown];
   for(let x=1012,i=0;x<1346;x+=16,i++)el('path',{d:`M${x} 412H${x+14}L${x+7} 425Z`,fill:cols[i%4]},H);
   // the square
-  strip(v,x=>521+wave(x,[[2,2,0]]),'#33472A');
-  el('path',{d:'M1066 521H1294L1480 700H880Z',fill:'#5B4030'},v);
-  strip(v,x=>660+wave(x,[[3,5,.7]]),'#26381F');
+  strip(v,x=>521+wave(x,[[2,2,0]]),'#739437'); keep.add(v.lastElementChild);
+  el('path',{d:'M1066 521H1294L1480 700H880Z',fill:'#B3936B'},v);
+  strip(v,x=>660+wave(x,[[3,5,.7]]),'#5C8430'); keep.add(v.lastElementChild);
   const st=el('g',{},v);
   [[1090,500,180,'#7A6A58'],[1080,507,200,'#857462'],[1070,514,220,'#8F7E6B']].forEach(([x,y,w,f])=>el('rect',{x,y,width:w,height:7,fill:f},st));
-  // the speaker at the podium, in a top hat
+  // the speaker at the podium, the top hat now a buckled pilgrim hat
   el('path',{d:'M1169 500V480Q1180 472 1191 480V500Z',fill:P.dark},st);
   el('circle',{cx:1180,cy:470,r:7,fill:P.skin[0]},st);
   el('path',{d:'M1172 465H1188M1175 465V452H1185V465',stroke:P.dark,'stroke-width':2.5,fill:P.dark},st);
+  el('rect',{x:1177,y:459,width:6,height:5,fill:'none',stroke:P.gold,'stroke-width':1.4},st);
   el('path',{d:'M1166 500L1170 478H1190L1194 500Z',fill:'#5A3A22'},st);
-  // jack-o-lanterns on the steps
-  function jack(x,y,r){
-    el('ellipse',{cx:x,cy:y-r,rx:r*1.2,ry:r,fill:P.orange},st);
-    el('path',{d:`M${x-r*.4} ${y-r*1.9}Q${x-r*.6} ${y-r} ${x-r*.4} ${y-r*.1}M${x+r*.4} ${y-r*1.9}Q${x+r*.6} ${y-r} ${x+r*.4} ${y-r*.1}`,stroke:'#B4521E','stroke-width':1.2,fill:'none'},st);
-    el('rect',{x:x-1.5,y:y-r*2-4,width:3,height:5,fill:P.green},st);
-    el('path',{d:`M${x-r*.6} ${y-r*1.2}l${r*.25} ${-r*.35}l${r*.25} ${r*.35}ZM${x+r*.1} ${y-r*1.2}l${r*.25} ${-r*.35}l${r*.25} ${r*.35}ZM${x-r*.6} ${y-r*.6}Q${x} ${y-r*.1} ${x+r*.6} ${y-r*.6}Z`,fill:'#FFD95A',class:'breathe'},st);
+  // pumpkins on the steps, uncarved now
+  function pumpkin(g,x,y,r,c){
+    el('ellipse',{cx:x,cy:y-r,rx:r*1.2,ry:r,fill:c||P.orange},g);
+    el('path',{d:`M${x-r*.4} ${y-r*1.9}Q${x-r*.6} ${y-r} ${x-r*.4} ${y-r*.1}M${x+r*.4} ${y-r*1.9}Q${x+r*.6} ${y-r} ${x+r*.4} ${y-r*.1}`,stroke:'#B4521E','stroke-width':1.2,fill:'none'},g);
+    el('rect',{x:x-1.5,y:y-r*2-4,width:3,height:5,fill:P.green},g);
   }
-  [[1078,507,8],[1282,507,8],[1050,528,10],[1312,528,11],[1036,540,7]].forEach(([x,y,r])=>jack(x,y,r));
+  [[1078,507,8],[1282,507,8],[1050,528,10],[1312,528,11],[1036,540,7]].forEach(([x,y,r])=>pumpkin(st,x,y,r));
   // lamp posts
   [[990,612],[1372,612]].forEach(([x,y])=>{
-    el('circle',{cx:x,cy:y-88,r:46,fill:'url(#ctlamp)',class:'breathe'},v);
     el('path',{d:`M${x} ${y}V${y-82}M${x-6} ${y}H${x+6}`,stroke:P.dark,'stroke-width':4,fill:'none'},v);
-    el('path',{d:`M${x-8} ${y-82}H${x+8}L${x+5} ${y-96}H${x-5}Z`,fill:P.lit},v);
+    el('path',{d:`M${x-8} ${y-82}H${x+8}L${x+5} ${y-96}H${x-5}Z`,fill:'#F2E6C4'},v);
   });
-  // the crowd, seen from behind, in costume
-  function fig(g,x,y,s,kind,col,up,i){
-    const S=n=>+(n*s).toFixed(1), sk=P.skin[i%4], f=el('g',{},g);
-    if(up){
-      el('path',{d:`M${x+S(9)} ${y-S(46)}Q${x+S(18)} ${y-S(66)} ${x+S(16)} ${y-S(88)}`,stroke:kind==='ghost'?P.sheet:col,'stroke-width':S(7),'stroke-linecap':'round',fill:'none'},f);
-      el('circle',{cx:x+S(16),cy:y-S(90),r:S(4.2),fill:kind==='ghost'?P.sheet:sk},f);
-    }
-    if(kind==='ghost'){
-      el('path',{d:`M${x-S(17)} ${y}C${x-S(16)} ${y-S(40)} ${x-S(16)} ${y-S(76)} ${x} ${y-S(76)}C${x+S(16)} ${y-S(76)} ${x+S(16)} ${y-S(40)} ${x+S(17)} ${y}Q${x+S(11)} ${y-S(7)} ${x+S(6)} ${y}Q${x} ${y-S(7)} ${x-S(6)} ${y}Q${x-S(11)} ${y-S(7)} ${x-S(17)} ${y}Z`,fill:P.sheet},f);
-      return;
-    }
-    const w=kind==='vampire'?24:19;
-    el('path',{d:`M${x-S(12)} ${y-S(52)}Q${x} ${y-S(57)} ${x+S(12)} ${y-S(52)}L${x+S(w)} ${y}H${x-S(w)}Z`,fill:col},f);
-    if(kind==='vampire')el('path',{d:`M${x-S(14)} ${y-S(50)}L${x-S(13)} ${y-S(70)}L${x-S(3)} ${y-S(56)}ZM${x+S(14)} ${y-S(50)}L${x+S(13)} ${y-S(70)}L${x+S(3)} ${y-S(56)}Z`,fill:P.red},f);
-    if(kind==='pumpkin'){
-      el('ellipse',{cx:x,cy:y-S(66),rx:S(14),ry:S(12),fill:P.orange},f);
-      el('path',{d:`M${x-S(5)} ${y-S(77)}Q${x-S(8)} ${y-S(66)} ${x-S(5)} ${y-S(55)}M${x+S(5)} ${y-S(77)}Q${x+S(8)} ${y-S(66)} ${x+S(5)} ${y-S(55)}`,stroke:'#B4521E','stroke-width':S(1.4),fill:'none'},f);
-      el('path',{d:`M${x} ${y-S(77)}q${S(1)} ${S(-5)} ${S(4)} ${S(-6)}`,stroke:P.green,'stroke-width':S(2.6),'stroke-linecap':'round',fill:'none'},f);
-      return;
-    }
-    const head=kind==='devil'?P.red:kind==='cat'?P.brown:sk;
-    el('circle',{cx:x,cy:y-S(64),r:S(10),fill:head},f);
-    if(kind==='witch'){
-      el('ellipse',{cx:x,cy:y-S(70),rx:S(19),ry:S(3.5),fill:P.dark},f);
-      el('path',{d:`M${x-S(9)} ${y-S(71)}Q${x-S(2)} ${y-S(90)} ${x+S(8)} ${y-S(104)}Q${x+S(4)} ${y-S(90)} ${x+S(9)} ${y-S(71)}Z`,fill:P.dark},f);
-      el('rect',{x:x-S(8.5),y:y-S(77),width:S(17),height:S(4),fill:P.orange},f);
-    }
-    if(kind==='devil')el('path',{d:`M${x-S(7)} ${y-S(71)}Q${x-S(11)} ${y-S(78)} ${x-S(9)} ${y-S(84)}Q${x-S(5)} ${y-S(78)} ${x-S(3)} ${y-S(73)}ZM${x+S(7)} ${y-S(71)}Q${x+S(11)} ${y-S(78)} ${x+S(9)} ${y-S(84)}Q${x+S(5)} ${y-S(78)} ${x+S(3)} ${y-S(73)}Z`,fill:P.red},f);
-    if(kind==='cat')el('path',{d:`M${x-S(9)} ${y-S(68)}L${x-S(8)} ${y-S(80)}L${x-S(2)} ${y-S(73)}ZM${x+S(9)} ${y-S(68)}L${x+S(8)} ${y-S(80)}L${x+S(2)} ${y-S(73)}Z`,fill:P.brown},f);
-    if(kind==='scarecrow'){
-      el('ellipse',{cx:x,cy:y-S(70),rx:S(17),ry:S(3.5),fill:'#B08A4A'},f);
-      el('path',{d:`M${x-S(9)} ${y-S(71)}Q${x} ${y-S(85)} ${x+S(9)} ${y-S(71)}Z`,fill:'#B08A4A'},f);
-    }
-  }
-  // a question over a raised hand
+  // a banner slung between the lamp posts
+  el('path',{d:'M990 522Q1030 504 1062 503M1300 503Q1332 504 1372 522',stroke:P.dark,'stroke-width':2,fill:'none'},v);
+  el('path',{d:'M1056 500Q1181 510 1306 500L1300 523Q1181 533 1062 523Z',fill:'#F6E2B8',stroke:'#A8321F','stroke-width':2},v);
+  el('text',{x:1181,y:522,'text-anchor':'middle','font-family':'Archivo, sans-serif','font-weight':800,'font-size':15,'letter-spacing':3,fill:P.red},v).textContent='HAPPY THANKSGIVING';
+
+  // a hand raised with a question over it
   // each bubble is a button; a click opens the question that person is asking
   const QS=['How loud is it at the fence line?','Will it raise my power bill?','How much water does it use?','Where does the gas come from?',
     'How many local jobs, and for how long?','What happens to our road while you build?','Will we see the lights at night?','Does it pay county property tax?',
@@ -2156,29 +2178,208 @@ function route(g,y0,terms,cls,stroke,w){let d='';for(let x=0;x<=2*SW;x+=10)d+=(x
     el('ellipse',{cx:x+S(14),cy:y-S(18),rx:S(17),ry:S(14),fill:'#F6E2B8',stroke:P.dark,'stroke-width':1.2},q);
     el('text',{x:x+S(14),y:y-S(11),'text-anchor':'middle','font-family':'Archivo, sans-serif','font-weight':800,'font-size':S(20),fill:P.red},q).textContent='?';
   }
-  // a burning torch in a raised hand: a glow, a wrapped head, two flames that flicker out of step
-  const tdefs=el('defs',{},v), tg=el('radialGradient',{id:'tglow'},tdefs);
-  el('stop',{offset:0,'stop-color':'#FFB347','stop-opacity':.75},tg);el('stop',{offset:1,'stop-color':'#FF7A1A','stop-opacity':0},tg);
-  function torch(g,x,y,s,i){
-    const S=n=>+(n*s).toFixed(1), hx=x+S(16), hy=y-S(90), d=`animation-delay:-${((i*.37)%1).toFixed(2)}s`;
-    el('circle',{class:'glow',cx:hx+S(3),cy:hy-S(34),r:S(46),fill:'url(#tglow)',style:d},g);
-    el('path',{d:`M${hx-S(1)} ${hy+S(10)}L${hx+S(3)} ${hy-S(24)}`,stroke:'#4A3020','stroke-width':S(3.2),'stroke-linecap':'round'},g);
-    el('path',{d:`M${hx-S(2)} ${hy-S(20)}h${S(10)}l${S(-1)} ${S(-7)}h${S(-8)}Z`,fill:'#2A1C12'},g);
-    el('path',{class:'fl',style:d,d:`M${hx+S(3)} ${hy-S(52)}C${hx+S(9)} ${hy-S(42)} ${hx+S(13)} ${hy-S(34)} ${hx+S(8)} ${hy-S(27)}H${hx-S(2)}C${hx-S(7)} ${hy-S(35)} ${hx-S(2)} ${hy-S(41)} ${hx+S(3)} ${hy-S(52)}Z`,fill:'#F26A1B'},g);
-    el('path',{class:'fl in',style:d,d:`M${hx+S(3)} ${hy-S(42)}C${hx+S(7)} ${hy-S(36)} ${hx+S(8)} ${hy-S(31)} ${hx+S(6)} ${hy-S(27)}H${hx}C${hx-S(3)} ${hy-S(31)} ${hx} ${hy-S(36)} ${hx+S(3)} ${hy-S(42)}Z`,fill:'#FFD36B'},g);
+  // someone facing us across the table. pose: 'hand' raised, 'toast' a raised glass, or arms down
+  const hats=['pilgrim','bonnet','hair','beard','scarf','beanie','hair','chef'], body=[P.red,P.green,P.orange,P.brown,'#3A3256'];
+  function person(g,x,y,s,kind,col,pose,i){
+    const S=n=>+(n*s).toFixed(1), sk=P.skin[i%4], f=el('g',{},g), hairc=i%3?'#3A2214':'#6E4630';
+    if(pose){
+      el('path',{d:`M${x+S(10)} ${y-S(46)}Q${x+S(19)} ${y-S(66)} ${x+S(16)} ${y-S(86)}`,stroke:col,'stroke-width':S(7),'stroke-linecap':'round',fill:'none'},f);
+      el('circle',{cx:x+S(16),cy:y-S(88),r:S(4.2),fill:sk},f);
+      if(pose==='toast'){
+        el('path',{d:`M${x+S(11)} ${y-S(104)}H${x+S(22)}L${x+S(20)} ${y-S(95)}H${x+S(13)}Z`,fill:'#A8321F',stroke:'#F6E2B8','stroke-width':S(1)},f);
+        el('path',{d:`M${x+S(16.5)} ${y-S(95)}V${y-S(89)}`,stroke:'#F6E2B8','stroke-width':S(1.6)},f);
+      }
+    }
+    el('path',{d:`M${x-S(13)} ${y-S(50)}Q${x} ${y-S(57)} ${x+S(13)} ${y-S(50)}L${x+S(20)} ${y}H${x-S(20)}Z`,fill:col},f);
+    if(kind==='pilgrim'||kind==='bonnet')el('path',{d:`M${x-S(11)} ${y-S(52)}L${x} ${y-S(40)}L${x+S(11)} ${y-S(52)}Q${x} ${y-S(58)} ${x-S(11)} ${y-S(52)}Z`,fill:P.sheet},f);
+    if(kind==='chef')el('path',{d:`M${x-S(14)} ${y-S(30)}H${x+S(14)}L${x+S(17)} ${y}H${x-S(17)}Z`,fill:P.sheet},f);
+    el('circle',{cx:x,cy:y-S(64),r:S(10),fill:sk},f);
+    if(kind==='beard')el('path',{d:`M${x-S(10)} ${y-S(64)}Q${x-S(9)} ${y-S(49)} ${x} ${y-S(49)}Q${x+S(9)} ${y-S(49)} ${x+S(10)} ${y-S(64)}Q${x} ${y-S(59)} ${x-S(10)} ${y-S(64)}Z`,fill:hairc},f);
+    if(kind==='hair'||kind==='beard')el('path',{d:`M${x-S(10)} ${y-S(65)}Q${x} ${y-S(83)} ${x+S(10)} ${y-S(65)}Q${x} ${y-S(71)} ${x-S(10)} ${y-S(65)}Z`,fill:hairc},f);
+    if(kind==='pilgrim'){
+      el('rect',{x:x-S(16),y:y-S(73),width:S(32),height:S(3.2),fill:P.dark},f);
+      el('path',{d:`M${x-S(9)} ${y-S(72)}L${x-S(7)} ${y-S(90)}H${x+S(7)}L${x+S(9)} ${y-S(72)}Z`,fill:P.dark},f);
+      el('rect',{x:x-S(3.4),y:y-S(79),width:S(6.8),height:S(5.5),fill:'none',stroke:P.gold,'stroke-width':S(1.4)},f);
+    }
+    if(kind==='bonnet')el('path',{d:`M${x-S(12)} ${y-S(60)}Q${x-S(15)} ${y-S(79)} ${x} ${y-S(80)}Q${x+S(15)} ${y-S(79)} ${x+S(12)} ${y-S(60)}Q${x+S(8)} ${y-S(72)} ${x} ${y-S(72)}Q${x-S(8)} ${y-S(72)} ${x-S(12)} ${y-S(60)}Z`,fill:P.sheet},f);
+    if(kind==='scarf')el('path',{d:`M${x-S(11)} ${y-S(66)}Q${x} ${y-S(84)} ${x+S(11)} ${y-S(66)}Q${x} ${y-S(72)} ${x-S(11)} ${y-S(66)}Z`,fill:P.orange},f);
+    if(kind==='beanie'){
+      el('path',{d:`M${x-S(10.5)} ${y-S(68)}Q${x} ${y-S(86)} ${x+S(10.5)} ${y-S(68)}Z`,fill:P.green},f);
+      el('rect',{x:x-S(11),y:y-S(70),width:S(22),height:S(3.6),fill:P.gold},f);
+    }
+    if(kind==='chef'){
+      el('rect',{x:x-S(9),y:y-S(75),width:S(18),height:S(5),fill:'#F6EBD6'},f);
+      el('path',{d:`M${x-S(9)} ${y-S(73)}Q${x-S(17)} ${y-S(92)} ${x-S(5)} ${y-S(91)}Q${x} ${y-S(99)} ${x+S(5)} ${y-S(91)}Q${x+S(17)} ${y-S(92)} ${x+S(9)} ${y-S(73)}Z`,fill:'#F6EBD6'},f);
+    }
+    el('circle',{cx:x-S(3.4),cy:y-S(65),r:S(1.2),fill:P.dark},f);
+    el('circle',{cx:x+S(3.4),cy:y-S(65),r:S(1.2),fill:P.dark},f);
+    el('path',{d:`M${x-S(3.6)} ${y-S(60)}Q${x} ${y-S(57)} ${x+S(3.6)} ${y-S(60)}`,stroke:kind==='beard'?'#F6E2B8':P.dark,'stroke-width':S(1.1),'stroke-linecap':'round',fill:'none'},f);
   }
-  const kinds=['witch','pumpkin','ghost','devil','cat','scarecrow','vampire'], body=[P.red,P.green,P.orange,P.brown];
-  const crowd=el('g',{},v), torches=el('g',{},v), bubbles=el('g',{},v);
-  [[600,.62,40],[645,.8,50],[694,1,62]].forEach(([y,s,step],row)=>{
-    let n=0;
-    for(let x=660+row*13;x<1590;x+=step+((x*7+row*3)%17)){
-      const i=n++ +row*5, kind=kinds[(i*3+row)%7], up=(i*5+row)%3===0;
-      if(Math.abs(x-1180)<40&&row===0)continue;
-      fig(el('g',{class:'look',style:`animation-delay:-${((i*2.3)%14).toFixed(1)}s`},crowd),x,y+(i*13)%7,s,kind,body[(i+row*2)%4],up,i);
-      if(up&&(i+row)%2===0)ask(bubbles,x+16*s,y-98*s,s,i);
-      else if(up&&kind!=='ghost')torch(torches,x,y+(i*13)%7,s,i);
+  // someone on the near bench, seen from behind
+  function back(g,x,y,s,col,i){
+    const S=n=>+(n*s).toFixed(1), kind=['hair','pilgrim','bonnet','hair','scarf','beanie'][i%6], f=el('g',{},g), hairc=i%3?'#3A2214':'#6E4630';
+    el('path',{d:`M${x-S(14)} ${y-S(50)}Q${x} ${y-S(57)} ${x+S(14)} ${y-S(50)}L${x+S(22)} ${y}H${x-S(22)}Z`,fill:col},f);
+    el('circle',{cx:x,cy:y-S(64),r:S(10.5),fill:kind==='bonnet'?P.sheet:kind==='scarf'?P.orange:kind==='beanie'?P.green:hairc},f);
+    if(kind==='pilgrim'){
+      el('rect',{x:x-S(16),y:y-S(70),width:S(32),height:S(3.2),fill:P.dark},f);
+      el('path',{d:`M${x-S(9)} ${y-S(69)}L${x-S(7)} ${y-S(87)}H${x+S(7)}L${x+S(9)} ${y-S(69)}Z`,fill:P.dark},f);
+    }
+    if(kind==='beanie')el('rect',{x:x-S(11),y:y-S(62),width:S(22),height:S(4),fill:P.gold},f);
+  }
+  // a live turkey in profile, tail fanned, head bobbing
+  function turkey(g,x,y,s,dir,i){
+    const o=el('g',{class:'look',style:`animation-delay:-${((i*2.3)%14).toFixed(1)}s`},g);
+    const t=el('g',{transform:`translate(${x} ${y}) scale(${dir*s} ${s})`},o);
+    el('path',{d:'M-5 -18L-7 0M-11 0H-1M6 -18L8 0M3 0H13',stroke:'#C9702A','stroke-width':2.6,'stroke-linecap':'round',fill:'none'},t);
+    const fan=['#7A4420','#A8501E','#5A2F16','#C8701F'];
+    for(let k=0;k<9;k++){
+      const f=el('g',{transform:`translate(-10 -38) rotate(${-92+k*15})`},t);
+      el('path',{d:'M0 0L-10 -46Q0 -56 10 -46Z',fill:fan[k%4],stroke:'#2A180E','stroke-width':.8},f);
+      el('path',{d:'M-10 -46Q0 -56 10 -46L8.3 -38Q0 -47 -8.3 -38Z',fill:'#EBD3A6'},f);
+      el('circle',{cx:0,cy:-35,r:2.2,fill:'#2A180E'},f);
+    }
+    el('ellipse',{cx:0,cy:-34,rx:24,ry:20,fill:'#3E2414'},t);
+    el('ellipse',{cx:13,cy:-37,rx:11,ry:14,fill:'#5A2A14'},t);
+    el('ellipse',{cx:-3,cy:-32,rx:15,ry:10.5,fill:'#7A4420'},t);
+    el('path',{d:'M-14 -32Q-4 -27 8 -33M-13 -28Q-4 -23 6 -28',stroke:'#2A180E','stroke-width':1,fill:'none'},t);
+    const h=el('g',{class:'gob',style:`animation-delay:-${((i*.37)%1.8).toFixed(2)}s`},t);
+    el('path',{d:'M15 -46Q26 -52 24 -68',stroke:'#7E3B22','stroke-width':6,'stroke-linecap':'round',fill:'none'},h);
+    el('circle',{cx:25,cy:-72,r:5.8,fill:'#C9674B'},h);
+    el('path',{d:'M30 -74L38 -71L30 -69Z',fill:P.gold},h);
+    el('path',{d:'M30 -71Q34 -66 31 -60Q27 -63 27 -68Z',fill:'#B02A1C'},h);
+    el('circle',{cx:26.5,cy:-74,r:1.3,fill:P.dark},h);
+  }
+  // the roast, on its platter
+  function roast(g,x,y,s){
+    const S=n=>+(n*s).toFixed(1);
+    el('ellipse',{cx:x,cy:y,rx:S(52),ry:S(10),fill:'#F6EBD6',stroke:'#B89A6A','stroke-width':1},g);
+    el('path',{d:`M${x-S(38)} ${y-S(3)}Q${x-S(40)} ${y-S(36)} ${x-S(4)} ${y-S(38)}Q${x+S(32)} ${y-S(38)} ${x+S(38)} ${y-S(5)}Q${x} ${y+S(4)} ${x-S(38)} ${y-S(3)}Z`,fill:'#B9702A'},g);
+    el('path',{d:`M${x-S(24)} ${y-S(26)}Q${x-S(4)} ${y-S(36)} ${x+S(18)} ${y-S(28)}Q${x} ${y-S(24)} ${x-S(24)} ${y-S(26)}Z`,fill:'#D9974A'},g);
+    el('path',{d:`M${x+S(20)} ${y-S(13)}Q${x+S(40)} ${y-S(24)} ${x+S(53)} ${y-S(32)}`,stroke:'#A5601F','stroke-width':S(10),'stroke-linecap':'round',fill:'none'},g);
+    el('circle',{cx:x+S(56),cy:y-S(34),r:S(3.6),fill:'#F6EBD6'},g);
+    el('path',{d:`M${x-S(20)} ${y-S(12)}Q${x-S(40)} ${y-S(24)} ${x-S(53)} ${y-S(32)}`,stroke:'#A5601F','stroke-width':S(10),'stroke-linecap':'round',fill:'none'},g);
+    el('circle',{cx:x-S(56),cy:y-S(34),r:S(3.6),fill:'#F6EBD6'},g);
+    [[-22,-6,3.5,P.red],[-9,-3,3,P.green],[10,-3,3.5,P.gold],[24,-6,3,P.red]].forEach(([dx,dy,r,c])=>el('circle',{cx:x+S(dx),cy:y+S(dy),r:S(r),fill:c},g));
+  }
+  function pie(g,x,y){
+    el('ellipse',{cx:x,cy:y,rx:21,ry:6,fill:'#C98B4A'},g);
+    el('ellipse',{cx:x,cy:y-2,rx:18,ry:4.6,fill:'#C2571C'},g);
+    el('path',{d:`M${x} ${y-2}L${x+15} ${y-4}A18 4.6 0 0 1 ${x+13} ${y+1}Z`,fill:'#F6EBD6'},g);
+  }
+  function bowl(g,x,y,c){
+    el('ellipse',{cx:x,cy:y-9,rx:14,ry:4,fill:c},g);
+    el('path',{d:`M${x-15} ${y-9}Q${x-12} ${y+1} ${x} ${y+1}Q${x+12} ${y+1} ${x+15} ${y-9}Z`,fill:'#E8D3AE',stroke:'#B89A6A','stroke-width':.7},g);
+  }
+  function candle(g,x,y,i){
+    const d=`animation-delay:-${((i*.37)%1).toFixed(2)}s`;
+    el('circle',{class:'glow',cx:x,cy:y-40,r:22,fill:'url(#ctlamp)',style:d},g);
+    el('rect',{x:x-2.2,y:y-30,width:4.4,height:30,fill:'#F6EBD6'},g);
+    el('path',{d:`M${x-6} ${y}H${x+6}`,stroke:P.gold,'stroke-width':3,'stroke-linecap':'round'},g);
+    el('path',{class:'fl',style:d,d:`M${x} ${y-44}C${x+4} ${y-38} ${x+5} ${y-34} ${x} ${y-30}C${x-5} ${y-34} ${x-4} ${y-38} ${x} ${y-44}Z`,fill:'#FFC046'},g);
+  }
+  function cornucopia(g,x,y){
+    el('path',{d:`M${x-44} ${y-6}Q${x-36} ${y-34} ${x+2} ${y-28}Q${x+10} ${y-14} ${x+2} ${y}Q${x-26} ${y+2} ${x-44} ${y-6}Z`,fill:'#B98A44',stroke:'#7A5A28','stroke-width':1},g);
+    el('path',{d:`M${x-34} ${y-24}L${x-28} ${y-1}M${x-22} ${y-29}L${x-16} ${y}M${x-9} ${y-29}L${x-5} ${y}`,stroke:'#7A5A28','stroke-width':1},g);
+    pumpkin(g,x+18,y,9);
+    el('circle',{cx:x+7,cy:y-22,r:7,fill:P.red},g);
+    el('circle',{cx:x+22,cy:y-24,r:6,fill:P.gold},g);
+    [[35,-5],[40,-11],[45,-5]].forEach(([dx,dy])=>el('circle',{cx:x+dx,cy:y+dy,r:4,fill:'#5A2F5C'},g));
+  }
+  // hay and corn shocks at the corners of the square
+  function bale(g,x,y){
+    el('rect',{x:x-28,y:y-24,width:56,height:24,rx:4,fill:'#C9A45A'},g);
+    el('path',{d:`M${x-12} ${y-24}V${y}M${x+12} ${y-24}V${y}M${x-26} ${y-12}H${x+26}`,stroke:'#8E6E2E','stroke-width':1.2,fill:'none'},g);
+  }
+  function shock(g,x,y){
+    el('path',{d:`M${x-16} ${y}L${x} ${y-58}L${x+16} ${y}Z`,fill:'#B8924A'},g);
+    el('path',{d:`M${x-8} ${y}L${x} ${y-54}M${x+8} ${y}L${x} ${y-54}M${x} ${y}V${y-54}M${x-10} ${y-14}H${x+10}`,stroke:'#7A5A28','stroke-width':1.3,fill:'none'},g);
+  }
+  const yard=el('g',{},v);
+  shock(yard,1412,610); shock(yard,950,610);
+  bale(yard,1440,612); bale(yard,922,612);
+  // two turkeys loose on the square behind the table
+  const loose=el('g',{},v);
+  turkey(loose,1000,566,.46,1,1);
+  turkey(loose,1362,566,.46,-1,2);
+
+  const crowd=el('g',{},v), bubbles=el('g',{},v);
+  let fi=0;
+  // standing behind the table, either side of the banner
+  [[722,1000],[1362,1650]].forEach(([a,b])=>{
+    for(let x=a;x<b;x+=47){
+      const i=fi++, up=i%2===0;
+      person(crowd,x,590+(i*13)%6,.66,hats[(i*3+1)%8],body[(i+2)%5],up?'hand':(i%4===1?'toast':''),i);
+      if(up)ask(bubbles,x+16*.66,590+(i*13)%6-98*.66,.8,i);
     }
   });
+  // seated along the far side, facing us
+  let n=0;
+  for(let x=744;x<1630;x+=68){
+    const i=n++, c=Math.abs(x-1181)<190;
+    const pose=c?(i%2?'':'' ):(i%3===0?'hand':i%3===1?'toast':'');
+    person(crowd,x,612,.9,x>1480&&x<1520?'chef':hats[(i*5)%8],body[(i*2+1)%5],pose,i+3);
+    if(pose==='hand')ask(bubbles,x+16*.9,612-98*.9,.9,i+20);
+  }
+  // the table
+  const T=el('g',{},v);
+  el('path',{d:'M716 606H1646L1664 630H698Z',fill:'#F6EBD6'},T);
+  el('path',{d:'M698 630H1664V664H698Z',fill:'#E4CFA8'},T);
+  for(let x=722;x<1650;x+=58)el('path',{d:`M${x} 630Q${x+29} 648 ${x+58} 630`,stroke:'#C9A878','stroke-width':1.3,fill:'none'},T);
+  el('path',{d:'M716 606H1646',stroke:'#FFF6E3','stroke-width':1.5},T);
+  el('path',{d:'M720 617H1660',stroke:P.orange,'stroke-width':5,'stroke-opacity':.6},T);
+  // places: a plate in front of everybody
+  for(let x=744;x<1630;x+=68){
+    el('ellipse',{cx:x,cy:611,rx:15,ry:3.4,fill:'#fff',stroke:'#C9A878','stroke-width':.8},T);
+    el('ellipse',{cx:x+1,cy:625,rx:17,ry:3.8,fill:'#fff',stroke:'#C9A878','stroke-width':.8},T);
+  }
+  // the spread, the big roast at the centre
+  candle(T,1020,620,1); candle(T,1342,620,2); candle(T,822,620,3); candle(T,1520,620,4);
+  bowl(T,960,622,'#B02A1C'); bowl(T,1400,622,'#E8A93A'); bowl(T,880,622,'#6F8A3A'); bowl(T,1470,622,'#D9974A');
+  pie(T,1072,623); pie(T,1292,623); pie(T,770,623); pie(T,1592,623);
+  cornucopia(T,1566,626);
+  roast(T,1181,623,1.25);
+  // the near bench, seen from behind, with a gap for each turkey on the loose
+  el('rect',{x:700,y:682,width:966,height:9,fill:'#4A2B18'},v);
+  const near=el('g',{},v);
+  let m=0;
+  for(let x=728;x<1660;x+=78){
+    const i=m++;
+    if(Math.abs(x-1040)<30||Math.abs(x-1430)<30)continue;
+    back(near,x,716,.92,body[(i*3+2)%5],i);
+  }
+  // the turkeys up front, and more wandering in from the left
+  const fore=el('g',{},v);
+  turkey(fore,1044,696,.92,-1,3);
+  turkey(fore,1434,698,.98,1,4);
+  turkey(fore,640,682,.92,1,5);
+  turkey(fore,560,696,.66,1,6);
+  turkey(fore,1722,682,.92,-1,7);
+  turkey(fore,1802,696,.66,-1,8);
+  pumpkin(fore,676,698,10); pumpkin(fore,698,700,7,P.gold);
+  // chickens wandering the scene, each pecking in its own time
+  function chicken(g,x,y,s,dir,col,i){
+    const c=el('g',{transform:`translate(${x} ${y}) scale(${dir*s} ${s})`},g);
+    el('path',{d:'M-3 -10V0M-7 0H0M4 -10V0M1 0H8',stroke:P.gold,'stroke-width':1.9,'stroke-linecap':'round',fill:'none'},c);
+    el('path',{d:'M-14 -22L-27 -40L-23 -24L-31 -32L-22 -14Z',fill:col==='#F2E6CF'?'#D9C4A0':'#2A180E'},c);
+    el('ellipse',{cx:-2,cy:-19,rx:17,ry:12,fill:col},c);
+    el('path',{d:'M-11 -20Q-2 -11 8 -20Q-2 -26 -11 -20Z',fill:'#000','fill-opacity':.14},c);
+    const h=el('g',{class:'peck',style:`animation-delay:-${((i*1.13)%4.4).toFixed(2)}s`},c);
+    el('path',{d:'M9 -24Q15 -31 14 -38',stroke:col,'stroke-width':7,'stroke-linecap':'round',fill:'none'},h);
+    el('circle',{cx:15,cy:-41,r:5.2,fill:col},h);
+    el('path',{d:'M10 -45q1.5 -4.5 3 -1q1.5 -4.5 3 -.5q2 -3.5 3 1Z',fill:'#B02A1C'},h);
+    el('path',{d:'M20 -42L26 -40L20 -38Z',fill:P.gold},h);
+    el('path',{d:'M19 -38q2 4 -1 5q-2 -2 -1 -5Z',fill:'#B02A1C'},h);
+    el('circle',{cx:16.5,cy:-42,r:1,fill:P.dark},h);
+  }
+  const hens=el('g',{},v);
+  [[900,582,.62,1,'#F2E6CF'],[1460,578,.58,-1,'#8A4A22'],[610,642,.95,1,'#B85A22'],[494,668,.82,-1,'#F2E6CF'],[820,692,1.1,1,'#8A4A22'],[1140,694,1.15,-1,'#F2E6CF'],[1286,692,1.1,1,'#B85A22'],[1560,664,1.1,-1,'#F2E6CF'],[1780,650,.95,-1,'#B85A22'],[1880,672,.82,1,'#F2E6CF']]
+    .forEach(([x,y,s,d,c],i)=>chicken(hens,x,y,s,d,c,i));
+  // more pumpkins, heaped by the table and along the square
+  [[596,700,15],[624,702,10,P.gold],[866,700,13],[892,702,9,'#D9641E'],[1096,702,12],[1214,702,14],[1238,703,9,P.gold],[1352,702,13],[1500,702,12,'#D9641E'],[1584,702,15],[1720,702,15],[1750,703,10,P.gold],[1860,702,12]]
+    .forEach(([x,y,r,c])=>pumpkin(fore,x,y,r,c));
+  [[930,596,8],[960,600,6,P.gold],[1404,596,8,'#D9641E'],[1438,600,6],[604,590,9],[646,596,6,P.gold]].forEach(([x,y,r,c])=>pumpkin(yard,x,y,r,c));
+
+  [...v.children].slice(from).forEach(c=>{if(!keep.has(c)&&!c.classList.contains('run'))c.setAttribute('transform','translate(-381 0)')});
   const hero=v.parentNode, tip=hero.querySelector('.qtip');
   let open=null;
   function close(){tip.hidden=true;if(open)open.setAttribute('aria-expanded','false');open=null;}
