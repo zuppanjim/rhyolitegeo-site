@@ -476,12 +476,68 @@ h2.sec{font-size:clamp(30px,3.8vw,44px);margin-top:12px;max-width:24ch}
   for(var k=0;k<5;k++)o.push('<ellipse class="coin" cx="1724" cy="'+(552-k*9)+'" rx="22" ry="6" fill="#E8B04A" stroke="#7a5418" stroke-width="1.6" style="animation-delay:'+(k*.25)+'s"/>');
   o.push('<text x="1724" y="519" font-family="Archivo,sans-serif" font-weight="800" font-size="13" fill="#7a5418" text-anchor="middle">T</text>');
   [0,.8,1.6].forEach(function(d){o.push('<rect class="tok" x="1664" y="592" width="9" height="9" rx="2" fill="#FFE08A" style="animation-delay:'+d+'s"/>');});
+  /* nuclear bursts from the token rig: ghosted, warped rings under the dollar signs */
+  o.push('<filter id="warp" filterUnits="userSpaceOnUse" x="1460" y="80" width="380" height="520"><feTurbulence id="warpt" type="fractalNoise" baseFrequency=".018 .05" numOctaves="2" seed="3" result="n"/><feDisplacementMap id="warpd" in="SourceGraphic" in2="n" scale="10" xChannelSelector="R" yChannelSelector="G" result="d"/><feGaussianBlur in="d" stdDeviation=".7"/></filter>');
+  o.push('<g id="nuke" filter="url(#warp)" style="mix-blend-mode:screen;pointer-events:none"></g>');
   [[1696,0,-18],[1716,.5,14],[1740,1,-10],[1706,1.6,20],[1730,2.2,-14]].forEach(function(q){o.push('<text class="dol" x="'+q[0]+'" y="694" font-family="Archivo,sans-serif" font-weight="800" font-size="26" fill="#9BD38A" stroke="#1c140c" stroke-width="3" paint-order="stroke" text-anchor="middle" style="animation-delay:'+q[1]+'s">$</text>');});
 
   /* labels */
   function lab(x,y,t){o.push('<text x="'+x+'" y="'+y+'" font-family="IBM Plex Mono,monospace" font-size="13" letter-spacing="1.5" fill="#FBF6EC" stroke="#1c140c" stroke-width="4" paint-order="stroke" text-anchor="middle">'+t+'</text>');}
   lab(640,664,"YOUR WELLS");lab(900,660,"GAS");lab(1075,486,"ENGINE PLANT · ISLANDED");lab(1415,514,"AI DATA HALLS");lab(1590,662,"FIBER");lab(1724,496,"TOKENS");
   document.getElementById("scene").innerHTML=o.join("");
+
+  /* nuclear distortion bursts: wavefronts thrown up in a flashlight cone from the rig;
+     random size, rhythm and hue in the blue-to-green band, ghosted so the $ stay readable */
+  function nukeBursts(){
+    var NS="http://www.w3.org/2000/svg",g=document.getElementById("nuke"),turb=document.getElementById("warpt"),disp=document.getElementById("warpd");
+    if(!g)return;
+    var CX=1724,CY=558,HALF=.36,REACH=420,waves=[];               /* cone apex, half-angle (rad), max throw */
+    var tan=Math.tan(HALF);
+    function el(t,a){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);return e;}
+    function rnd(a,b){return a+Math.random()*(b-a);}
+    /* the beam itself: a soft cone that brightens with each burst */
+    var gid="beamg";
+    g.appendChild(el("linearGradient",{id:gid,x1:"0",y1:"1",x2:"0",y2:"0"}));
+    var lg=document.getElementById(gid),s0=el("stop",{offset:"0","stop-opacity":".55"}),s1=el("stop",{offset:"1","stop-opacity":"0"});
+    lg.appendChild(s0);lg.appendChild(s1);
+    var top=CY-REACH,w=REACH*tan;
+    var cone=el("path",{d:"M"+CX+" "+CY+"L"+(CX-w)+" "+top+"Q"+CX+" "+(top-w*.25)+" "+(CX+w)+" "+top+"Z",fill:"url(#"+gid+")",opacity:"0"});
+    g.appendChild(cone);
+    var glow=0,glowHue=180;
+    function burst(){
+      var hue=rnd(150,205),n=2+Math.floor(Math.random()*4),reach=rnd(140,REACH),dur=rnd(.9,2.4)*1000,gap=rnd(70,300),sw=rnd(2.5,7),now=performance.now();
+      glow=rnd(.35,.8);glowHue=hue;
+      for(var i=0;i<n;i++){
+        var e=el("path",{fill:"none","stroke-linecap":"round",stroke:"hsl("+(hue+rnd(-8,8)).toFixed(0)+" "+rnd(75,100).toFixed(0)+"% "+rnd(58,74).toFixed(0)+"%)","stroke-width":sw});
+        g.appendChild(e);
+        waves.push({e:e,t0:now+i*gap,dur:dur,reach:reach*rnd(.85,1.05),bow:rnd(.18,.4),peak:rnd(.45,.75)});
+      }
+      if(Math.random()<.5){
+        var f=el("circle",{cx:CX,cy:CY,fill:"hsl("+hue.toFixed(0)+" 100% 72%)"});g.appendChild(f);
+        waves.push({e:f,t0:now,dur:dur*.4,reach:rnd(12,24),flash:1,peak:rnd(.3,.45)});
+      }
+      setTimeout(burst,rnd(250,2200));
+    }
+    function tick(t){
+      waves=waves.filter(function(r){
+        var k=(t-r.t0)/r.dur;
+        if(k<0){r.e.setAttribute("opacity",0);return true;}
+        if(k>=1){r.e.remove();return false;}
+        var d=6+r.reach*(1-Math.pow(1-k,1.6)),op=r.peak*(k<.12?k/.12:1-(k-.12)/.88);
+        if(r.flash)r.e.setAttribute("r",d);
+        else{var y=CY-d,hw=d*tan;r.e.setAttribute("d","M"+(CX-hw).toFixed(1)+" "+y.toFixed(1)+"Q"+CX+" "+(y-hw*r.bow*2).toFixed(1)+" "+(CX+hw).toFixed(1)+" "+y.toFixed(1));}
+        r.e.setAttribute("opacity",op.toFixed(3));
+        return true;
+      });
+      glow*=.97;
+      cone.setAttribute("opacity",(glow*.42).toFixed(3));
+      var c="hsl("+glowHue.toFixed(0)+" 100% 55%)";s0.setAttribute("stop-color",c);s1.setAttribute("stop-color",c);
+      turb.setAttribute("baseFrequency",(.014+.008*Math.sin(t/900)).toFixed(4)+" "+(.04+.02*Math.sin(t/610)).toFixed(4));
+      disp.setAttribute("scale",(8+6*Math.sin(t/430)).toFixed(1));
+      requestAnimationFrame(tick);
+    }
+    burst();requestAnimationFrame(tick);
+  }
 
   /* the Nmail flame (nmail/web/app.js flameIcon): 3 to 7 licking tongues, 2,000 shades, re-drawn every 4 s */
   (function(){
@@ -512,6 +568,7 @@ h2.sec{font-size:clamp(30px,3.8vw,44px);margin-top:12px;max-width:24ch}
     }
     draw();
     var motion=document.documentElement.classList.contains("motion");
+    if(motion)nukeBursts();
     if(!motion)return;
     setInterval(draw,4000);
 
